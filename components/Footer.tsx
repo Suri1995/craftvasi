@@ -1,7 +1,7 @@
 'use client'
-
-import Link from 'next/link'
+import Image from 'next/image'
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react'
+import CraftVasiLogo from "@/public/craftvasi-logo.png";
 
 export function Footer() {
   return (
@@ -10,12 +10,21 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-heading font-bold text-accent mb-4">
-              Craftvasi
-            </h3>
-            <p className="text-primary-foreground/80 text-sm leading-relaxed">
+            <div className="flex items-center gap-6">
+              <a href="/" className="flex items-center">
+                <Image
+                  src={CraftVasiLogo}
+                  alt="Craftvasi Logo"
+                  width={120}
+                  height={40}
+                  priority
+                  className="object-contain hover:opacity-90 transition-opacity"
+                />
+              </a>
+            </div>
+            {/* <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Transforming spaces into extraordinary experiences with premium interior design and construction.
-            </p>
+            </p> */}
             <div className="flex gap-4 mt-6">
               <a
                 href="https://facebook.com"
@@ -60,12 +69,12 @@ export function Footer() {
                 { label: 'Contact', href: '/contact' },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
+                  <a
                     href={link.href}
                     className="hover:text-accent transition-colors text-sm"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -83,12 +92,12 @@ export function Footer() {
                 { label: 'Careers', href: '#careers' },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
+                  <a
                     href={link.href}
                     className="hover:text-accent transition-colors text-sm"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -100,11 +109,11 @@ export function Footer() {
               Our Services
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/services#kitchen" className="hover:text-accent transition-colors">Modular Kitchen</Link></li>
-              <li><Link href="/services#living" className="hover:text-accent transition-colors">Living Room Space</Link></li>
-              <li><Link href="/services#bedroom" className="hover:text-accent transition-colors">Bedrooms</Link></li>
-              <li><Link href="/services#kids" className="hover:text-accent transition-colors">Kids Bedrooms</Link></li>
-              <li><Link href="/services#vastu" className="hover:text-accent transition-colors">Vastu Consulting</Link></li>
+              <li><a href="/services#kitchen" className="hover:text-accent transition-colors">Modular Kitchen</a></li>
+              <li><a href="/services#living" className="hover:text-accent transition-colors">Living Room Space</a></li>
+              <li><a href="/services#bedroom" className="hover:text-accent transition-colors">Bedrooms</a></li>
+              <li><a href="/services#kids" className="hover:text-accent transition-colors">Kids Bedrooms</a></li>
+              <li><a href="/services#vastu" className="hover:text-accent transition-colors">Vastu Consulting</a></li>
             </ul>
           </div>
 

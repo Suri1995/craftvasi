@@ -30,8 +30,8 @@ export function Header() {
   return (
     <>
       <header
-  className="fixed top-0 left-0 right-0 z-1000 py-4 transition-all duration-300
-             bg-[radial-gradient(350.31%_152.23%_at_100%_0,_#83dae2_16%,_#d9f6f7_50.92%,_#f1f4f7_65.03%)]"
+  className="fixed top-0 left-0 right-0 z-1000 py-4 transition-all duration-300 shadow-lg
+             bg-[radial-gradient(350.31%_152.23%_at_100%_0,_#83dae2_16%,_#d9f6f7_50.92%,_#f1f4f7_65.03%)] "
 >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
