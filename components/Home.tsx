@@ -78,14 +78,14 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="/projects"
-            className="rounded-lg bg-yellow-500 px-8 py-3 font-semibold text-black transition hover:scale-105"
+            className="rounded-lg bg-red-600 px-8 py-3 font-semibold text-white transition hover:bg-red-700 hover:scale-105"
           >
             Start Your Interior Project
           </a>
 
           <a
             href="/contact"
-            className="rounded-lg border-2 border-yellow-500 px-8 py-3 font-semibold text-yellow-500 transition hover:bg-yellow-500 hover:text-black"
+            className="rounded-lg border-2 border-red-600 px-8 py-3 font-semibold text-red-600 transition hover:bg-red-600 hover:text-white"
           >
             View Our Projects
           </a>
@@ -186,8 +186,8 @@ export function Services() {
       className="
         py-20 md:py-32
         bg-gradient-to-b
-        from-[#0f172a]
-        via-[#020617]
+        from-[#1a1a3d]
+        via-[#2d2d5f]
         to-black
       "
     >
@@ -444,9 +444,9 @@ export function Portfolio() {
       className="
         py-20 md:py-32
         bg-gradient-to-b
-        from-[#312e81]
-        via-[#4f46e5]
-        to-[#818cf8]
+        from-[#1a1a3d]
+        via-[#2d2d5f]
+        to-[#dc143c]/10
       "
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -560,7 +560,7 @@ export function Portfolio() {
 
 export function CTASection() {
   return (
-    <section className="w-full py-14 bg-[radial-gradient(103.66%_89.9%_at_67.34%_75.46%,_#008089_0%,_#004855_50.99%,_#002f3c_100%)]">
+    <section className="w-full py-14 bg-gradient-to-r from-[#1a1a3d] via-[#dc143c] to-[#1a1a3d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
 

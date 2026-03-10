@@ -31,7 +31,7 @@ export function Header() {
     <>
       <header
   className="fixed top-0 left-0 right-0 z-1000 py-4 transition-all duration-300 shadow-lg
-             bg-[radial-gradient(350.31%_152.23%_at_100%_0,_#83dae2_16%,_#d9f6f7_50.92%,_#f1f4f7_65.03%)] "
+             bg-gradient-to-r from-[#1a1a3d] to-[#2d2d5f]"
 >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -62,8 +62,8 @@ export function Header() {
                       href={link.href}
                       className={`font-medium text-[20px] transition-colors ${
                         isActive
-                          ? "text-accent"
-                          : "text-foreground hover:text-stone-500"
+                          ? "text-red-500"
+                          : "text-white hover:text-red-400"
                       }`}
                     >
                       {link.label}
@@ -76,7 +76,7 @@ export function Header() {
               <div className="hidden md:block">
                 <a
                   href="tel:+919700707830"
-                  className="flex items-center gap-2 px-4 py-3 bg-[#bd700d] text-white rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-[16px]"
+                  className="flex items-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 hover:scale-105 transition-all duration-300 text-[16px]"
                 >
                   <Phone className="w-5 h-5" />
                   <span>+91 9700707830</span>

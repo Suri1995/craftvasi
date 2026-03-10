@@ -53,7 +53,7 @@ export default function ContactPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary to-background pt-24 pb-16 md:pb-24">
+      <section className="bg-gradient-to-b from-[#f0f4f8] to-white pt-24 pb-16 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-heading font-bold text-primary mb-6">
@@ -247,7 +247,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-gradient-to-r from-[#1a1a3d] to-[#2d2d5f] text-white rounded-lg font-semibold hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -268,7 +268,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-gradient-to-b from-white to-[#f0f4f8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-heading font-bold text-primary mb-4">
