@@ -6,73 +6,73 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1a1a1a;
+  --foreground: #1a1a3d;
   --card: #ffffff;
-  --card-foreground: #1a1a1a;
+  --card-foreground: #1a1a3d;
   --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #2c2c2c;
+  --popover-foreground: #1a1a3d;
+  --primary: #1a1a3d;
   --primary-foreground: #ffffff;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #2c2c2c;
-  --muted: #e8e8e8;
-  --muted-foreground: #666666;
-  --accent: #d4af37;
-  --accent-foreground: #1a1a1a;
+  --secondary: #f0f4f8;
+  --secondary-foreground: #1a1a3d;
+  --muted: #e5e7eb;
+  --muted-foreground: #6b7280;
+  --accent: #dc143c;
+  --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e0e0e0;
-  --input: #f5f5f5;
-  --ring: #d4af37;
-  --chart-1: #d4af37;
-  --chart-2: #2c2c2c;
-  --chart-3: #666666;
-  --chart-4: #999999;
-  --chart-5: #cccccc;
+  --border: #e5e7eb;
+  --input: #f3f4f6;
+  --ring: #dc143c;
+  --chart-1: #dc143c;
+  --chart-2: #1a1a3d;
+  --chart-3: #6366f1;
+  --chart-4: #8b5cf6;
+  --chart-5: #ec4899;
   --radius: 0.5rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #2c2c2c;
+  --sidebar-foreground: #1a1a3d;
+  --sidebar-primary: #1a1a3d;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #d4af37;
-  --sidebar-accent-foreground: #1a1a1a;
-  --sidebar-border: #e0e0e0;
-  --sidebar-ring: #d4af37;
+  --sidebar-accent: #dc143c;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #dc143c;
 }
 
 .dark {
-  --background: #0f0f0f;
+  --background: #0a0a1a;
   --foreground: #ffffff;
-  --card: #1a1a1a;
+  --card: #1a1a3d;
   --card-foreground: #ffffff;
-  --popover: #1a1a1a;
+  --popover: #1a1a3d;
   --popover-foreground: #ffffff;
   --primary: #ffffff;
-  --primary-foreground: #1a1a1a;
-  --secondary: #2a2a2a;
+  --primary-foreground: #1a1a3d;
+  --secondary: #1a1a3d;
   --secondary-foreground: #ffffff;
-  --muted: #404040;
-  --muted-foreground: #999999;
-  --accent: #d4af37;
-  --accent-foreground: #1a1a1a;
+  --muted: #404059;
+  --muted-foreground: #a0aac5;
+  --accent: #ff1744;
+  --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #333333;
-  --input: #2a2a2a;
-  --ring: #d4af37;
-  --chart-1: #d4af37;
+  --border: #333366;
+  --input: #1a1a3d;
+  --ring: #ff1744;
+  --chart-1: #ff1744;
   --chart-2: #ffffff;
-  --chart-3: #999999;
-  --chart-4: #666666;
-  --chart-5: #404040;
-  --sidebar: #1a1a1a;
+  --chart-3: #6366f1;
+  --chart-4: #8b5cf6;
+  --chart-5: #ec4899;
+  --sidebar: #1a1a3d;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #ffffff;
-  --sidebar-primary-foreground: #1a1a1a;
-  --sidebar-accent: #d4af37;
-  --sidebar-accent-foreground: #1a1a1a;
-  --sidebar-border: #333333;
-  --sidebar-ring: #d4af37;
+  --sidebar-primary-foreground: #1a1a3d;
+  --sidebar-accent: #ff1744;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #333366;
+  --sidebar-ring: #ff1744;
 }
 
 @theme inline {
@@ -236,6 +236,39 @@ html {
 /* Image hover effect */
 .image-hover {
   @apply overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105;
+}
+
+/* Logo Color Gradients */
+.gradient-navy-red {
+  @apply bg-gradient-to-br from-[#1a1a3d] to-[#dc143c];
+}
+
+.gradient-red-navy {
+  @apply bg-gradient-to-br from-[#dc143c] to-[#1a1a3d];
+}
+
+.gradient-navy-red-light {
+  @apply bg-gradient-to-r from-[#1a1a3d] via-[#4a4a7d] to-[#dc143c];
+}
+
+.gradient-accent-navy {
+  @apply bg-gradient-to-br from-[#dc143c] via-[#ff6b6b] to-[#1a1a3d];
+}
+
+.gradient-navy-light {
+  @apply bg-gradient-to-br from-[#1a1a3d] to-[#4a4a7d];
+}
+
+.gradient-hero {
+  @apply bg-gradient-to-b from-[#1a1a3d] via-[#2d2d5f] to-[#dc143c]/10;
+}
+
+.gradient-footer {
+  @apply bg-gradient-to-r from-[#1a1a3d] via-[#2d2d5f] to-[#1a1a3d];
+}
+
+.gradient-overlay-accent {
+  @apply bg-gradient-to-t from-[#dc143c] via-[#dc143c]/50 to-transparent;
 }
 
 /* Accessibility - respect user preference */

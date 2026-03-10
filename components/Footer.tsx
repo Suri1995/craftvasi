@@ -5,7 +5,7 @@ import CraftVasiLogo from "@/public/craftvasi-logo.png";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-gradient-to-r from-[#1a1a3d] via-[#2d2d5f] to-[#1a1a3d] text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand */}
@@ -152,11 +152,11 @@ export function Footer() {
       </div>
 
       {/* Mobile Bottom CTA Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-accent text-accent-foreground border-t border-accent/20 z-30">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-red-600 text-white border-t border-red-700 z-30">
         <div className="flex gap-2 p-3">
           <a
             href="tel:+919700707830"
-            className="flex-1 py-2 px-3 bg-accent-foreground text-accent rounded font-semibold text-center text-sm hover:bg-opacity-90 transition-all"
+            className="flex-1 py-2 px-3 bg-white text-red-600 rounded font-semibold text-center text-sm hover:bg-opacity-90 transition-all"
           >
             Call
           </a>
@@ -164,7 +164,7 @@ export function Footer() {
             href="https://wa.me/919700707830"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-2 px-3 bg-accent-foreground text-accent rounded font-semibold text-center text-sm hover:bg-opacity-90 transition-all"
+            className="flex-1 py-2 px-3 bg-white text-red-600 rounded font-semibold text-center text-sm hover:bg-opacity-90 transition-all"
           >
             WhatsApp
           </a>

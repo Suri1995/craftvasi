@@ -38,7 +38,7 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary to-background pt-24 pb-16 md:pb-24">
+      <section className="bg-gradient-to-b from-[#f0f4f8] to-white pt-24 pb-16 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-6xl font-heading font-bold text-primary mb-6">
@@ -104,7 +104,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Values */}
-      <section className="py-20 md:py-32 bg-secondary">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-[#f0f4f8] to-[#e8ecf1]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
@@ -216,7 +216,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-gradient-to-r from-[#1a1a3d] to-[#2d2d5f] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
             Let's Create Something Amazing
