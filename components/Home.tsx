@@ -1,41 +1,77 @@
 'use client'
 
+'use client'
+
 import { useRef, useState, useEffect } from 'react'
-import Image from 'next/image'
 import { ImageGallery } from '@/components/ui/carousel-circular-image-gallery'
 
+/* ---------------- HERO ---------------- */
+
 export function Hero() {
+  const [cycle, setCycle] = useState(0)
+
+  useEffect(() => {
+    const totalAnimationTime = 9500
+    const pauseTime = 3000
+
+    const interval = setInterval(() => {
+      setCycle(v => v + 1)
+    }, totalAnimationTime + pauseTime)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className="relative w-screen h-screen overflow-hidden">
-      {/* Fullscreen Background Gallery */}
       <div className="absolute inset-0 z-0">
         <ImageGallery />
       </div>
 
-      {/* Dark overlay */}
       <div className="absolute inset-0 z-10 bg-black/45" />
 
-      {/* Centered Content */}
       <div className="relative z-20 flex h-full flex-col items-center justify-center text-center px-4">
-        {/* Heading — animated word by word */}
-        <h1 className="mb-4 text-4xl md:text-6xl font-bold text-white leading-tight">
-          <span className="word" style={{ '--delay': '0ms' } as any}>Crafting</span>{' '}
-          <span className="word" style={{ '--delay': '750ms' } as any}>Beautiful,</span>{' '}
-          <span className="word" style={{ '--delay': '1500ms' } as any}>Functional</span>{' '}
-          <span className="word" style={{ '--delay': '2250ms' } as any}>Spaces</span>
+
+        {/* Heading */}
+        <h1
+          key={cycle}
+          className="mb-4 text-4xl md:text-6xl font-bold text-white leading-tight max-w-5xl"
+        >
+          <span className="word" style={{ '--delay': '0ms' } as any}>Designing</span>{' '}
+          <span className="word" style={{ '--delay': '500ms' } as any}>Extraordinary</span>{' '}
+          <span className="word" style={{ '--delay': '1000ms' } as any}>Spaces.</span>{' '}
+          <span className="word" style={{ '--delay': '1500ms' } as any}>Crafting</span>{' '}
+          <span className="word" style={{ '--delay': '2000ms' } as any}>Experiences</span>{' '}
+          <span className="word" style={{ '--delay': '2500ms' } as any}>That</span>{' '}
+          <span className="word" style={{ '--delay': '3000ms' } as any}>Last.</span>
         </h1>
 
-        {/* Subtext */}
-        <p className="mb-8 max-w-2xl text-lg md:text-xl text-white/90">
-          <span className="word" style={{ '--delay': '3000ms' } as any}>Explore</span>{' '}
-          <span className="word" style={{ '--delay': '3375ms' } as any}>our</span>{' '}
-          <span className="word" style={{ '--delay': '3750ms' } as any}>portfolio</span>{' '}
-          <span className="word" style={{ '--delay': '4125ms' } as any}>of</span>{' '}
-          <span className="word" style={{ '--delay': '4500ms' } as any}>exceptional</span>{' '}
-          <span className="word" style={{ '--delay': '4875ms' } as any}>interior</span>{' '}
-          <span className="word" style={{ '--delay': '5250ms' } as any}>design</span>{' '}
-          <span className="word" style={{ '--delay': '5625ms' } as any}>and</span>{' '}
-          <span className="word" style={{ '--delay': '6000ms' } as any}>construction</span>
+        {/* Sub heading */}
+        <p
+          key={cycle + 100}
+          className="mb-8 max-w-3xl text-lg md:text-xl text-white/90"
+        >
+          <span className="word" style={{ '--delay': '3800ms' } as any}>Craftvasi</span>{' '}
+          <span className="word" style={{ '--delay': '4050ms' } as any}>Interior</span>{' '}
+          <span className="word" style={{ '--delay': '4300ms' } as any}>Studio</span>{' '}
+          <span className="word" style={{ '--delay': '4550ms' } as any}>&</span>{' '}
+          <span className="word" style={{ '--delay': '4800ms' } as any}>Constructions</span>{' '}
+          <span className="word" style={{ '--delay': '5050ms' } as any}>Pvt</span>{' '}
+          <span className="word" style={{ '--delay': '5300ms' } as any}>Ltd</span>{' '}
+          <span className="word" style={{ '--delay': '5550ms' } as any}>transforms</span>{' '}
+          <span className="word" style={{ '--delay': '5800ms' } as any}>homes,</span>{' '}
+          <span className="word" style={{ '--delay': '6050ms' } as any}>offices,</span>{' '}
+          <span className="word" style={{ '--delay': '6300ms' } as any}>and</span>{' '}
+          <span className="word" style={{ '--delay': '6550ms' } as any}>commercial</span>{' '}
+          <span className="word" style={{ '--delay': '6800ms' } as any}>spaces</span>{' '}
+          <span className="word" style={{ '--delay': '7050ms' } as any}>into</span>{' '}
+          <span className="word" style={{ '--delay': '7300ms' } as any}>stunning</span>{' '}
+          <span className="word" style={{ '--delay': '7550ms' } as any}>environments</span>{' '}
+          <span className="word" style={{ '--delay': '7800ms' } as any}>with</span>{' '}
+          <span className="word" style={{ '--delay': '8050ms' } as any}>thoughtful</span>{' '}
+          <span className="word" style={{ '--delay': '8300ms' } as any}>design</span>{' '}
+          <span className="word" style={{ '--delay': '8550ms' } as any}>and</span>{' '}
+          <span className="word" style={{ '--delay': '8800ms' } as any}>flawless</span>{' '}
+          <span className="word" style={{ '--delay': '9050ms' } as any}>execution.</span>
         </p>
 
         {/* Buttons */}
@@ -44,39 +80,35 @@ export function Hero() {
             href="/projects"
             className="rounded-lg bg-yellow-500 px-8 py-3 font-semibold text-black transition hover:scale-105"
           >
-            View All Projects
+            Start Your Interior Project
           </a>
 
           <a
             href="/contact"
             className="rounded-lg border-2 border-yellow-500 px-8 py-3 font-semibold text-yellow-500 transition hover:bg-yellow-500 hover:text-black"
           >
-            Contact Now
+            View Our Projects
           </a>
         </div>
       </div>
 
-      {/* CSS animation */}
       <style jsx>{`
         .word {
           display: inline-block;
           opacity: 0;
           transform: translateY(20px);
-          animation: word-appear 5s ease-in-out var(--delay) infinite;
+          animation: word-appear 1.2s ease forwards;
+          animation-delay: var(--delay);
         }
 
         @keyframes word-appear {
-          0%, 25% {
+          0% {
             opacity: 0;
             transform: translateY(20px);
           }
-          50% {
+          100% {
             opacity: 1;
             transform: translateY(0);
-          }
-          75%, 100% {
-            opacity: 0;
-            transform: translateY(-20px);
           }
         }
       `}</style>

@@ -41,7 +41,7 @@ export function Header() {
                 <Image
                   src={CraftVasiLogo}
                   alt="Craftvasi Logo"
-                  width={120}
+                  width={160}
                   height={40}
                   priority
                   className="object-contain hover:opacity-90 transition-opacity"
