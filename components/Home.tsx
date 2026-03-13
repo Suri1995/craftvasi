@@ -1,10 +1,10 @@
 'use client'
 
-'use client'
-
 import { useRef, useState, useEffect } from 'react'
 import { ImageGallery } from '@/components/ui/carousel-circular-image-gallery'
-
+import { GradientDots } from '@/components/ui/gradient-dots'
+import CardStack from "@/components/ui/card-stack"
+import { BorderBeamCard } from '@/components/ui/border-beam-card'
 /* ---------------- HERO ---------------- */
 
 export function Hero() {
@@ -22,33 +22,35 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative w-screen h-screen overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <section className="relative w-full max-h-[90vh] overflow-x-hidden overflow-y-hidden">
+      <div className="absolute inset-0 z-0 w-full overflow-hidden">
         <ImageGallery />
       </div>
 
       <div className="absolute inset-0 z-10 bg-black/45" />
 
-      <div className="relative z-20 flex h-full flex-col items-center justify-center text-center px-4">
-
-        {/* Heading */}
+      <div className="relative z-20 flex min-h-screen w-full flex-col items-center justify-center px-4 text-center">
         <h1
           key={cycle}
-          className="mb-4 text-4xl md:text-6xl font-bold text-white leading-tight max-w-5xl"
+          className="mb-4 max-w-5xl text-4xl font-bold leading-tight text-white md:text-6xl"
         >
-          <span className="word" style={{ '--delay': '0ms' } as any}>Designing</span>{' '}
+          <span
+  className="word text-[#1B2A6B] [text-shadow:0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]"
+  style={{ '--delay': '0ms' } as any}
+>
+  Designing
+</span>{' '}
           <span className="word" style={{ '--delay': '500ms' } as any}>Extraordinary</span>{' '}
-          <span className="word" style={{ '--delay': '1000ms' } as any}>Spaces.</span>{' '}
-          <span className="word" style={{ '--delay': '1500ms' } as any}>Crafting</span>{' '}
+          <span className="word text-[#1B2A6B] [text-shadow:0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]" style={{ '--delay': '1000ms' } as any}>Spaces.</span>{' '}
+          <span className="word text-[#E52B2B] [text-shadow:0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]" style={{ '--delay': '1500ms' } as any}>Crafting</span>{' '}
           <span className="word" style={{ '--delay': '2000ms' } as any}>Experiences</span>{' '}
           <span className="word" style={{ '--delay': '2500ms' } as any}>That</span>{' '}
-          <span className="word" style={{ '--delay': '3000ms' } as any}>Last.</span>
+          <span className="word text-[#E52B2B] [text-shadow:0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]" style={{ '--delay': '3000ms' } as any}>Last.</span>
         </h1>
 
-        {/* Sub heading */}
         <p
           key={cycle + 100}
-          className="mb-8 max-w-3xl text-lg md:text-xl text-white/90"
+          className="mb-8 max-w-3xl text-lg text-white/90 md:text-xl"
         >
           <span className="word" style={{ '--delay': '3800ms' } as any}>Craftvasi</span>{' '}
           <span className="word" style={{ '--delay': '4050ms' } as any}>Interior</span>{' '}
@@ -74,18 +76,17 @@ export function Hero() {
           <span className="word" style={{ '--delay': '9050ms' } as any}>execution.</span>
         </p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <a
             href="/projects"
-            className="rounded-lg bg-red-600 px-8 py-3 font-semibold text-white transition hover:bg-red-700 hover:scale-105"
+            className="rounded-lg bg-[#E52B2B] px-8 py-3 font-semibold text-white transition hover:scale-105"
           >
             Start Your Interior Project
           </a>
 
           <a
             href="/contact"
-            className="rounded-lg border-2 border-red-600 px-8 py-3 font-semibold text-red-600 transition hover:bg-red-600 hover:text-white"
+            className="rounded-lg bg-[#1B2A6B] px-8 py-3 font-semibold text-white transition hover:scale-105"
           >
             View Our Projects
           </a>
@@ -99,6 +100,7 @@ export function Hero() {
           transform: translateY(20px);
           animation: word-appear 1.2s ease forwards;
           animation-delay: var(--delay);
+          max-width: 100%;
         }
 
         @keyframes word-appear {
@@ -116,157 +118,238 @@ export function Hero() {
   )
 }
 
-export function Services() {
-  const [visibleCards, setVisibleCards] = useState<number[]>([])
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
+/* ---------------- ABOUT ---------------- */
+
+export function AboutCraftvasi() {
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const index = cardsRef.current.indexOf(
-              entry.target as HTMLDivElement
-            )
-            setVisibleCards(prev => [...new Set([...prev, index])])
+            setIsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    if (sectionRef.current) observer.observe(sectionRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-gradient-to-b from-black via-[#11112a] to-[#1a1a3d] py-14 md:py-24"
+    >
+      <GradientDots
+        duration={20}
+        colorCycleDuration={8}
+        dotSize={10}
+        spacing={18}
+        backgroundColor="rgba(8,8,16,0.92)"
+        className="opacity-50"
+      />
+
+      <div className="pointer-events-none absolute inset-0 bg-black/35" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.06),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_28%)]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-10 lg:gap-10">
+          <div
+            className={`lg:col-span-4 transition-all text-center duration-700 ease-out ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <h2 className="mb-4 text-4xl font-bold leading-tight text-[#E52B2B] md:text-5xl">
+              About Craftvasi
+            </h2>
+          </div>
+
+          <div
+            className={`lg:col-span-8 transition-all duration-700 delay-150 ease-out ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm md:p-10">
+              <p className="mb-6 text-base leading-8 text-white/80 md:text-lg">
+                Craftvasi Interior Studio &amp; Constructions Pvt Ltd is a Hyderabad-based
+                design and build company specializing in{' '}
+                <span className="font-semibold text-white">
+                  premium interiors, customized furniture, and turnkey construction solutions
+                </span>.
+              </p>
+
+              <p className="mb-6 text-base leading-8 text-white/80 md:text-lg">
+                Founded in <span className="font-semibold text-white">2019</span>, Craftvasi has
+                successfully delivered{' '}
+                <span className="font-semibold text-white">
+                  200+ residential and commercial projects
+                </span>
+                , helping clients transform their spaces into elegant, functional, and inspiring
+                environments.
+              </p>
+
+              <p className="mb-6 text-base leading-8 text-white/80 md:text-lg">
+                Our team of designers, project engineers, and craftsmen work together to deliver{' '}
+                <span className="font-semibold text-white">
+                  complete end-to-end interior solutions
+                </span>{' '}
+                — from concept design and 3D visualization to manufacturing and installation.
+              </p>
+
+              <p className="mb-8 text-base leading-8 text-white/80 md:text-lg">
+                At Craftvasi, we believe every space should reflect the personality, lifestyle,
+                and aspirations of the people who use it.
+              </p>
+
+              <div className="border-l-4 border-[#E52B2B] pl-5">
+                <p className="text-2xl font-bold leading-relaxed text-white md:text-3xl">
+                  We don’t just design spaces.
+                  <br />
+                  We craft experiences.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+export function Services() {
+  return (
+    <section
+      className="
+        overflow-x-hidden
+        bg-gradient-to-b
+        from-[#0c0c26]
+        via-[#2d2d5f]
+        to-[#3c3c51]
+        py-10 md:py-20
+      "
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 text-center">
+          <h2 className="font-heading text-4xl font-bold text-[#E52B2B] md:text-5xl">
+            Our Services
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl leading-relaxed text-white/60">
+            Interior and construction solutions crafted with balance, detail, and timeless design.
+          </p>
+        </div>
+
+        <div className="md:mt-20">
+          <CardStack />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function OurProcess() {
+  const [visibleSteps, setVisibleSteps] = useState<number[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const children = containerRef.current?.querySelectorAll('.process-step')
+            children?.forEach((_, index) => {
+              setVisibleSteps(prev => [...new Set([...prev, index])])
+            })
           }
         })
       },
       { threshold: 0.15 }
     )
 
-    cardsRef.current.forEach(card => {
-      if (card) observer.observe(card)
-    })
+    if (containerRef.current) observer.observe(containerRef.current)
 
     return () => observer.disconnect()
   }, [])
 
-  const services = [
+  const steps = [
     {
-      id: 1,
-      title: 'Home Interiors',
-      link: '#home',
-      image: '/home-interior-image.jpg',
+      title: 'Consultation & Requirement Discussion',
+      description:
+        'We begin by understanding your vision, lifestyle, functional needs, and project expectations in detail.',
     },
     {
-      id: 2,
-      title: 'Corporate Interiors',
-      link: '#corporate',
-      image: '/corporate-interior-image.jpg',
+      title: 'Concept Design & Space Planning',
+      description:
+        'Our team creates thoughtful layouts and planning strategies that balance aesthetics, flow, and usability.',
     },
     {
-      id: 3,
-      title: 'Modular Kitchen',
-      link: '#kitchen',
-      image: '/modern-kitchen-interior-image.jpg',
+      title: '3D Design & Material Selection',
+      description:
+        'We develop realistic 3D visualizations and help you finalize finishes, textures, colors, and materials.',
     },
     {
-      id: 4,
-      title: 'Bedrooms',
-      link: '#bedrooms',
-      image: '/bedroom-interior-image.jpg',
+      title: 'Quotation & Project Planning',
+      description:
+        'A clear project scope, transparent quotation, timelines, and execution roadmap are prepared before work begins.',
     },
     {
-      id: 5,
-      title: 'Constructions',
-      link: '#construction',
-      image: '/construction-interior-image.jpg',
+      title: 'Manufacturing & Site Execution',
+      description:
+        'Custom production and on-site implementation are carried out with close coordination and professional supervision.',
     },
     {
-      id: 6,
-      title: 'Office Interiors',
-      link: '#office',
-      image: '/office-interior-image.jpg',
+      title: 'Quality Check & Final Handover',
+      description:
+        'Every detail is reviewed carefully before final delivery to ensure the finished space meets our quality standards.',
     },
   ]
 
   return (
-    <section
-      className="
-        py-20 md:py-32
-        bg-gradient-to-b
-        from-[#1a1a3d]
-        via-[#2d2d5f]
-        to-black
-      "
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white">
-            Our Services
+    <section className="overflow-x-hidden bg-gradient-to-b from-[#050539] via-[#151547] to-[#2d2d5f] py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-bold text-[#E52B2B] md:text-5xl">
+            Our Process
           </h2>
-          <p className="mt-4 text-white/60 max-w-xl mx-auto">
-            Interior and construction solutions crafted with balance, detail,
-            and timeless design.
+          <p className="mx-auto mt-4 max-w-3xl text-white/60 leading-relaxed">
+            A seamless journey from consultation to final handover, designed to make every project clear, collaborative, and efficient.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+        <div
+          ref={containerRef}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2"
+        >
+          {steps.map((step, index) => (
             <div
-              key={service.id}
-              ref={el => {
-                if (el) cardsRef.current[index] = el
-              }}
-              className={`
-                group relative overflow-hidden rounded-2xl
-                border border-white/10
-                transition-all duration-700 ease-out
-                h-64 flex items-end
-                ${
-                  visibleCards.includes(index)
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
-                }
-                hover:-translate-y-2
-                hover:shadow-2xl hover:shadow-accent/10
-              `}
+              key={step.title}
+              className={`process-step transition-all duration-700 ease-out ${
+                visibleSteps.includes(index)
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-10 opacity-0'
+              }`}
               style={{
-                backgroundImage: `url('${service.image}')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                transitionDelay: visibleCards.includes(index)
-                  ? `${index * 80}ms`
-                  : '0ms',
+                transitionDelay: `${index * 100}ms`,
               }}
             >
-              {/* Overlay */}
-              <div
-                className="
-                  absolute inset-0
-                  bg-gradient-to-t
-                  from-black/75
-                  via-black/45
-                  to-transparent
-                  opacity-85
-                  group-hover:opacity-95
-                  transition-opacity duration-500
-                "
-              />
-
-              {/* Content */}
-              <div className="relative z-10 p-8 w-full">
-                <h3 className="text-2xl font-heading font-bold text-white mb-2">
-                  {service.title}
-                </h3>
-
-                <a
-                  href={service.link}
-                  className="
-                    inline-flex items-center text-accent font-semibold
-                    relative
-                    after:absolute after:left-0 after:-bottom-1
-                    after:h-[2px] after:w-0 after:bg-accent
-                    after:transition-all after:duration-300
-                    hover:after:w-full
-                  "
-                >
-                  Learn More →
-                </a>
-              </div>
+              <BorderBeamCard>
+                <div className="flex h-full flex-col justify-between">
+                  <div>
+                    <h3 className="mb-4 text-xl font-semibold leading-snug text-white md:text-2xl">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm leading-7 text-white/70 md:text-base">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </BorderBeamCard>
             </div>
           ))}
         </div>
@@ -313,14 +396,15 @@ export function WhyChoose() {
   ]
 
   return (
-    <section className="py-20 md:py-32 bg-secondary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section className="overflow-x-hidden bg-secondary py-8 md:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-bold text-[#E52B2B] md:text-5xl">
+            Why Craftvasi
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div ref={containerRef} className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-8">
-              Why Craftvasi
-            </h2>
-
             {reasons.map((reason, index) => (
               <div
                 key={index}
@@ -332,8 +416,8 @@ export function WhyChoose() {
                 }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent flex items-center justify-center mt-1">
-                    <svg className="w-4 h-4 text-accent-foreground" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent">
+                    <svg className="h-4 w-4 text-accent-foreground" fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"
                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -342,7 +426,7 @@ export function WhyChoose() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-heading font-semibold text-primary mb-2">
+                    <h3 className="mb-2 text-lg font-heading font-semibold text-primary">
                       {reason}
                     </h3>
                     <p className="text-foreground/70">
@@ -355,11 +439,11 @@ export function WhyChoose() {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-background p-8 rounded-lg border-l-4 border-accent">
-              <h3 className="text-2xl font-heading font-bold text-primary mb-4">
+            <div className="rounded-lg border-l-4 border-accent bg-background p-8">
+              <h3 className="mb-4 text-2xl font-heading font-bold text-primary">
                 We Remove the Biggest Risk
               </h3>
-              <p className="text-lg text-foreground/70 mb-4">
+              <p className="mb-4 text-lg text-foreground/70">
                 The fear that the finished project won't match the vision. True understanding comes from direct, emotional experience, not just viewing a file.
               </p>
               <p className="text-lg text-foreground/70">
@@ -369,7 +453,7 @@ export function WhyChoose() {
 
             <a
               href="/contact"
-              className="inline-block px-8 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
+              className="inline-block rounded-lg bg-accent px-8 py-3 font-semibold text-accent-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               Start Your Journey
             </a>
@@ -442,17 +526,17 @@ export function Portfolio() {
   return (
     <section
       className="
-        py-20 md:py-32
+        overflow-x-hidden
+        py-8 md:py-20
         bg-gradient-to-b
         from-[#1a1a3d]
         via-[#2d2d5f]
         to-[#dc143c]/10
       "
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
+          <h2 className="mb-4 text-4xl font-heading font-bold text-[#E52B2B] md:text-5xl">
             Our Recent Projects
           </h2>
           <p className="text-lg text-white/60">
@@ -460,8 +544,7 @@ export function Portfolio() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <div
               key={project.title}
@@ -469,14 +552,13 @@ export function Portfolio() {
                 if (el) cardsRef.current[index] = el
               }}
               className={`
-                group relative overflow-hidden rounded-2xl
+                group relative h-80 overflow-hidden rounded-2xl
                 border border-white/10
                 transition-all duration-700 ease-out
-                h-80
                 ${
                   visibleCards.includes(index)
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-10 opacity-0'
                 }
                 hover:-translate-y-2
                 hover:shadow-2xl hover:shadow-black/40
@@ -490,40 +572,33 @@ export function Portfolio() {
                   : '0ms',
               }}
             >
-              {/* Overlay */}
               <div
-                className="border-2 border-accent
-                  absolute inset-0
+                className="
+                  absolute inset-0 border-2 border-accent
                   bg-gradient-to-t
                   from-black/80
                   via-black/50
                   to-transparent
                   opacity-85
-                  group-hover:opacity-95
                   transition-opacity duration-500
+                  group-hover:opacity-95
                 "
               />
 
-              {/* Content */}
-              <div className="relative z-10 p-6 h-full flex flex-col justify-between">
-                <div>
-                  {/* <p className="text-accent font-extrabold text-sm uppercase tracking-wide">
-                    {project.category}
-                  </p> */}
-                </div>
+              <div className="relative z-10 flex h-full flex-col justify-between p-6">
+                <div />
 
                 <div>
-                  <h3 className="text-2xl font-heading font-bold text-white mb-2">
+                  <h3 className="mb-2 text-2xl font-heading font-bold text-white">
                     {project.title}
                   </h3>
-                  <p className="text-white/80 mb-4 text-sm">
+                  <p className="mb-4 text-sm text-white/80">
                     {project.description}
                   </p>
                   <a
                     href="/projects"
                     className="
-                      inline-flex items-center text-accent font-semibold
-                      relative
+                      relative inline-flex items-center font-semibold text-accent
                       after:absolute after:left-0 after:-bottom-1
                       after:h-[2px] after:w-0 after:bg-accent
                       after:transition-all after:duration-300
@@ -538,16 +613,15 @@ export function Portfolio() {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
+        <div className="mt-12 text-center">
           <a
             href="/projects"
             className="
-              inline-block px-8 py-3
-              bg-white/10 backdrop-blur-md
-              text-white rounded-lg font-semibold
-              hover:bg-white/20 hover:scale-105
+              inline-block rounded-lg
+              bg-[#1a1a3d] px-8 py-3 font-semibold
+              text-white backdrop-blur-md
               transition-all duration-300
+              hover:scale-105
             "
           >
             View All Projects
@@ -560,31 +634,27 @@ export function Portfolio() {
 
 export function CTASection() {
   return (
-    <section className="w-full py-14 bg-gradient-to-r from-[#1a1a3d] via-[#dc143c] to-[#1a1a3d]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-
-          {/* Center – Content (UNCHANGED TEXT) */}
+    <section className="w-full overflow-x-hidden bg-gradient-to-r from-[#1a1a3d] via-[#dc143c] to-[#1a1a3d] py-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground mb-3 max-w-3xl">
+            <h2 className="mb-3 max-w-3xl text-2xl font-heading font-bold text-primary-foreground md:text-3xl">
               Crafting Beautiful, Functional Spaces Tailored to Your Unique Style.
             </h2>
-            <p className="text-primary-foreground/80 text-base max-w-2xl">
+            <p className="max-w-2xl text-base text-primary-foreground/80">
               Let's discuss your project and create something beautiful together
             </p>
           </div>
 
-          {/* Right – Button */}
           <div className="flex-shrink-0">
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-xl font-semibold hover:scale-105 transition-transform"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 font-semibold text-accent-foreground transition-transform hover:scale-105"
             >
               Contact Now
               <span className="text-lg">→</span>
             </a>
           </div>
-
         </div>
       </div>
     </section>

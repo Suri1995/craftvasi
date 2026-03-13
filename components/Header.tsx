@@ -31,7 +31,7 @@ export function Header() {
     <>
       <header
   className="fixed top-0 left-0 right-0 z-1000 py-4 transition-all duration-300 shadow-lg
-             bg-gradient-to-r from-[#1a1a3d] to-[#2d2d5f]"
+             bg-[#f5ebeb]"
 >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -63,7 +63,7 @@ export function Header() {
                       className={`font-medium text-[20px] transition-colors ${
                         isActive
                           ? "text-red-500"
-                          : "text-white hover:text-red-400"
+                          : "text-[#1a1a3d] hover:text-red-400"
                       }`}
                     >
                       {link.label}
