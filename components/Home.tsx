@@ -1,10 +1,14 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import Image from 'next/image'
 import { ImageGallery } from '@/components/ui/carousel-circular-image-gallery'
 import { GradientDots } from '@/components/ui/gradient-dots'
 import CardStack from "@/components/ui/card-stack"
 import { BorderBeamCard } from '@/components/ui/border-beam-card'
+
+import RedTick from "@/public/red-circle-tick-icon.png"
+import TestimonialSlider from './ui/testimonial-slider'
 /* ---------------- HERO ---------------- */
 
 export function Hero() {
@@ -358,6 +362,91 @@ export function OurProcess() {
   )
 }
 
+export function WhyChooseCraftvasi() {
+  const [visibleItems, setVisibleItems] = useState<number[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const children = containerRef.current?.querySelectorAll('.why-choose-item')
+            children?.forEach((_, index) => {
+              setVisibleItems(prev => [...new Set([...prev, index])])
+            })
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    if (containerRef.current) observer.observe(containerRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
+  const reasons = [
+    '200+ Successful Projects',
+    'Experienced Designers & Engineers',
+    'Customized Interior Solutions',
+    'Premium Quality Materials',
+    'Transparent Pricing',
+    'On-Time Project Delivery',
+    'Complete End-to-End Execution',
+  ]
+
+  return (
+    <section className="overflow-x-hidden bg-gradient-to-b from-[#3e3e88] via-[#1a1a3d] to-[#121238] py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-bold text-[#E52B2B] md:text-5xl">
+            Why Choose Craftvasi
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl leading-relaxed text-white/60">
+            Trusted expertise, premium execution, and a seamless process that brings your vision to life.
+          </p>
+        </div>
+
+        <div
+          ref={containerRef}
+          className="flex flex-col md:flex-row flex-wrap gap-6 justify-center items-center"
+        >
+          {reasons.map((reason, index) => (
+            <div
+              key={reason}
+              className={`why-choose-item transition-all duration-700 ease-out ${
+                visibleItems.includes(index)
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-10 opacity-0'
+              }`}
+              style={{
+                transitionDelay: `${index * 100}ms`,
+              }}
+            >
+              <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-[#E52B2B]/40 hover:bg-white/10">
+                <div className="flex items-center gap-3 ">
+                  
+                    <Image 
+                    src={RedTick}
+                    alt="Red Tick Icon"
+                    width={24}
+                    height={24}
+                    />
+
+                  <h3 className="text-lg font-semibold leading-snug text-white md:text-xl">
+                    {reason}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function WhyChoose() {
   const [visibleItems, setVisibleItems] = useState<number[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
@@ -453,9 +542,9 @@ export function WhyChoose() {
 
             <a
               href="/contact"
-              className="inline-block rounded-lg bg-accent px-8 py-3 font-semibold text-accent-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="inline-block rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
-              Start Your Journey
+              Get Free Design Consultation
             </a>
           </div>
         </div>
@@ -632,18 +721,34 @@ export function Portfolio() {
   )
 }
 
+export function ClientTestimonials() {
+  return (
+    <section className="overflow-x-hidden bg-gradient-to-b from-[#0c0c26] via-[#151547] to-[#1a1a3d] py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <h2 className="text-4xl font-bold text-[#E52B2B] md:text-5xl">
+            Client Testimonials
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl leading-relaxed text-white/60">
+            Hear what our clients say about their experience working with Craftvasi.
+          </p>
+        </div>
+
+        <TestimonialSlider />
+      </div>
+    </section>
+  )
+}
+
 export function CTASection() {
   return (
     <section className="w-full overflow-x-hidden bg-gradient-to-r from-[#1a1a3d] via-[#dc143c] to-[#1a1a3d] py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="flex-1 text-center md:text-left">
-            <h2 className="mb-3 max-w-3xl text-2xl font-heading font-bold text-primary-foreground md:text-3xl">
-              Crafting Beautiful, Functional Spaces Tailored to Your Unique Style.
+            <h2 className="max-w-3xl text-2xl font-heading font-bold text-primary-foreground md:text-3xl">
+              Let Craftvasi design interiors that reflect your style and elevate your lifestyle.
             </h2>
-            <p className="max-w-2xl text-base text-primary-foreground/80">
-              Let's discuss your project and create something beautiful together
-            </p>
           </div>
 
           <div className="flex-shrink-0">

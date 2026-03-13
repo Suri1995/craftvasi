@@ -5,7 +5,7 @@ import CraftVasiLogo from "@/public/craftvasi-logo.png";
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-[#1a1a3d] via-[#2d2d5f] to-[#1a1a3d] text-primary-foreground">
+    <footer className="bg-gradient-to-r from-[#1a1a3d]/50 via-[#2d2d5f]/50 to-[#1a1a3d]/50 text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand */}
@@ -89,7 +89,7 @@ export function Footer() {
               {[
                 { label: 'About', href: '/about' },
                 { label: "FAQ's", href: '/contact#faq' },
-                { label: 'Careers', href: '#careers' },
+                { label: 'Blogs', href: '/blog' },
               ].map((link) => (
                 <li key={link.label}>
                   <a
@@ -125,14 +125,14 @@ export function Footer() {
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                <a href="tel:+919700707830" className="hover:text-accent transition-colors">
-                  +91 9700707830
+                <a href="tel:+919573117830" className="hover:text-accent transition-colors">
+                  +91 9573117830
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                 <a href="mailto:hello@craftvasi.com" className="hover:text-accent transition-colors">
-                  hello@craftvasi.com
+                  craftvasi@gmail.com
                 </a>
               </div>
               <div className="flex items-start gap-3">

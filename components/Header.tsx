@@ -75,11 +75,11 @@ export function Header() {
               {/* Desktop Phone CTA */}
               <div className="hidden md:block">
                 <a
-                  href="tel:+919700707830"
+                  href="tel:+919573117830"
                   className="flex items-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 hover:scale-105 transition-all duration-300 text-[16px]"
                 >
                   <Phone className="w-5 h-5" />
-                  <span>+91 9700707830</span>
+                  <span>+91 9573117830</span>
                 </a>
               </div>
             </div>
@@ -105,11 +105,11 @@ export function Header() {
             <nav className="flex flex-col gap-3 px-4 sm:px-6 lg:px-8">
               {/* Mobile Phone */}
               <a
-                href="tel:+919700707830"
+                href="tel:+919573117830"
                 className="flex items-center gap-2 font-semibold py-2 text-foreground hover:text-accent transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +91 9700707830
+                +91 9573117830
               </a>
 
               {navLinks.map((link, index) => {
