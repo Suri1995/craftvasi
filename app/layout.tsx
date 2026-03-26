@@ -8,12 +8,16 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-heading',
+  display: 'swap',
+  preload: true,
 })
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
+  display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -36,7 +40,7 @@ export const metadata: Metadata = {
     description: 'Premium interior design and construction services in Hyderabad',
     siteName: 'Craftvasi',
   },
-    generator: 'v0.app'
+  generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
@@ -54,6 +58,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.vercel-analytics.com" />
+      </head>
       <body className="font-sans antialiased">
         {children}
         <Analytics />
