@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { questionnaireQuestions } from '@/lib/questionnaire-data'
 
-type FormStep = 'client-details' | 'message' | 'questions' | 'thank-you'
+type FormStep = 'client-details' | 'questions' | 'thank-you'
 
 interface ClientDetailsForm {
   name: string
@@ -13,6 +13,8 @@ interface ClientDetailsForm {
   projectType: string
   bhkType: string
 }
+
+const TOTAL_STEPS = questionnaireQuestions.length + 1 // +1 for message
 
 export function CombinedContactForm() {
   const [currentStep, setCurrentStep] = useState<FormStep>('client-details')
@@ -38,15 +40,6 @@ export function CombinedContactForm() {
     e.preventDefault()
     if (!clientDetails.name || !clientDetails.email || !clientDetails.phone || !clientDetails.projectAddress || !clientDetails.projectType || !clientDetails.bhkType) {
       alert('Please fill in all fields')
-      return
-    }
-    setCurrentStep('message')
-  }
-
-  const handleMessageSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!message.trim()) {
-      alert('Please enter a message')
       return
     }
     setCurrentStep('questions')
@@ -77,7 +70,7 @@ export function CombinedContactForm() {
   }
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < questionnaireQuestions.length - 1) {
+    if (currentQuestionIndex < TOTAL_STEPS - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
     }
   }
@@ -89,6 +82,11 @@ export function CombinedContactForm() {
   }
 
   const handleSubmit = () => {
+    if (currentQuestionIndex === questionnaireQuestions.length && !message.trim()) {
+      alert('Please enter a message')
+      return
+    }
+
     const completeData = {
       clientDetails,
       message,
@@ -99,8 +97,9 @@ export function CombinedContactForm() {
     setCurrentStep('thank-you')
   }
 
-  const isLastQuestion = currentQuestionIndex === questionnaireQuestions.length - 1
-  const currentQuestion = questionnaireQuestions[currentQuestionIndex]
+  const isLastQuestion = currentQuestionIndex === TOTAL_STEPS - 1
+  const isMessageStep = currentQuestionIndex === questionnaireQuestions.length
+  const currentQuestion = questionnaireQuestions[currentQuestionIndex] || null
 
   return (
     <div>
@@ -111,9 +110,9 @@ export function CombinedContactForm() {
             <h2 className="text-2xl font-heading font-bold text-primary mb-2">
               Client Details
             </h2>
-            <p className="text-sm text-foreground/60">Step 1 of 3</p>
+            <p className="text-sm text-foreground/60">Step 1 of 2</p>
             <div className="w-full bg-border rounded-full h-2 mt-4">
-              <div className="bg-gradient-to-r from-accent to-primary h-2 rounded-full transition-all duration-300" style={{ width: '33%' }} />
+              <div className="bg-gradient-to-r from-accent to-primary h-2 rounded-full transition-all duration-300" style={{ width: '50%' }} />
             </div>
           </div>
 
@@ -230,95 +229,74 @@ export function CombinedContactForm() {
         </div>
       )}
 
-      {/* Step 2: Send us a Message */}
-      {currentStep === 'message' && (
-        <div>
-          <div className="mb-8">
-            <h2 className="text-2xl font-heading font-bold text-primary mb-2">
-              Send us a Message
-            </h2>
-            <p className="text-sm text-foreground/60">Step 2 of 3</p>
-            <div className="w-full bg-border rounded-full h-2 mt-4">
-              <div className="bg-gradient-to-r from-accent to-primary h-2 rounded-full transition-all duration-300" style={{ width: '66%' }} />
-            </div>
-          </div>
-
-          <form onSubmit={handleMessageSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-primary mb-2">
-                Your Message <span className="text-accent">*</span>
-              </label>
-              <textarea
-                placeholder="Tell us about your project requirements, preferences, and any special needs..."
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                required
-                rows={8}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-none"
-              />
-            </div>
-
-            <div className="flex justify-between gap-3 pt-4">
-              <button
-                type="button"
-                onClick={() => setCurrentStep('client-details')}
-                className="px-6 py-3 border-2 border-border rounded-lg text-primary font-semibold hover:bg-secondary transition-colors"
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-[#1a1a3d] to-[#2d2d5f] text-white rounded-lg font-semibold hover:scale-105 transition-all flex items-center gap-2"
-              >
-                Continue to Design Questionnaire
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* Step 3: Design Questionnaire */}
+      {/* Step 2: Design Questionnaire + Message */}
       {currentStep === 'questions' && (
         <div>
           <div className="mb-8">
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-2xl font-heading font-bold text-primary">
-                {currentQuestion.section}
-              </h2>
-              <span className="text-sm font-semibold text-accent">
-                Question {currentQuestionIndex + 1} of {questionnaireQuestions.length}
-              </span>
-            </div>
-            <p className="text-sm text-foreground/60 mb-4">Step 3 of 3</p>
+            {!isMessageStep && (
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-2xl font-heading font-bold text-primary">
+                  {currentQuestion?.section}
+                </h2>
+                <span className="text-sm font-semibold text-accent">
+                  Question {currentQuestionIndex + 1} of {TOTAL_STEPS}
+                </span>
+              </div>
+            )}
+            {isMessageStep && (
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-2xl font-heading font-bold text-primary">
+                  Send us a Message
+                </h2>
+                <span className="text-sm font-semibold text-accent">
+                  Question {currentQuestionIndex + 1} of {TOTAL_STEPS}
+                </span>
+              </div>
+            )}
+            <p className="text-sm text-foreground/60 mb-4">Step 2 of 2</p>
             <div className="w-full bg-border rounded-full h-2">
               <div
                 className="bg-gradient-to-r from-accent to-primary h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestionIndex + 1) / questionnaireQuestions.length) * 100}%` }}
+                style={{ width: `${((currentQuestionIndex + 1) / TOTAL_STEPS) * 100}%` }}
               />
             </div>
           </div>
 
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-primary mb-6">{currentQuestion.title}</h3>
-            <div className="space-y-4">
-              {currentQuestion.options.map(option => (
-                <div key={option.id} className="flex items-start gap-4">
-                  <input
-                    type="checkbox"
-                    id={option.id}
-                    checked={answers[currentQuestion.id]?.includes(option.id) || false}
-                    onChange={() => handleAnswerSelect(option.id)}
-                    className="w-5 h-5 text-accent rounded cursor-pointer mt-1 flex-shrink-0"
-                  />
-                  <label htmlFor={option.id} className="text-base text-foreground/80 cursor-pointer flex-1 py-1">
-                    {option.label}
-                  </label>
+            {isMessageStep ? (
+              <div>
+                <h3 className="text-xl font-semibold text-primary mb-6">
+                  Tell us more about your project
+                </h3>
+                <textarea
+                  placeholder="Share your project requirements, preferences, budget considerations, timeline, and any special needs..."
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                  rows={8}
+                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-none"
+                />
+              </div>
+            ) : (
+              <div>
+                <h3 className="text-xl font-semibold text-primary mb-6">{currentQuestion?.title}</h3>
+                <div className="space-y-4">
+                  {currentQuestion?.options.map(option => (
+                    <div key={option.id} className="flex items-start gap-4">
+                      <input
+                        type="checkbox"
+                        id={option.id}
+                        checked={answers[currentQuestion.id]?.includes(option.id) || false}
+                        onChange={() => handleAnswerSelect(option.id)}
+                        className="w-5 h-5 text-accent rounded cursor-pointer mt-1 flex-shrink-0"
+                      />
+                      <label htmlFor={option.id} className="text-base text-foreground/80 cursor-pointer flex-1 py-1">
+                        {option.label}
+                      </label>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
 
           <div className="flex justify-between gap-3 pt-8 border-t border-border">
