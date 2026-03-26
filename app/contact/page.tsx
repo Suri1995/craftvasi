@@ -5,6 +5,7 @@ import React from "react"
 import { useState } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { QuestionnaireForm } from '@/components/questionnaire-form'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
 
 export default function ContactPage() {
@@ -286,6 +287,24 @@ export default function ContactPage() {
                 Map view would be displayed here
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Questionnaire Section */}
+      <section className="py-20 md:py-32 bg-gradient-to-b from-white to-[#f0f4f8]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-primary mb-4">
+              Design <span className="text-accent">Questionnaire</span>
+            </h2>
+            <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+              Help us understand your preferences better. Answer these quick questions to get personalized design recommendations.
+            </p>
+          </div>
+
+          <div className="bg-secondary p-8 md:p-12 rounded-lg border border-border">
+            <QuestionnaireForm />
           </div>
         </div>
       </section>
