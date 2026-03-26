@@ -14,27 +14,28 @@ const QuestionnaireContext = createContext<QuestionnaireContextType | undefined>
 export function QuestionnaireProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const [shouldShowToday, setShouldShowToday] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-    // Check if questionnaire was shown today
-    const lastShownDate = localStorage.getItem('questionnaire-shown-date')
-    const today = new Date().toDateString()
+    setIsMounted(true)
+    
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const lastShownDate = localStorage.getItem('questionnaire-shown-date')
+      const today = new Date().toDateString()
 
-    if (lastShownDate !== today) {
-      setShouldShowToday(true)
-      setIsOpen(true)
-      localStorage.setItem('questionnaire-shown-date', today)
-    }
+      if (lastShownDate !== today) {
+        setShouldShowToday(true)
+        setIsOpen(true)
+        localStorage.setItem('questionnaire-shown-date', today)
+      }
+    }, 500)
+
+    return () => clearTimeout(timer)
   }, [])
 
   const openQuestionnaire = () => setIsOpen(true)
   const closeQuestionnaire = () => setIsOpen(false)
-
-  if (!mounted) {
-    return <>{children}</>
-  }
 
   return (
     <QuestionnaireContext.Provider value={{ isOpen, openQuestionnaire, closeQuestionnaire, shouldShowToday }}>
