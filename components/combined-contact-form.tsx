@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { questionnaireQuestions } from '@/lib/questionnaire-data'
 
 type FormStep = 'client-details' | 'questions' | 'thank-you'
@@ -32,11 +32,11 @@ export function CombinedContactForm() {
   const [message, setMessage] = useState('')
   const [answers, setAnswers] = useState<Record<string, string[]>>({})
 
-  const handleClientDetailsChange = (field: keyof ClientDetailsForm, value: string) => {
+  const handleClientDetailsChange = useCallback((field: keyof ClientDetailsForm, value: string) => {
     setClientDetails(prev => ({ ...prev, [field]: value }))
-  }
+  }, [])
 
-  const handleClientDetailsSubmit = (e: React.FormEvent) => {
+  const handleClientDetailsSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault()
     if (!clientDetails.name || !clientDetails.email || !clientDetails.phone || !clientDetails.projectAddress || !clientDetails.projectType || !clientDetails.bhkType) {
       alert('Please fill in all fields')
@@ -44,11 +44,11 @@ export function CombinedContactForm() {
     }
     setCurrentStep('questions')
     setCurrentQuestionIndex(0)
-  }
+  }, [clientDetails])
 
-  const handleAnswerSelect = (optionId: string) => {
-    const currentQuestion = questionnaireQuestions[currentQuestionIndex]
+  const handleAnswerSelect = useCallback((optionId: string) => {
     setAnswers(prev => {
+      const currentQuestion = questionnaireQuestions[currentQuestionIndex]
       const currentAnswers = prev[currentQuestion.id] || []
       if (currentQuestion.isMultiSelect) {
         if (currentAnswers.includes(optionId)) {
@@ -67,21 +67,21 @@ export function CombinedContactForm() {
         [currentQuestion.id]: [optionId],
       }
     })
-  }
+  }, [currentQuestionIndex])
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     if (currentQuestionIndex < TOTAL_STEPS - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
     }
-  }
+  }, [currentQuestionIndex])
 
-  const handlePreviousQuestion = () => {
+  const handlePreviousQuestion = useCallback(() => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1)
     }
-  }
+  }, [currentQuestionIndex])
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (currentQuestionIndex === questionnaireQuestions.length && !message.trim()) {
       alert('Please enter a message')
       return
@@ -95,11 +95,11 @@ export function CombinedContactForm() {
     }
     console.log('Form submitted:', completeData)
     setCurrentStep('thank-you')
-  }
+  }, [currentQuestionIndex, message, clientDetails, answers])
 
   const isLastQuestion = currentQuestionIndex === TOTAL_STEPS - 1
   const isMessageStep = currentQuestionIndex === questionnaireQuestions.length
-  const currentQuestion = questionnaireQuestions[currentQuestionIndex] || null
+  const currentQuestion = useMemo(() => questionnaireQuestions[currentQuestionIndex] || null, [currentQuestionIndex])
 
   return (
     <div>

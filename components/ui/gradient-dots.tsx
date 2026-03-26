@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 type GradientDotsProps = React.ComponentProps<typeof motion.div> & {
@@ -11,7 +11,7 @@ type GradientDotsProps = React.ComponentProps<typeof motion.div> & {
   backgroundColor?: string;
 };
 
-export function GradientDots({
+const GradientDotsComponent = ({
   dotSize = 8,
   spacing = 10,
   duration = 30,
@@ -19,7 +19,7 @@ export function GradientDots({
   backgroundColor = 'var(--background)',
   className,
   ...props
-}: GradientDotsProps) {
+}: GradientDotsProps) => {
   const hexSpacing = spacing * 1.732;
 
   return (
@@ -74,4 +74,6 @@ export function GradientDots({
       {...props}
     />
   );
-}
+};
+
+export const GradientDots = memo(GradientDotsComponent);
