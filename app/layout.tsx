@@ -2,6 +2,8 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Poppins, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { QuestionnaireProvider } from '@/context/questionnaire-context'
+import { QuestionnaireModal } from '@/components/questionnaire-modal'
 import './globals.css'
 
 const poppins = Poppins({
@@ -55,7 +57,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
-        {children}
+        <QuestionnaireProvider>
+          {children}
+          <QuestionnaireModal />
+        </QuestionnaireProvider>
         <Analytics />
       </body>
     </html>
