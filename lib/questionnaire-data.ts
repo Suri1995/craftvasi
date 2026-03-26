@@ -1,7 +1,7 @@
 export interface ClientDetails {
   name: string
-  contactNumber: string
   email: string
+  phone: string
   projectAddress: string
   projectType: 'apartment' | 'villa' | 'independent-house' | ''
   bhkType: '1bhk' | '2bhk' | '3bhk' | 'duplex' | ''
