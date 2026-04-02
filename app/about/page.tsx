@@ -8,8 +8,8 @@ import { ArrowRight, Award, Users, Zap } from "lucide-react";
 import Link from "next/link";
 
 import AboutUsImg from "@/public/about-us-img.jpeg";
-import CEO from "@/public/ceo-image.png"
-import MD from "@/public/md-image.png"
+import CEO from "@/public/ceo-image.png";
+import MD from "@/public/md-image.png";
 
 export default function AboutPage() {
   const [visibleSections, setVisibleSections] = useState<number[]>([]);
@@ -517,25 +517,45 @@ export default function AboutPage() {
                   className="text-lg text-foreground/70 leading-relaxed mb-6
             group-hover:text-foreground/90 transition-colors duration-300"
                 >
-                  "Welcome to Craftvasi Interior Studio & Construction. Since
-                  our establishment in 2019, we have remained dedicated to
+                  Welcome to Craftvasi Interior Studio & Construction. Since our
+                  establishment in 2019, we have remained dedicated to
                   transforming spaces and bringing our clients' visions to life
                   with creativity, precision, and quality craftsmanship. As a
                   company, we believe that great design is about more than
                   aesthetics; it's about creating environments that enhance the
-                  way people live, work, and experience the world around them."
+                  way people live, work, and experience the world around them.
+                </p>
+
+                <p
+                  className="text-lg text-foreground/70 leading-relaxed mb-6
+            group-hover:text-foreground/90 transition-colors duration-300"
+                >
+                  {`Our talented team of designers, architects, and builders works collaboratively on
+every project to ensure it is tailored to the unique needs and aspirations of our
+clients. Whether we’re designing a luxury home, a modern office, or a
+commercial space, our focus is on delivering thoughtful, functional, and timeless
+designs that stand the test of time.`}
+                </p>
+
+                <p
+                  className="text-lg text-foreground/70 leading-relaxed mb-6
+            group-hover:text-foreground/90 transition-colors duration-300"
+                >
+                  At Craftvasi, we pride ourselves on building lasting
+                  relationships with our clients, founded on trust,
+                  transparency, and exceptional service. Every project we take
+                  on is an opportunity for us to push the boundaries of
+                  innovation while maintaining our commitment to quality and
+                  sustainability.
                 </p>
 
                 <p
                   className="text-lg text-foreground/70 leading-relaxed mb-8
             group-hover:text-foreground/90 transition-colors duration-300"
                 >
-                  "Our talented team of designers, architects, and builders
-                  works collaboratively on every project to ensure it is
-                  tailored to the unique needs and aspirations of our clients.
-                  At Craftvasi, we pride ourselves on building lasting
-                  relationships with our clients, founded on trust,
-                  transparency, and exceptional service."
+                  Thank you for considering Craftvasi Interior Studio &
+                  Construction. We look forward to creating beautiful spaces
+                  with you and turning your dreams into reality.
                 </p>
               </div>
 
@@ -924,111 +944,76 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Team Section */}
-          <section
+      <section
+        className="py-[28px] md:py-20 relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 30%, hsl(var(--accent)/0.07) 0%, hsl(var(--background)) 55%, hsl(var(--primary)/0.05) 100%)",
+        }}
+      >
+        {/* Decorative blobs */}
 
-      className="py-[28px] md:py-20 relative overflow-hidden"
+        <div className="absolute top-0 left-0 w-96 h-96 bg-accent/6 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
 
-      style={{
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/6 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
 
-        background:
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 rounded-full blur-3xl pointer-events-none" />
 
-          "radial-gradient(ellipse at 50% 30%, hsl(var(--accent)/0.07) 0%, hsl(var(--background)) 55%, hsl(var(--primary)/0.05) 100%)",
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Header */}
 
-      }}
+          <div className="text-center mb-20">
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm">
+              Our People
+            </span>
 
-    >
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
+              Meet Our <span className="text-accent">Leadership</span>
+            </h2>
 
-      {/* Decorative blobs */}
+            <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+              Visionary professionals leading Craftvasi
+            </p>
+          </div>
 
-      <div className="absolute top-0 left-0 w-96 h-96 bg-accent/6 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto items-stretch">
+            {[
+              {
+                name: "Bhanuprakash Reddy Pothula",
 
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/6 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
+                role: "CEO",
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 rounded-full blur-3xl pointer-events-none" />
+                image: CEO, // Ensure this variable is imported or defined
 
+                background:
+                  "Founder and visionary CEO of Craftvasi since 2019, Bhanuprakash has led 200+ projects across residential, commercial, and hospitality sectors. He combines creative passion with strategic thinking to craft spaces that elevate how people live and work.",
 
+                tags: ["Founder", "Creative Vision", "Client Relations"],
+              },
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              {
+                name: "Saibabu",
 
-        {/* Header */}
+                role: "Managing Director",
 
-        <div className="text-center mb-20">
+                image: MD, // Ensure this variable is imported or defined
 
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm">
+                background:
+                  "With 10+ years of experience, Saibabu is the operational backbone of Craftvasi. He oversees every phase from consulting to delivery, ensuring projects are completed on time, within budget, and to the highest standards of quality.",
 
-            Our People
-
-          </span>
-
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
-
-            Meet Our <span className="text-accent">Leadership</span>
-
-          </h2>
-
-          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
-
-            Visionary professionals leading Craftvasi
-
-          </p>
-
-        </div>
-
-
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto items-stretch">
-
-          {[
-
-            {
-
-              name: "Bhanuprakash Reddy Pothula",
-
-              role: "CEO",
-
-              image: CEO, // Ensure this variable is imported or defined
-
-              background: "Founder and visionary CEO of Craftvasi since 2019, Bhanuprakash has led 200+ projects across residential, commercial, and hospitality sectors. He combines creative passion with strategic thinking to craft spaces that elevate how people live and work.",
-
-              tags: ["Founder", "Creative Vision", "Client Relations"],
-
-            },
-
-            {
-
-              name: "Saibabu",
-
-              role: "Managing Director",
-
-              image: MD, // Ensure this variable is imported or defined
-
-              background: "With 10+ years of experience, Saibabu is the operational backbone of Craftvasi. He oversees every phase from consulting to delivery, ensuring projects are completed on time, within budget, and to the highest standards of quality.",
-
-              tags: ["Operations", "Strategy", "Delivery"],
-
-            },
-
-          ].map((leader, index) => (
-
-            <div
-
-              key={index}
-
-              ref={(el) => {
-
-                if (el) sectionsRef.current[index + 12] = el; // Ensure sectionsRef is defined in your component
-
-              }}
-
-              className={`scroll-reveal h-full ${visibleSections.includes(index + 12) ? "is-visible" : ""}`} // Ensure visibleSections is defined
-
-              style={{ transitionDelay: `${index * 150}ms` }}
-
-            >
-
+                tags: ["Operations", "Strategy", "Delivery"],
+              },
+            ].map((leader, index) => (
               <div
-
-                className="group relative bg-white/55 backdrop-blur-sm border border-accent/15 rounded-3xl overflow-hidden h-full flex flex-col
+                key={index}
+                ref={(el) => {
+                  if (el) sectionsRef.current[index + 12] = el; // Ensure sectionsRef is defined in your component
+                }}
+                className={`scroll-reveal h-full ${visibleSections.includes(index + 12) ? "is-visible" : ""}`} // Ensure visibleSections is defined
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div
+                  className="group relative bg-white/55 backdrop-blur-sm border border-accent/15 rounded-3xl overflow-hidden h-full flex flex-col
 
                   transition-all duration-500
 
@@ -1039,290 +1024,188 @@ export default function AboutPage() {
                   hover:shadow-2xl hover:shadow-primary/15
 
                   hover:bg-white/80"
+                >
+                  {/* Top line expands on hover */}
 
-              >
-
-                {/* Top line expands on hover */}
-
-                <div
-
-                  className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent
+                  <div
+                    className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent
 
                     group-hover:left-0 group-hover:right-0 group-hover:via-primary transition-all duration-500 z-10"
+                  />
 
-                />
+                  {/* Corner glow */}
 
-
-
-                {/* Corner glow */}
-
-                <div
-
-                  className="absolute -top-10 -right-10 w-40 h-40 bg-accent/0 rounded-full blur-2xl
+                  <div
+                    className="absolute -top-10 -right-10 w-40 h-40 bg-accent/0 rounded-full blur-2xl
 
                     group-hover:bg-primary/15 transition-all duration-500"
+                  />
 
-                />
+                  {/* Avatar area - Height increased from h-56 to h-72 */}
 
-
-
-                {/* Avatar area - Height increased from h-56 to h-72 */}
-
-                <div
-
-                  className="relative h-72 flex-shrink-0 bg-gradient-to-br from-accent/10 via-accent/5 to-primary/10 flex items-center justify-center overflow-hidden
+                  <div
+                    className="relative h-72 flex-shrink-0 bg-gradient-to-br from-accent/10 via-accent/5 to-primary/10 flex items-center justify-center overflow-hidden
 
                     group-hover:from-primary/15 group-hover:via-primary/8 group-hover:to-accent/10 transition-all duration-500"
+                  >
+                    {/* Background dot pattern */}
 
-                >
+                    <div
+                      className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage:
+                          "radial-gradient(circle at 25% 25%, hsl(var(--accent)) 1px, transparent 1px), radial-gradient(circle at 75% 75%, hsl(var(--accent)) 1px, transparent 1px)",
 
-                  {/* Background dot pattern */}
+                        backgroundSize: "30px 30px",
+                      }}
+                    />
 
-                  <div
+                    {/* Decorative rings - Scaled up to avoid overlapping larger photo */}
 
-                    className="absolute inset-0 opacity-10"
-
-                    style={{
-
-                      backgroundImage:
-
-                        "radial-gradient(circle at 25% 25%, hsl(var(--accent)) 1px, transparent 1px), radial-gradient(circle at 75% 75%, hsl(var(--accent)) 1px, transparent 1px)",
-
-                      backgroundSize: "30px 30px",
-
-                    }}
-
-                  />
-
-
-
-                  {/* Decorative rings - Scaled up to avoid overlapping larger photo */}
-
-                  <div
-
-                    className="absolute w-48 h-48 rounded-full border-2 border-accent/10
+                    <div
+                      className="absolute w-48 h-48 rounded-full border-2 border-accent/10
 
                       group-hover:border-primary/30 group-hover:scale-110 transition-all duration-500"
+                    />
 
-                  />
-
-                  <div
-
-                    className="absolute w-64 h-64 rounded-full border border-accent/5
+                    <div
+                      className="absolute w-64 h-64 rounded-full border border-accent/5
 
                       group-hover:border-primary/15 group-hover:scale-110 transition-all duration-700"
+                    />
 
-                  />
+                    {/* Floating particles */}
 
-
-
-                  {/* Floating particles */}
-
-                  <div
-
-                    className="absolute top-4 left-8 w-2 h-2 rounded-full bg-accent/30
+                    <div
+                      className="absolute top-4 left-8 w-2 h-2 rounded-full bg-accent/30
 
                       group-hover:bg-primary/40 group-hover:-translate-y-2 transition-all duration-500"
+                    />
 
-                  />
-
-                  <div
-
-                    className="absolute top-8 right-12 w-1.5 h-1.5 rounded-full bg-accent/20
+                    <div
+                      className="absolute top-8 right-12 w-1.5 h-1.5 rounded-full bg-accent/20
 
                       group-hover:bg-primary/30 group-hover:-translate-y-3 transition-all duration-700"
+                    />
 
-                  />
-
-                  <div
-
-                    className="absolute bottom-8 left-16 w-1 h-1 rounded-full bg-accent/25
+                    <div
+                      className="absolute bottom-8 left-16 w-1 h-1 rounded-full bg-accent/25
 
                       group-hover:bg-primary/35 group-hover:-translate-y-1 transition-all duration-600"
+                    />
 
-                  />
+                    {/* Avatar circle - Increased from w-28 h-28 to w-40 h-40 */}
 
-
-
-                  {/* Avatar circle - Increased from w-28 h-28 to w-40 h-40 */}
-
-                  <div
-
-                    className="relative w-40 h-40 rounded-3xl bg-white/80 border-2 border-accent/20 flex items-center justify-center
+                    <div
+                      className="relative w-40 h-40 rounded-3xl bg-white/80 border-2 border-accent/20 flex items-center justify-center
 
                       group-hover:bg-primary group-hover:border-primary group-hover:scale-105 group-hover:rotate-2
 
                       transition-all duration-300 shadow-xl shadow-accent/10 group-hover:shadow-primary/30 z-10"
+                    >
+                      <Image
+                        src={leader.image}
+                        alt={leader.name}
+                        className="w-full h-full object-cover rounded-3xl"
+                      />
+                    </div>
 
-                  >
+                    {/* Role badge floating on hover */}
 
-                    <Image
-
-                      src={leader.image}
-
-                      alt={leader.name}
-
-                      className="w-full h-full object-cover rounded-3xl"
-
-                    />
-
-                  </div>
-
-
-
-                  {/* Role badge floating on hover */}
-
-                  <div
-
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2
+                    <div
+                      className="absolute bottom-6 left-1/2 -translate-x-1/2
 
                       opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
 
                       transition-all duration-400 z-20"
-
-                  >
-
-                    <span className="px-4 py-1.5 bg-primary text-white text-xs font-bold tracking-widest uppercase rounded-full shadow-lg whitespace-nowrap">
-
-                      {leader.role}
-
-                    </span>
-
+                    >
+                      <span className="px-4 py-1.5 bg-primary text-white text-xs font-bold tracking-widest uppercase rounded-full shadow-lg whitespace-nowrap">
+                        {leader.role}
+                      </span>
+                    </div>
                   </div>
 
-                </div>
+                  {/* Content area */}
 
+                  <div className="p-8 relative flex flex-col flex-1">
+                    {/* Name + role */}
 
-
-                {/* Content area */}
-
-                <div className="p-8 relative flex flex-col flex-1">
-
-                  {/* Name + role */}
-
-                  <div className="mb-4">
-
-                    <h3
-
-                      className="text-xl md:text-2xl font-heading font-bold text-primary mb-1.5
+                    <div className="mb-4">
+                      <h3
+                        className="text-xl md:text-2xl font-heading font-bold text-primary mb-1.5
 
                         group-hover:text-accent transition-colors duration-300"
+                      >
+                        {leader.name}
+                      </h3>
 
-                    >
+                      {/* Role row — hidden on hover */}
 
-                      {leader.name}
-
-                    </h3>
-
-
-
-                    {/* Role row — hidden on hover */}
-
-                    <div
-
-                      className="flex items-center gap-2
+                      <div
+                        className="flex items-center gap-2
 
                         opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:mb-0 group-hover:overflow-hidden
 
                         transition-all duration-300"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-accent transition-all duration-300" />
 
-                    >
-
-                      <div className="w-2 h-2 rounded-full bg-accent transition-all duration-300" />
-
-                      <p className="text-accent font-semibold text-sm tracking-wide">
-
-                        {leader.role}
-
-                      </p>
-
+                        <p className="text-accent font-semibold text-sm tracking-wide">
+                          {leader.role}
+                        </p>
+                      </div>
                     </div>
 
-                  </div>
+                    {/* Animated underline */}
 
-
-
-                  {/* Animated underline */}
-
-                  <div
-
-                    className="w-10 h-1 bg-accent/40 rounded-full mb-5
+                    <div
+                      className="w-10 h-1 bg-accent/40 rounded-full mb-5
 
                       group-hover:w-20 group-hover:bg-primary transition-all duration-500"
+                    />
 
-                  />
+                    {/* Description */}
 
-
-
-                  {/* Description */}
-
-                  <p
-
-                    className="text-foreground/65 leading-relaxed text-sm mb-6 flex-1
+                    <p
+                      className="text-foreground/65 leading-relaxed text-sm mb-6 flex-1
 
                       group-hover:text-foreground/90 transition-colors duration-300"
+                    >
+                      {leader.background}
+                    </p>
 
-                  >
+                    {/* Tags row — always at bottom */}
 
-                    {leader.background}
-
-                  </p>
-
-
-
-                  {/* Tags row — always at bottom */}
-
-                  <div className="flex flex-wrap gap-2 pt-5 border-t border-accent/10 group-hover:border-primary/25 transition-colors duration-300 mt-auto">
-
-                    {leader.tags.map((tag, i) => (
-
-                      <span
-
-                        key={i}
-
-                        className="px-3 py-1 text-xs font-semibold rounded-full bg-accent/8 text-accent border border-accent/15
+                    <div className="flex flex-wrap gap-2 pt-5 border-t border-accent/10 group-hover:border-primary/25 transition-colors duration-300 mt-auto">
+                      {leader.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 text-xs font-semibold rounded-full bg-accent/8 text-accent border border-accent/15
 
                           group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/25
 
                           transition-all duration-300"
-
-                        style={{ transitionDelay: `${i * 50}ms` }}
-
-                      >
-
-                        {tag}
-
-                      </span>
-
-                    ))}
-
+                          style={{ transitionDelay: `${i * 50}ms` }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                </div>
+                  {/* Bottom line expands on hover */}
 
-
-
-                {/* Bottom line expands on hover */}
-
-                <div
-
-                  className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent
+                  <div
+                    className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent
 
                     group-hover:left-0 group-hover:right-0 group-hover:via-primary/50 transition-all duration-500"
-
-                />
-
+                  />
+                </div>
               </div>
-
-            </div>
-
-          ))}
-
+            ))}
+          </div>
         </div>
-
-      </div>
-
-    </section>
+      </section>
 
       {/* CTA Section */}
       <section className="py-[28px] md:py-20 bg-gradient-to-r from-primary to-primary/80 text-white">
