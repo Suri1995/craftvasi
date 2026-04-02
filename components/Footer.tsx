@@ -146,8 +146,9 @@ export function Footer() {
         {/* Divider */}
         <div className="border-t border-primary-foreground/20 pt-8">
           <p className="text-sm text-primary-foreground/60 text-center">
-            © 2024 Craftvasi. All rights reserved.
+            © 2026 Craftvasi. All rights reserved.
           </p>
+          <p className="text-sm text-white text-center">Developed by <a href='https://sellute.com/' target='_blank' className='text-primary font-bold underline underline-offset-2'>Sellute Business Solutions</a></p>
         </div>
       </div>
 
