@@ -1,0 +1,2572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes">
+  <meta name="theme-color" content="#2c2c2c">
+  <title>Craftvasi - Interior Design & Construction | Hyderabad</title>
+  <meta name="description" content="Premium interior design and construction services in Hyderabad. Transform your space with our expert team.">
+  <meta name="keywords" content="interior design, construction, home renovation, Hyderabad, interior studio">
+  <meta name="author" content="Craftvasi Interior Studio">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://craftvasi.com">
+  <meta property="og:title" content="Craftvasi - Interior Design & Construction">
+  <meta property="og:description" content="Premium interior design and construction services in Hyderabad">
+  <meta property="og:site_name" content="Craftvasi">
+  <link rel="icon" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+  <style>
+    /* CSS Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --background: #ffffff;
+      --foreground: #1a1a3d;
+      --primary: #201e59;
+      --primary-foreground: #ffffff;
+      --secondary: #f0f4f8;
+      --secondary-foreground: #1a1a3d;
+      --accent: #d92332;
+      --accent-foreground: #ffffff;
+      --muted-foreground: #6b7280;
+      --border: #e5e7eb;
+      --font-sans: 'Inter', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--foreground);
+      background: var(--background);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      background: #f5ebeb;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      width: 160px;
+      height: auto;
+      object-fit: contain;
+      transition: opacity 0.3s;
+    }
+
+    .logo:hover img {
+      opacity: 0.9;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      font-size: 1.25rem;
+      color: #1a1a3d;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ef4444;
+    }
+
+    .phone-cta {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: #dc2626;
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .phone-cta:hover {
+      background: #b91c1c;
+      transform: scale(1.05);
+    }
+
+    .phone-cta svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+      padding: 0.5rem;
+    }
+
+    .mobile-menu-btn svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: var(--primary);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 1rem;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-menu a {
+      font-weight: 500;
+      padding: 0.5rem 0;
+      color: var(--foreground);
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    .mobile-menu .contact-btn {
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .header-spacer {
+      height: 5rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+      .phone-cta {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      position: relative;
+      width: 100%;
+      max-height: 90vh;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero-gallery {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .hero-title {
+      max-width: 64rem;
+      margin-bottom: 1rem;
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: white;
+    }
+
+    .hero-title .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: wordAppear 1.2s ease forwards;
+    }
+
+    .hero-title .blue {
+      color: #1B2A6B;
+      text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    .hero-title .red {
+      color: #E52B2B;
+      text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.4);
+    }
+
+    @keyframes wordAppear {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-subtitle {
+      max-width: 48rem;
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-subtitle .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: wordAppear 1.2s ease forwards;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-btn {
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      color: white;
+      transition: transform 0.3s;
+    }
+
+    .hero-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .hero-btn-primary {
+      background: #E52B2B;
+    }
+
+    .hero-btn-secondary {
+      background: #1B2A6B;
+    }
+
+    .hero-gallery-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-dots {
+      position: absolute;
+      z-index: 20;
+      bottom: 7rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .hero-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .hero-dot:hover,
+    .hero-dot.active {
+      background: white;
+    }
+
+    @media (min-width: 640px) {
+      .hero-buttons {
+        flex-direction: row;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 3.75rem;
+      }
+      .hero-subtitle {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* ========== ABOUT SECTION ========== */
+    .about {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #000000, #11112a, #1a1a3d);
+      padding: 3.5rem 0;
+    }
+
+    .about-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .about-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .about-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.06), transparent 30%),
+                  radial-gradient(circle at bottom left, rgba(255,255,255,0.04), transparent 28%);
+    }
+
+    .about-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: all 0.7s ease;
+    }
+
+    .about-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+      margin-bottom: 1rem;
+    }
+
+    .about-card {
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      padding: 1.5rem;
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: all 0.7s ease 0.15s;
+    }
+
+    .about-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-card p {
+      font-size: 1rem;
+      line-height: 2;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-card strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    .about-quote {
+      border-left: 4px solid #E52B2B;
+      padding-left: 1.25rem;
+    }
+
+    .about-quote p {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .about {
+        padding: 6rem 0;
+      }
+      .about-title {
+        font-size: 3rem;
+      }
+      .about-card {
+        padding: 2.5rem;
+      }
+      .about-card p {
+        font-size: 1.125rem;
+      }
+      .about-quote p {
+        font-size: 1.875rem;
+      }
+    }
+
+    /* ========== SERVICES SECTION ========== */
+    .services {
+      overflow: hidden;
+      background: linear-gradient(to bottom, #0c0c26, #2d2d5f, #3c3c51);
+      padding: 2.5rem 0;
+    }
+
+    .services-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .services-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+    }
+
+    .services-subtitle {
+      max-width: 48rem;
+      margin: 1rem auto 0;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    /* Card Stack */
+    .card-stack-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card-stack-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-stack-dot {
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.3);
+      width: 6px;
+      transition: all 0.3s;
+    }
+
+    .card-stack-dot.active {
+      width: 2rem;
+      background: #E52B2B;
+    }
+
+    .card-stack-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 1.5rem;
+    }
+
+    .card-stack-btn {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-stack-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-stack-btn.prev {
+      left: 0;
+    }
+
+    .card-stack-btn.next {
+      right: 0;
+    }
+
+    .card-stack {
+      position: relative;
+      width: 100%;
+      max-width: 820px;
+      height: clamp(260px, 40vh, 420px);
+      aspect-ratio: 16 / 9;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      cursor: grab;
+      transition: all 0.3s ease;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .service-card:active {
+      cursor: grabbing;
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .service-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.45) 50%, transparent);
+    }
+
+    .service-card-content {
+      position: absolute;
+      inset: 0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .service-card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1B2A6B;
+      text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card-desc {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .service-card-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #E52B2B;
+      transition: color 0.3s;
+    }
+
+    .service-card-link:hover {
+      color: #f87171;
+    }
+
+    .card-stack-mobile-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .card-stack-mobile-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+    }
+
+    .card-stack-mobile-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (min-width: 768px) {
+      .services {
+        padding: 5rem 0;
+      }
+      .services-title {
+        font-size: 3rem;
+      }
+      .card-stack-btn {
+        display: flex;
+      }
+      .card-stack-mobile-btns {
+        display: none;
+      }
+      .service-card-content {
+        padding: 1.5rem;
+      }
+      .service-card-title {
+        font-size: 1.5rem;
+      }
+      .service-card-desc {
+        font-size: 1rem;
+        line-height: 1.75;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .service-card-content {
+        padding: 2rem;
+      }
+      .service-card-title {
+        font-size: 1.875rem;
+      }
+    }
+
+    /* ========== PROCESS SECTION ========== */
+    .process {
+      overflow: hidden;
+      background: linear-gradient(to bottom, #050539, #151547, #2d2d5f);
+      padding: 4rem 0;
+    }
+
+    .process-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .process-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+    }
+
+    .process-subtitle {
+      max-width: 48rem;
+      margin: 1rem auto 0;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .process-step {
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: all 0.7s ease;
+    }
+
+    .process-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Border Beam Card */
+    .border-beam-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 1px;
+    }
+
+    .border-beam-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+    }
+
+    .border-beam-spinner {
+      position: absolute;
+      inset: -120%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(255,255,255,0.15) 320deg, rgba(239,68,68,0.95) 340deg, rgba(255,255,255,0.6) 350deg, transparent 360deg);
+      animation: spinBeam 6s linear infinite;
+    }
+
+    @keyframes spinBeam {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .border-beam-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      opacity: 0.6;
+      filter: blur(20px);
+      background: radial-gradient(circle at top, rgba(239,68,68,0.18), transparent 35%),
+                  radial-gradient(circle at bottom right, rgba(255,255,255,0.12), transparent 30%);
+      transition: opacity 0.5s;
+    }
+
+    .border-beam-card:hover .border-beam-glow {
+      opacity: 0.9;
+    }
+
+    .border-beam-mask {
+      position: absolute;
+      inset: 1px;
+      border-radius: 27px;
+      background: #0c1020;
+    }
+
+    .border-beam-inner {
+      position: relative;
+      z-index: 10;
+      border-radius: 27px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      backdrop-filter: blur(20px);
+      padding: 1rem;
+      transition: border-color 0.5s;
+    }
+
+    .border-beam-card:hover .border-beam-inner {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .step-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .step-desc {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (min-width: 768px) {
+      .process {
+        padding: 6rem 0;
+      }
+      .process-title {
+        font-size: 3rem;
+      }
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .border-beam-inner {
+        padding: 1.75rem;
+      }
+      .step-title {
+        font-size: 1.5rem;
+      }
+      .step-desc {
+        font-size: 1rem;
+      }
+    }
+
+    /* ========== WHY CHOOSE SECTION ========== */
+    .why-choose {
+      overflow: hidden;
+      background: linear-gradient(to bottom, #3e3e88, #1a1a3d, #121238);
+      padding: 4rem 0;
+    }
+
+    .why-choose-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .why-choose-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .why-choose-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+    }
+
+    .why-choose-subtitle {
+      max-width: 48rem;
+      margin: 1rem auto 0;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .why-choose-grid {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .why-choose-item {
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: all 0.7s ease;
+    }
+
+    .why-choose-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .why-choose-card {
+      height: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .why-choose-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(229, 43, 43, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .why-choose-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .why-choose-card img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .why-choose-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.4;
+    }
+
+    @media (min-width: 768px) {
+      .why-choose {
+        padding: 6rem 0;
+      }
+      .why-choose-title {
+        font-size: 3rem;
+      }
+      .why-choose-grid {
+        flex-direction: row;
+      }
+      .why-choose-card h3 {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* ========== PORTFOLIO SECTION ========== */
+    .portfolio {
+      overflow: hidden;
+      background: linear-gradient(to bottom, #1a1a3d, #2d2d5f, rgba(220, 20, 60, 0.1));
+      padding: 2rem 0;
+    }
+
+    .portfolio-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .portfolio-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .portfolio-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+      margin-bottom: 1rem;
+    }
+
+    .portfolio-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .portfolio-card {
+      position: relative;
+      height: 20rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: all 0.7s ease;
+    }
+
+    .portfolio-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .portfolio-card-overlay {
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--accent);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5) 50%, transparent);
+      opacity: 0.85;
+      transition: opacity 0.5s;
+    }
+
+    .portfolio-card:hover .portfolio-card-overlay {
+      opacity: 0.95;
+    }
+
+    .portfolio-card-content {
+      position: relative;
+      z-index: 10;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .portfolio-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-card p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    .portfolio-card a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .portfolio-card a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .portfolio-card a:hover::after {
+      width: 100%;
+    }
+
+    .portfolio-cta {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .portfolio-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      background: #1a1a3d;
+      color: white;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+    }
+
+    .portfolio-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+      .portfolio {
+        padding: 5rem 0;
+      }
+      .portfolio-title {
+        font-size: 3rem;
+      }
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ========== WHY CRAFTVASI SECTION ========== */
+    .why-craftvasi {
+      overflow: hidden;
+      background: var(--secondary);
+      padding: 2rem 0;
+    }
+
+    .why-craftvasi-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .why-craftvasi-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .why-craftvasi-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+    }
+
+    .why-craftvasi-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .why-craftvasi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .why-craftvasi-item {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition: all 0.6s ease;
+    }
+
+    .why-craftvasi-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .why-craftvasi-item-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .why-craftvasi-icon {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 0.25rem;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .why-craftvasi-icon svg {
+      width: 1rem;
+      height: 1rem;
+      color: white;
+    }
+
+    .why-craftvasi-item h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .why-craftvasi-item p {
+      color: rgba(26, 26, 61, 0.7);
+    }
+
+    .why-craftvasi-box {
+      border-radius: 0.5rem;
+      border-left: 4px solid var(--accent);
+      background: var(--background);
+      padding: 2rem;
+    }
+
+    .why-craftvasi-box h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .why-craftvasi-box p {
+      font-size: 1.125rem;
+      color: rgba(26, 26, 61, 0.7);
+      margin-bottom: 1rem;
+    }
+
+    .why-craftvasi-cta {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .why-craftvasi-cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width: 768px) {
+      .why-craftvasi {
+        padding: 5rem 0;
+      }
+      .why-craftvasi-title {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .why-craftvasi-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ========== TESTIMONIALS SECTION ========== */
+    .testimonials {
+      overflow: hidden;
+      background: linear-gradient(to bottom, #0c0c26, #151547, #1a1a3d);
+      padding: 4rem 0;
+    }
+
+    .testimonials-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .testimonials-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #E52B2B;
+    }
+
+    .testimonials-subtitle {
+      max-width: 48rem;
+      margin: 1rem auto 0;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .testimonials-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      padding: 2rem 1rem;
+    }
+
+    .testimonials-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .testimonials-nav-btn {
+      padding: 0.5rem;
+      border-radius: 50%;
+      background: #E52B2B;
+      color: white;
+      transition: all 0.3s;
+    }
+
+    .testimonials-nav-btn:disabled {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.4);
+      cursor: not-allowed;
+    }
+
+    .testimonials-nav-btn:not(:disabled):hover {
+      background: #f87171;
+    }
+
+    .testimonials-track-wrapper {
+      overflow: hidden;
+    }
+
+    .testimonials-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .testimonial-card-wrapper {
+      flex-shrink: 0;
+      width: 100%;
+      padding: 0.5rem;
+    }
+
+    .testimonial-card {
+      position: relative;
+      height: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 16, 40, 0.8);
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .testimonial-quote-icon {
+      position: absolute;
+      top: 0.25rem;
+      left: 0.25rem;
+      opacity: 0.1;
+    }
+
+    .testimonial-quote-icon svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      color: #E52B2B;
+    }
+
+    .testimonial-stars {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-stars svg {
+      width: 1rem;
+      height: 1rem;
+      fill: #E52B2B;
+      color: #E52B2B;
+    }
+
+    .testimonial-text {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1rem;
+    }
+
+    .testimonial-author h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .testimonial-author p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .testimonials-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .testimonial-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s;
+    }
+
+    .testimonial-dot.active {
+      background: #E52B2B;
+      transform: scale(1.2);
+    }
+
+    @media (min-width: 768px) {
+      .testimonials {
+        padding: 6rem 0;
+      }
+      .testimonials-title {
+        font-size: 3rem;
+      }
+      .testimonials-slider {
+        padding: 2.5rem;
+      }
+      .testimonials-nav {
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }
+      .testimonial-card-wrapper {
+        width: 50%;
+      }
+      .testimonial-quote-icon svg {
+        width: 3rem;
+        height: 3rem;
+      }
+      .testimonial-text {
+        font-size: 1rem;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .testimonial-card-wrapper {
+        width: 33.333%;
+      }
+    }
+
+    /* ========== CTA SECTION ========== */
+    .cta {
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(to right, #1a1a3d, #dc143c, #1a1a3d);
+      padding: 3.5rem 0;
+    }
+
+    .cta-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .cta-text {
+      flex: 1;
+      text-align: center;
+    }
+
+    .cta-title {
+      max-width: 48rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+      .cta-container {
+        flex-direction: row;
+      }
+      .cta-text {
+        text-align: left;
+      }
+      .cta-title {
+        font-size: 1.875rem;
+      }
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: linear-gradient(to right, rgba(26, 26, 61, 0.5), rgba(45, 45, 95, 0.5), rgba(26, 26, 61, 0.5));
+      color: white;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand img {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      transition: opacity 0.3s;
+    }
+
+    .footer-brand:hover img {
+      opacity: 0.9;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .footer-socials a {
+      transition: color 0.3s;
+    }
+
+    .footer-socials a:hover {
+      color: var(--accent);
+    }
+
+    .footer-socials svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .footer-section h4 {
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-section a {
+      font-size: 0.875rem;
+      transition: color 0.3s;
+    }
+
+    .footer-section a:hover {
+      color: var(--accent);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .footer-contact-item svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    .footer-contact a {
+      transition: color 0.3s;
+    }
+
+    .footer-contact a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-bottom a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Mobile CTA Bar */
+    .mobile-cta-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #dc2626;
+      border-top: 1px solid #b91c1c;
+      z-index: 30;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    .mobile-cta-bar a {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      background: white;
+      color: #dc2626;
+      border-radius: 0.25rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-align: center;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-cta-bar a:hover {
+      opacity: 0.9;
+    }
+
+    .footer-spacer {
+      height: 4rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-container {
+        padding: 4rem 1rem;
+      }
+      .footer-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .mobile-cta-bar {
+        display: none;
+      }
+      .footer-spacer {
+        display: none;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* SVG Icons */
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-container">
+      <a href="/" class="logo">
+        <img src="/craftvasi-logo.png" alt="Craftvasi Logo">
+      </a>
+
+      <div class="nav-wrapper">
+        <ul class="nav-links">
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+
+        <a href="tel:+919573117830" class="phone-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+91 9573117830</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="menuIcon"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="closeIcon" style="display:none;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <nav>
+        <a href="tel:+919573117830">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:0.5rem;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 9573117830
+        </a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/projects">Projects</a>
+        <a href="/contact">Contact</a>
+        <a href="/contact" class="contact-btn">Contact Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="header-spacer"></div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <div class="hero-gallery" id="heroGallery">
+        <!-- SVG gallery will be rendered by JS -->
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title" id="heroTitle">
+          <span class="word blue" style="animation-delay: 0ms;">Designing</span>
+          <span class="word" style="animation-delay: 500ms;">Extraordinary</span>
+          <span class="word blue" style="animation-delay: 1000ms;">Spaces.</span>
+          <span class="word red" style="animation-delay: 1500ms;">Crafting</span>
+          <span class="word" style="animation-delay: 2000ms;">Experiences</span>
+          <span class="word" style="animation-delay: 2500ms;">That</span>
+          <span class="word red" style="animation-delay: 3000ms;">Last.</span>
+        </h1>
+        <p class="hero-subtitle" id="heroSubtitle">
+          <span class="word" style="animation-delay: 3800ms;">Craftvasi</span>
+          <span class="word" style="animation-delay: 4050ms;">Interior</span>
+          <span class="word" style="animation-delay: 4300ms;">Studio</span>
+          <span class="word" style="animation-delay: 4550ms;">&</span>
+          <span class="word" style="animation-delay: 4800ms;">Constructions</span>
+          <span class="word" style="animation-delay: 5050ms;">Pvt</span>
+          <span class="word" style="animation-delay: 5300ms;">Ltd</span>
+          <span class="word" style="animation-delay: 5550ms;">transforms</span>
+          <span class="word" style="animation-delay: 5800ms;">homes,</span>
+          <span class="word" style="animation-delay: 6050ms;">offices,</span>
+          <span class="word" style="animation-delay: 6300ms;">and</span>
+          <span class="word" style="animation-delay: 6550ms;">commercial</span>
+          <span class="word" style="animation-delay: 6800ms;">spaces</span>
+          <span class="word" style="animation-delay: 7050ms;">into</span>
+          <span class="word" style="animation-delay: 7300ms;">stunning</span>
+          <span class="word" style="animation-delay: 7550ms;">environments</span>
+          <span class="word" style="animation-delay: 7800ms;">with</span>
+          <span class="word" style="animation-delay: 8050ms;">thoughtful</span>
+          <span class="word" style="animation-delay: 8300ms;">design</span>
+          <span class="word" style="animation-delay: 8550ms;">and</span>
+          <span class="word" style="animation-delay: 8800ms;">flawless</span>
+          <span class="word" style="animation-delay: 9050ms;">execution.</span>
+        </p>
+        <div class="hero-buttons">
+          <a href="/projects" class="hero-btn hero-btn-primary">Start Your Interior Project</a>
+          <a href="/contact" class="hero-btn hero-btn-secondary">View Our Projects</a>
+        </div>
+      </div>
+      <div class="hero-dots" id="heroDots"></div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+      <div class="about-bg">
+        <div class="about-overlay"></div>
+        <div class="about-gradient"></div>
+      </div>
+      <div class="about-container">
+        <div class="about-header" id="aboutHeader">
+          <h2 class="about-title">About Craftvasi</h2>
+        </div>
+        <div class="about-card" id="aboutCard">
+          <p>Craftvasi Interior Studio & Constructions Pvt Ltd is a Hyderabad-based design and build company specializing in <strong>premium interiors, customized furniture, and turnkey construction solutions</strong>.</p>
+          <p>Founded in <strong>2019</strong>, Craftvasi has successfully delivered <strong>200+ residential and commercial projects</strong>, helping clients transform their spaces into elegant, functional, and inspiring environments.</p>
+          <p>Our team of designers, project engineers, and craftsmen work together to deliver <strong>complete end-to-end interior solutions</strong> - from concept design and 3D visualization to manufacturing and installation.</p>
+          <p>At Craftvasi, we believe every space should reflect the personality, lifestyle, and aspirations of the people who use it.</p>
+          <div class="about-quote">
+            <p>We don&apos;t just design spaces.<br>We craft experiences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+      <div class="services-container">
+        <div class="services-header">
+          <h2 class="services-title">Our Services</h2>
+          <p class="services-subtitle">Interior and construction solutions crafted with balance, detail, and timeless design.</p>
+        </div>
+        <div class="card-stack-wrapper">
+          <div class="card-stack-dots" id="cardStackDots"></div>
+          <div class="card-stack-container">
+            <button class="card-stack-btn prev" id="cardPrevBtn" aria-label="Previous service">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <div class="card-stack" id="cardStack"></div>
+            <button class="card-stack-btn next" id="cardNextBtn" aria-label="Next service">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="card-stack-mobile-btns">
+            <button class="card-stack-mobile-btn" id="cardPrevMobileBtn" aria-label="Previous service">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="card-stack-mobile-btn" id="cardNextMobileBtn" aria-label="Next service">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="process" id="process">
+      <div class="process-container">
+        <div class="process-header">
+          <h2 class="process-title">Our Process</h2>
+          <p class="process-subtitle">A seamless journey from consultation to final handover, designed to make every project clear, collaborative, and efficient.</p>
+        </div>
+        <div class="process-grid" id="processGrid"></div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE SECTION -->
+    <section class="why-choose" id="whyChoose">
+      <div class="why-choose-container">
+        <div class="why-choose-header">
+          <h2 class="why-choose-title">Why Choose Craftvasi</h2>
+          <p class="why-choose-subtitle">Trusted expertise, premium execution, and a seamless process that brings your vision to life.</p>
+        </div>
+        <div class="why-choose-grid" id="whyChooseGrid"></div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="portfolio" id="portfolio">
+      <div class="portfolio-container">
+        <div class="portfolio-header">
+          <h2 class="portfolio-title">Our Recent Projects</h2>
+          <p class="portfolio-subtitle">Projects thoughtfully brought to life</p>
+        </div>
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+        <div class="portfolio-cta">
+          <a href="/projects" class="portfolio-btn">View All Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CRAFTVASI SECTION -->
+    <section class="why-craftvasi" id="whyCraftvasi">
+      <div class="why-craftvasi-container">
+        <div class="why-craftvasi-header">
+          <h2 class="why-craftvasi-title">Why Craftvasi</h2>
+        </div>
+        <div class="why-craftvasi-content">
+          <div class="why-craftvasi-list" id="whyCraftvasiList"></div>
+          <div>
+            <div class="why-craftvasi-box">
+              <h3>We Remove the Biggest Risk</h3>
+              <p>The fear that the finished project won&apos;t match the vision. True understanding comes from direct, emotional experience, not just viewing a file.</p>
+              <p>By building your space virtually before we lay the first foundation, we guarantee zero surprises, 100% confidence, and a final result that perfectly mirrors the immersion you felt.</p>
+              <a href="/contact" class="why-craftvasi-cta">Get Free Design Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials" id="testimonials">
+      <div class="testimonials-container">
+        <div class="testimonials-header">
+          <h2 class="testimonials-title">Client Testimonials</h2>
+          <p class="testimonials-subtitle">Hear what our clients say about their experience working with Craftvasi.</p>
+        </div>
+        <div class="testimonials-slider">
+          <div class="testimonials-nav">
+            <button class="testimonials-nav-btn" id="testimonialPrevBtn" aria-label="Previous testimonial">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="testimonials-nav-btn" id="testimonialNextBtn" aria-label="Next testimonial">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="testimonials-track-wrapper">
+            <div class="testimonials-track" id="testimonialsTrack"></div>
+          </div>
+          <div class="testimonials-dots" id="testimonialsDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta">
+      <div class="cta-container">
+        <div class="cta-text">
+          <h2 class="cta-title">Let Craftvasi design interiors that reflect your style and elevate your lifestyle.</h2>
+        </div>
+        <a href="/contact" class="cta-btn">
+          Contact Now
+          <span>&#8594;</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div>
+          <a href="/" class="footer-brand">
+            <img src="/craftvasi-logo.png" alt="Craftvasi Logo">
+          </a>
+          <div class="footer-socials">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home">Home Interiors</a></li>
+            <li><a href="#corporate">Corporate Interiors</a></li>
+            <li><a href="#construction">Constructions</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Information</h4>
+          <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact#faq">FAQ&apos;s</a></li>
+            <li><a href="/blog">Blogs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="/services#kitchen">Modular Kitchen</a></li>
+            <li><a href="/services#living">Living Room Space</a></li>
+            <li><a href="/services#bedroom">Bedrooms</a></li>
+            <li><a href="/services#kids">Kids Bedrooms</a></li>
+            <li><a href="/services#vastu">Vastu Consulting</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact Information</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+919573117830">+91 9573117830</a>
+            </div>
+            <div class="footer-contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <a href="mailto:craftvasi@gmail.com">craftvasi@gmail.com</a>
+            </div>
+            <div class="footer-contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Hyderabad, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Craftvasi. All rights reserved.</p>
+        <p>Developed by <a href="https://sellute.com/" target="_blank">Sellute Business Solutions</a></p>
+      </div>
+    </div>
+
+    <!-- Mobile CTA Bar -->
+    <div class="mobile-cta-bar">
+      <a href="tel:+919700707830">Call</a>
+      <a href="https://wa.me/919700707830" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </div>
+    <div class="footer-spacer"></div>
+  </footer>
+
+  <script>
+    // Data
+    const heroImages = [
+      { title: 'Artistic Living Spaces', url: '/images/hero-artistic-living.jpg' },
+      { title: 'Modern Kitchen Design', url: '/images/hero-kitchen.jpg' },
+      { title: 'Luxury Bedroom', url: '/images/hero-bedroom.jpg' },
+      { title: 'Professional Office', url: '/images/hero-office.jpg' },
+      { title: 'Commercial Space', url: '/images/hero-commercial.jpg' },
+      { title: 'Contemporary Interior', url: '/images/project-bhk.jpg' },
+    ];
+
+    const serviceCards = [
+      {
+        id: 1,
+        src: '/home-interior-image.jpg',
+        title: 'Home Interior Design',
+        description: 'Complete interior solutions for villas, apartments, and independent houses including living rooms, kitchens, bedrooms, wardrobes, and lighting.',
+        link: '#home-interior-design',
+      },
+      {
+        id: 2,
+        src: '/modern-kitchen-interior-image.jpg',
+        title: 'Modular Kitchen Design',
+        description: 'Modern modular kitchens designed for efficiency, beauty, and durability using premium materials and fittings.',
+        link: '#modular-kitchen-design',
+      },
+      {
+        id: 3,
+        src: '/bedroom-interior-image.jpg',
+        title: 'Custom Furniture Manufacturing',
+        description: 'Craftvasi manufactures bespoke furniture including wardrobes, TV units, beds, sofas, dining tables, and storage solutions.',
+        link: '#custom-furniture-manufacturing',
+      },
+      {
+        id: 4,
+        src: '/office-interior-image.jpg',
+        title: 'Office Interior Solutions',
+        description: 'Professional office interiors including workstations, cabins, meeting rooms, reception areas, and collaborative spaces.',
+        link: '#office-interior-solutions',
+      },
+      {
+        id: 5,
+        src: '/corporate-interior-image.jpg',
+        title: 'Retail & Commercial Interiors',
+        description: 'Retail showrooms, display racks, glass showcases, counters, and brand-oriented interior design.',
+        link: '#retail-commercial-interiors',
+      },
+      {
+        id: 6,
+        src: '/construction-interior-image.jpg',
+        title: 'Construction & Turnkey Projects',
+        description: 'Complete design + construction solutions including renovation, remodeling, and new building interiors.',
+        link: '#construction-turnkey-projects',
+      },
+    ];
+
+    const processSteps = [
+      { title: 'Consultation & Requirement Discussion', description: 'We begin by understanding your vision, lifestyle, functional needs, and project expectations in detail.' },
+      { title: 'Concept Design & Space Planning', description: 'Our team creates thoughtful layouts and planning strategies that balance aesthetics, flow, and usability.' },
+      { title: '3D Design & Material Selection', description: 'We develop realistic 3D visualizations and help you finalize finishes, textures, colors, and materials.' },
+      { title: 'Quotation & Project Planning', description: 'A clear project scope, transparent quotation, timelines, and execution roadmap are prepared before work begins.' },
+      { title: 'Manufacturing & Site Execution', description: 'Custom production and on-site implementation are carried out with close coordination and professional supervision.' },
+      { title: 'Quality Check & Final Handover', description: 'Every detail is reviewed carefully before final delivery to ensure the finished space meets our quality standards.' },
+    ];
+
+    const whyChooseReasons = [
+      '200+ Successful Projects',
+      'Experienced Designers & Engineers',
+      'Customized Interior Solutions',
+      'Premium Quality Materials',
+      'Transparent Pricing',
+      'On-Time Project Delivery',
+      'Complete End-to-End Execution',
+    ];
+
+    const portfolioProjects = [
+      { title: '3BHK Flat', category: 'Interior Project', description: 'Spacious Project in the closest to city.', image: '/interior-projects-image.jpg' },
+      { title: 'Standalone G+4', category: 'Construction', description: 'Surrounded by lush green and superior neighbourhood.', image: '/standalone-building-image.png' },
+      { title: 'Minimalistic Cafe', category: 'Commercial Interiors', description: 'Cafe situated in the bustling city of Hyderabad.', image: '/minimalist-cafe-image.jpg' },
+      { title: 'Office Space', category: 'Office Interiors', description: 'Adobe for business owners and their team.', image: '/office-space-image.jpg' },
+      { title: 'Grocery Store', category: 'Commercial Interiors', description: 'Grocery Store setup in a high-rise gated community.', image: '/grocery-store-image.jpg' },
+    ];
+
+    const whyCraftvasiReasons = [
+      { title: 'Bespoke Designs, Tailored to Your Home', desc: 'We create personalized interiors that reflect your unique style while embracing contemporary trends.' },
+      { title: 'Unwavering Quality in Every Detail', desc: 'Our meticulous attention to materials and execution ensures your space is built to last.' },
+      { title: 'Your Vision, Our Expertise, Perfectly Aligned', desc: 'Our skilled team combines creativity with expertise to exceed your expectations.' },
+      { title: 'Transparent Process, Stress-Free Transformation', desc: 'We provide seamless communication and professional integrity from concept to completion.' },
+    ];
+
+    const testimonials = [
+      { id: 1, quote: 'Craftvasi designed our home beautifully. Their team handled everything professionally from design to execution.', name: 'Ramesh Kumar', role: 'Home Interior Client' },
+      { id: 2, quote: 'Their custom furniture quality is excellent. Highly recommended for home interiors.', name: 'Sneha Reddy', role: 'Residential Client' },
+      { id: 3, quote: 'The entire journey was smooth and transparent. The final outcome matched exactly what was promised.', name: 'Anil Sharma', role: 'Villa Project Client' },
+      { id: 4, quote: 'From planning to handover, the Craftvasi team was responsive, creative, and committed to quality.', name: 'Priya Verma', role: 'Office Interior Client' },
+      { id: 5, quote: 'They understood our taste perfectly and transformed the space into something elegant and functional.', name: 'Kavya Nair', role: 'Apartment Interior Client' },
+    ];
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuIcon.style.display = isOpen ? 'none' : 'block';
+      closeIcon.style.display = isOpen ? 'block' : 'none';
+    });
+
+    // Hero Gallery with GSAP
+    let currentHeroIndex = 0;
+    let inPlaceIndex = 0;
+    const heroGallery = document.getElementById('heroGallery');
+    const heroDots = document.getElementById('heroDots');
+
+    function initHeroGallery() {
+      gsap.registerPlugin(MotionPathPlugin);
+
+      const width = 1200;
+      const height = 1200;
+      const gap = 14;
+      const r = 8;
+      const total = heroImages.length;
+      const bigSize = Math.sqrt(width * width + height * height);
+
+      heroImages.forEach((img, i) => {
+        const div = document.createElement('div');
+        div.className = 'hero-gallery-svg';
+        div.style.position = 'absolute';
+        div.style.inset = '0';
+        div.style.zIndex = inPlaceIndex === i ? 5 : 1;
+        div.id = `heroImage${i}`;
+
+        div.innerHTML = `
+          <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <clipPath id="heroClip${i}">
+                <circle id="heroCircle${i}" cx="${width / 2 - (total * (r * 2 + gap) - gap) / 2 + i * (r * 2 + gap)}" cy="${height - 120}" r="${r}" />
+              </clipPath>
+            </defs>
+            <image href="${img.url}" width="${width}" height="${height}" clip-path="url(#heroClip${i})" preserveAspectRatio="xMidYMid slice" />
+          </svg>
+        `;
+        heroGallery.appendChild(div);
+
+        // Create dot
+        const dot = document.createElement('button');
+        dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => selectHeroImage(i));
+        heroDots.appendChild(dot);
+      });
+
+      // Auto-advance
+      setInterval(() => {
+        selectHeroImage((currentHeroIndex + 1) % total);
+      }, 4500);
+    }
+
+    function selectHeroImage(index) {
+      if (index === currentHeroIndex) return;
+
+      const width = 1200;
+      const height = 1200;
+      const gap = 14;
+      const r = 8;
+      const total = heroImages.length;
+      const bigSize = Math.sqrt(width * width + height * height);
+
+      const posSmall = (i) => ({
+        cx: width / 2 - (total * (r * 2 + gap) - gap) / 2 + i * (r * 2 + gap),
+        cy: height - 120,
+        r: r
+      });
+
+      const posCenter = () => ({
+        cx: width / 2,
+        cy: height / 2,
+        r: r * 8
+      });
+
+      const posEnd = () => ({
+        cx: width / 2,
+        cy: height / 2,
+        r: bigSize
+      });
+
+      // Animate out current
+      if (currentHeroIndex !== index) {
+        const oldCircle = document.getElementById(`heroCircle${currentHeroIndex}`);
+        const oldDiv = document.getElementById(`heroImage${currentHeroIndex}`);
+        if (oldCircle) {
+          gsap.timeline()
+            .to(oldCircle, { attr: posCenter(), duration: 0.4 })
+            .to(oldCircle, { attr: posSmall(currentHeroIndex), duration: 0.5, ease: 'power3.out' });
+        }
+        if (oldDiv) {
+          oldDiv.style.zIndex = 1;
+        }
+      }
+
+      // Animate in new
+      const newCircle = document.getElementById(`heroCircle${index}`);
+      const newDiv = document.getElementById(`heroImage${index}`);
+      if (newCircle) {
+        gsap.timeline()
+          .set(newCircle, { attr: posSmall(index) })
+          .to(newCircle, { attr: posCenter(), duration: 0.35 })
+          .to(newCircle, { attr: posEnd(), duration: 0.6, onComplete: () => {
+            inPlaceIndex = index;
+            if (newDiv) newDiv.style.zIndex = 5;
+          }});
+      }
+
+      // Update dots
+      document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      currentHeroIndex = index;
+    }
+
+    // Card Stack
+    let cardStack = [...serviceCards];
+    let cardIndex = 0;
+
+    function initCardStack() {
+      renderCardStack();
+      renderCardDots();
+
+      document.getElementById('cardPrevBtn').addEventListener('click', prevCard);
+      document.getElementById('cardNextBtn').addEventListener('click', nextCard);
+      document.getElementById('cardPrevMobileBtn').addEventListener('click', prevCard);
+      document.getElementById('cardNextMobileBtn').addEventListener('click', nextCard);
+    }
+
+    function renderCardStack() {
+      const container = document.getElementById('cardStack');
+      container.innerHTML = '';
+
+      const offsetVal = window.innerWidth < 768 ? 4 : 8;
+      const scaleStep = 0.05;
+      const dimStep = 0.12;
+
+      cardStack.forEach((card, i) => {
+        const div = document.createElement('div');
+        div.className = 'service-card';
+        div.style.top = `${i * -offsetVal}%`;
+        div.style.transform = `scale(${1 - i * scaleStep})`;
+        div.style.filter = `brightness(${Math.max(0.35, 1 - i * dimStep)})`;
+        div.style.zIndex = cardStack.length - i;
+        div.style.opacity = i === 0 ? 1 : 0.8;
+
+        div.innerHTML = `
+          <img src="${card.src}" alt="${card.title}" draggable="false">
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">${card.title}</h3>
+            <p class="service-card-desc">${card.description}</p>
+            <a href="${card.link}" class="service-card-link">Learn More &rarr;</a>
+          </div>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    function renderCardDots() {
+      const dotsContainer = document.getElementById('cardStackDots');
+      dotsContainer.innerHTML = '';
+
+      serviceCards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'card-stack-dot' + (i === cardIndex ? ' active' : '');
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function nextCard() {
+      cardStack = [...cardStack.slice(1), cardStack[0]];
+      cardIndex = (cardIndex + 1) % serviceCards.length;
+      renderCardStack();
+      renderCardDots();
+    }
+
+    function prevCard() {
+      cardStack = [cardStack[cardStack.length - 1], ...cardStack.slice(0, -1)];
+      cardIndex = (cardIndex - 1 + serviceCards.length) % serviceCards.length;
+      renderCardStack();
+      renderCardDots();
+    }
+
+    // Process Steps
+    function initProcessSteps() {
+      const grid = document.getElementById('processGrid');
+
+      processSteps.forEach((step, i) => {
+        const div = document.createElement('div');
+        div.className = 'process-step';
+        div.style.transitionDelay = `${i * 100}ms`;
+        div.innerHTML = `
+          <div class="border-beam-card">
+            <div class="border-beam-spinner"></div>
+            <div class="border-beam-glow"></div>
+            <div class="border-beam-mask"></div>
+            <div class="border-beam-inner">
+              <h3 class="step-title">${step.title}</h3>
+              <p class="step-desc">${step.description}</p>
+            </div>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    // Why Choose Section
+    function initWhyChoose() {
+      const grid = document.getElementById('whyChooseGrid');
+
+      whyChooseReasons.forEach((reason, i) => {
+        const div = document.createElement('div');
+        div.className = 'why-choose-item';
+        div.style.transitionDelay = `${i * 100}ms`;
+        div.innerHTML = `
+          <div class="why-choose-card">
+            <div class="why-choose-card-inner">
+              <img src="/red-circle-tick-icon.png" alt="Check">
+              <h3>${reason}</h3>
+            </div>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    // Portfolio Grid
+    function initPortfolio() {
+      const grid = document.getElementById('portfolioGrid');
+
+      portfolioProjects.forEach((project, i) => {
+        const div = document.createElement('div');
+        div.className = 'portfolio-card';
+        div.style.backgroundImage = `url('${project.image}')`;
+        div.style.transitionDelay = `${i * 80}ms`;
+        div.innerHTML = `
+          <div class="portfolio-card-overlay"></div>
+          <div class="portfolio-card-content">
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+            <a href="/projects">Read More &rarr;</a>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    // Why Craftvasi
+    function initWhyCraftvasi() {
+      const list = document.getElementById('whyCraftvasiList');
+
+      whyCraftvasiReasons.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'why-craftvasi-item';
+        div.style.transitionDelay = `${i * 100}ms`;
+        div.innerHTML = `
+          <div class="why-craftvasi-item-inner">
+            <div class="why-craftvasi-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </div>
+            <div>
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
+            </div>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // Testimonials Slider
+    let testimonialIndex = 0;
+
+    function getVisibleCount() {
+      if (window.innerWidth >= 1280) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    function initTestimonials() {
+      const track = document.getElementById('testimonialsTrack');
+
+      testimonials.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'testimonial-card-wrapper';
+        div.innerHTML = `
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+            </div>
+            <div class="testimonial-stars">
+              ${Array(5).fill('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('')}
+            </div>
+            <p class="testimonial-text">"${t.quote}"</p>
+            <div class="testimonial-author">
+              <h4>${t.name}</h4>
+              <p>${t.role}</p>
+            </div>
+          </div>
+        `;
+        track.appendChild(div);
+      });
+
+      renderTestimonialDots();
+      updateTestimonialSlider();
+
+      document.getElementById('testimonialPrevBtn').addEventListener('click', prevTestimonial);
+      document.getElementById('testimonialNextBtn').addEventListener('click', nextTestimonial);
+
+      // Auto-advance
+      setInterval(() => {
+        const visibleCount = getVisibleCount();
+        const maxIndex = Math.max(0, testimonials.length - visibleCount);
+        if (testimonialIndex < maxIndex) {
+          testimonialIndex++;
+        } else {
+          testimonialIndex = 0;
+        }
+        updateTestimonialSlider();
+      }, 4000);
+    }
+
+    function renderTestimonialDots() {
+      const dots = document.getElementById('testimonialsDots');
+      dots.innerHTML = '';
+
+      const visibleCount = getVisibleCount();
+      const count = testimonials.length - visibleCount + 1;
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'testimonial-dot' + (i === testimonialIndex ? ' active' : '');
+        dot.addEventListener('click', () => {
+          testimonialIndex = i;
+          updateTestimonialSlider();
+        });
+        dots.appendChild(dot);
+      }
+    }
+
+    function updateTestimonialSlider() {
+      const track = document.getElementById('testimonialsTrack');
+      const visibleCount = getVisibleCount();
+      track.style.transform = `translateX(-${testimonialIndex * (100 / visibleCount)}%)`;
+
+      // Update dots
+      document.querySelectorAll('.testimonial-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === testimonialIndex);
+      });
+
+      // Update buttons
+      const maxIndex = Math.max(0, testimonials.length - visibleCount);
+      document.getElementById('testimonialPrevBtn').disabled = testimonialIndex <= 0;
+      document.getElementById('testimonialNextBtn').disabled = testimonialIndex >= maxIndex;
+    }
+
+    function prevTestimonial() {
+      if (testimonialIndex > 0) {
+        testimonialIndex--;
+        updateTestimonialSlider();
+      }
+    }
+
+    function nextTestimonial() {
+      const visibleCount = getVisibleCount();
+      const maxIndex = Math.max(0, testimonials.length - visibleCount);
+      if (testimonialIndex < maxIndex) {
+        testimonialIndex++;
+        updateTestimonialSlider();
+      }
+    }
+
+    // Intersection Observer for animations
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      // About section
+      const aboutHeader = document.getElementById('aboutHeader');
+      const aboutCard = document.getElementById('aboutCard');
+      if (aboutHeader) observer.observe(aboutHeader);
+      if (aboutCard) observer.observe(aboutCard);
+
+      // Process steps
+      document.querySelectorAll('.process-step').forEach(el => observer.observe(el));
+
+      // Why Choose items
+      document.querySelectorAll('.why-choose-item').forEach(el => observer.observe(el));
+
+      // Portfolio cards
+      document.querySelectorAll('.portfolio-card').forEach(el => observer.observe(el));
+
+      // Why Craftvasi items
+      document.querySelectorAll('.why-craftvasi-item').forEach(el => observer.observe(el));
+    }
+
+    // Handle resize for testimonials
+    window.addEventListener('resize', () => {
+      renderTestimonialDots();
+      updateTestimonialSlider();
+    });
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeroGallery();
+      initCardStack();
+      initProcessSteps();
+      initWhyChoose();
+      initPortfolio();
+      initWhyCraftvasi();
+      initTestimonials();
+      initScrollAnimations();
+    });
+  </script>
+</body>
+</html>
