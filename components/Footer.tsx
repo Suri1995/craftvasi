@@ -67,6 +67,7 @@ export function Footer() {
                 { label: 'Corporate Interiors', href: '#corporate' },
                 { label: 'Constructions', href: '#construction' },
                 { label: 'Contact', href: '/contact' },
+                { label: 'Policy', href: '/privacy-policy' },
               ].map((link) => (
                 <li key={link.label}>
                   <a
