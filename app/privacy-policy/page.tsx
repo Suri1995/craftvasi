@@ -225,7 +225,7 @@ export default function PrivacyPolicyPage() {
               <div className="w-px h-8 bg-accent/20" />
               {/* Legal text */}
               <span className="text-xs font-semibold tracking-widest uppercase text-accent">
-                Legal — Privacy Policy
+                Legal
               </span>
             </div>
 
@@ -507,7 +507,7 @@ export default function PrivacyPolicyPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {[
                       { icon: Mail, label: "Email", value: "hello@craftvasi.com", href: "mailto:hello@craftvasi.com" },
-                      { icon: Phone, label: "Phone", value: "+91 9573117830", href: "tel:+919573117830" },
+                      { icon: Phone, label: "Phone", value: "+91 9700707830", href: "tel:+919700707830" },
                       { icon: Globe, label: "Address", value: "B.N. Reddy Nagar, Hyderabad", href: "#" },
                     ].map((contact, i) => {
                       const Icon = contact.icon;

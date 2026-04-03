@@ -312,7 +312,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: Phone, title: "Phone", content: "+91 9573117830", subtitle: "Mon–Sat, 9am–6pm", href: "tel:+919573117830", color: "accent" },
+              { icon: Phone, title: "Phone", content: "+91 9700707830", subtitle: "Mon–Sat, 9am–6pm", href: "tel:+919700707830", color: "accent" },
               { icon: Mail, title: "Email", content: "hello@craftvasi.com", subtitle: "We reply within 24hrs", href: "mailto:hello@craftvasi.com", color: "primary" },
               { icon: MapPin, title: "Location", content: "Hyderabad, India", subtitle: "B.N. Reddy Nagar", href: "#map", color: "accent" },
             ].map((item, index) => {
