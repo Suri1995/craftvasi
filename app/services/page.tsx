@@ -17,6 +17,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import CustomizedHomeFurniture from "@/public/customized-home-furniture.jpg"
+import OfficeFurniture from "@/public/office-furniture-solutions.jpg"
+import RetailStore from "@/public/retail-store-furniture.jpg"
+import FurnishingDecors from "@/public/furnishing-decors.jpg"
+import ConstructionRenovation from "@/public/construction-renovation.jpg"
+
 export default function ServicesPage() {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
@@ -69,7 +75,7 @@ export default function ServicesPage() {
           desc: "Stylish outdoor seating, tables, and decor pieces",
         },
       ],
-      image: "/images/service-home-furniture.jpg",
+      image: CustomizedHomeFurniture,
     },
     {
       id: "office-furniture",
@@ -95,7 +101,7 @@ export default function ServicesPage() {
           desc: "Sleek conference tables, lounge furniture, and reception desks",
         },
       ],
-      image: "/images/service-office.jpg",
+      image: OfficeFurniture,
     },
     {
       id: "retail-furniture",
@@ -121,7 +127,7 @@ export default function ServicesPage() {
           desc: "Designs that align with your brand identity and target audience",
         },
       ],
-      image: "/images/service-retail.jpg",
+      image: RetailStore,
     },
     {
       id: "furnishings-decor",
@@ -147,7 +153,7 @@ export default function ServicesPage() {
           desc: "Handpicked decor items like vases, clocks, and mirrors",
         },
       ],
-      image: "/images/service-decor.jpg",
+      image: FurnishingDecors,
     },
     {
       id: "construction",
@@ -173,7 +179,7 @@ export default function ServicesPage() {
           desc: "From conceptualization to execution, we handle it all",
         },
       ],
-      image: "/images/service-construction.jpg",
+      image: ConstructionRenovation,
     },
   ];
 
@@ -278,193 +284,216 @@ export default function ServicesPage() {
 
       {/* Services Carousel */}
       <section
-        className="py-[28px] md:py-20 relative overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse at 40% 50%, hsl(var(--accent)/0.07) 0%, hsl(var(--background)) 55%, hsl(var(--primary)/0.05) 100%)",
-        }}
-      >
-        {/* Decorative blobs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full -translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/3 rounded-full blur-3xl pointer-events-none" />
+  className="py-[28px] md:py-20 relative overflow-hidden"
+  style={{
+    background:
+      "radial-gradient(ellipse at 40% 50%, hsl(var(--accent)/0.07) 0%, hsl(var(--background)) 55%, hsl(var(--primary)/0.05) 100%)",
+  }}
+>
+  {/* Decorative blobs */}
+  <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
+  <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full -translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/3 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              {/* Content */}
-              <div className="order-2 lg:order-1 relative">
-                {/* Service counter badge */}
-                <div className="flex items-center gap-4 mb-8">
-                  <div
-                    className="group/icon w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0
-              hover:bg-accent hover:border-accent transition-all duration-300 cursor-default"
-                  >
-                    <Icon className="w-8 h-8 text-accent group-hover/icon:text-white transition-colors duration-300" />
-                  </div>
-                  <div>
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/8 border border-accent/15 rounded-full mb-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                      <span className="text-accent font-semibold text-xs tracking-widest uppercase">
-                        Service {currentServiceIndex + 1} of {services.length}
-                      </span>
-                    </span>
-                  </div>
-                </div>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
-                {/* Title */}
-                <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4 leading-tight">
-                  {currentService.title}
-                </h2>
+      {/* Content */}
+      <div className="order-2 lg:order-1 relative">
+        {/* Service counter badge */}
+        <div className="flex items-center gap-4 mb-8">
+          <div className="group/icon w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0
+            hover:bg-accent hover:border-accent transition-all duration-300 cursor-default">
+            <Icon className="w-8 h-8 text-accent group-hover/icon:text-white transition-colors duration-300" />
+          </div>
+          <div>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/8 border border-accent/15 rounded-full mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="text-accent font-semibold text-xs tracking-widest uppercase">
+                Service {currentServiceIndex + 1} of {services.length}
+              </span>
+            </span>
+          </div>
+        </div>
 
-                {/* Animated underline */}
-                <div className="w-16 h-1 bg-accent/50 rounded-full mb-6" />
+        {/* Title */}
+        <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4 leading-tight">
+          {currentService.title}
+        </h2>
 
-                {/* Description */}
-                <p className="text-lg text-foreground/70 leading-relaxed mb-8">
-                  {currentService.description}
-                </p>
+        {/* Animated underline */}
+        <div className="w-16 h-1 bg-accent/50 rounded-full mb-6" />
 
-                {/* What We Offer */}
-                <div className="mb-8">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-1 h-4 bg-accent rounded-full" />
-                    <p className="text-sm font-bold text-primary tracking-wide uppercase">
-                      What We Offer
-                    </p>
-                  </div>
+        {/* Description */}
+        <p className="text-lg text-foreground/70 leading-relaxed mb-8">
+          {currentService.description}
+        </p>
 
-                  <div className="space-y-3">
-                    {currentService.subservices.map((sub, subIndex) => (
-                      <div
-                        key={subIndex}
-                        className="group/item flex gap-4 p-3 rounded-2xl border border-transparent
-                    hover:border-accent/20 hover:bg-accent/5 transition-all duration-300"
-                      >
-                        <div
-                          className="w-8 h-8 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0
-                    group-hover/item:bg-accent group-hover/item:border-accent transition-all duration-300 mt-0.5"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-accent group-hover/item:text-white transition-colors duration-300" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-foreground text-sm group-hover/item:text-accent transition-colors duration-300">
-                            {sub.name}
-                          </p>
-                          <p className="text-foreground/60 text-sm mt-0.5">
-                            {sub.desc}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        {/* What We Offer */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="w-1 h-4 bg-accent rounded-full" />
+            <p className="text-sm font-bold text-primary tracking-wide uppercase">
+              What We Offer
+            </p>
+          </div>
 
-                {/* CTA */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/contact"
-                    className="group/btn inline-flex items-center justify-center gap-2 font-semibold px-6 py-3 rounded-2xl
-                bg-accent/10 border border-accent/20 text-accent
-                hover:bg-primary hover:border-primary hover:text-white
-                transition-all duration-300"
-                  >
-                    Get Started
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Image */}
-              <div className="order-1 lg:order-2 relative">
-                {/* Decorative frame */}
-                <div className="absolute -top-3 -right-3 w-full h-full rounded-3xl border border-accent/15 pointer-events-none z-0" />
-                <div className="absolute -top-1.5 -right-1.5 w-full h-full rounded-3xl border border-accent/8 pointer-events-none z-0" />
-
-                <div
-                  className="relative h-80 md:h-[500px] rounded-3xl overflow-hidden border border-accent/20
-            shadow-2xl shadow-accent/10 z-10
-            hover:shadow-primary/15 hover:border-primary/30 transition-all duration-500 group"
-                >
-                  <Image
-                    src={currentService.image}
-                    alt={currentService.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-
-                  {/* Image overlay gradient */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent
-              group-hover:from-primary/30 transition-all duration-500"
-                  />
-
-                  {/* Floating service title on image */}
-                  <div className="absolute bottom-5 left-5 right-5">
-                    <div
-                      className="bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/40
-                group-hover:bg-white/90 transition-all duration-300"
-                    >
-                      <p className="text-xs font-bold tracking-widest uppercase text-accent mb-0.5">
-                        Currently Viewing
-                      </p>
-                      <p className="text-sm font-heading font-bold text-primary truncate">
-                        {currentService.title}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Corner accent dot */}
-                <div className="absolute -bottom-2 -left-2 w-5 h-5 rounded-full bg-accent/40 blur-sm z-0" />
-                <div className="absolute -bottom-1 -left-1 w-3 h-3 rounded-full bg-accent z-0" />
-              </div>
-            </div>
-
-            {/* Carousel Navigation */}
-            <div className="mt-10 flex items-center justify-center gap-6">
-              {/* Prev button */}
-              <button
-                onClick={handlePrevious}
-                className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
-            hover:bg-primary hover:border-primary
-            flex items-center justify-center transition-all duration-300"
-                aria-label="Previous service"
+          <div className="space-y-3">
+            {currentService.subservices.map((sub, subIndex) => (
+              <div
+                key={subIndex}
+                className="group/item flex gap-4 p-3 rounded-2xl border border-transparent
+                  hover:border-accent/20 hover:bg-accent/5 transition-all duration-300"
               >
-                <ChevronLeft className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
-              </button>
-
-              {/* Dot Indicators */}
-              <div className="flex items-center gap-2">
-                {services.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentServiceIndex(index)}
-                    className={`h-2 rounded-full transition-all duration-300
-                ${
-                  index === currentServiceIndex
-                    ? "bg-accent w-8 shadow-sm shadow-accent/40"
-                    : "bg-accent/20 w-2 hover:bg-accent/50 hover:w-4"
-                }`}
-                    aria-label={`Go to service ${index + 1}`}
-                  />
-                ))}
+                <div className="w-8 h-8 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center flex-shrink-0
+                  group-hover/item:bg-accent group-hover/item:border-accent transition-all duration-300 mt-0.5">
+                  <CheckCircle2 className="w-4 h-4 text-accent group-hover/item:text-white transition-colors duration-300" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm group-hover/item:text-accent transition-colors duration-300">
+                    {sub.name}
+                  </p>
+                  <p className="text-foreground/60 text-sm mt-0.5">{sub.desc}</p>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
 
-              {/* Next button */}
-              <button
-                onClick={handleNext}
-                className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
-            hover:bg-primary hover:border-primary
-            flex items-center justify-center transition-all duration-300"
-                aria-label="Next service"
-              >
-                <ChevronRight className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
-              </button>
+        {/* CTA */}
+        <Link
+          href="/contact"
+          className="group/btn inline-flex items-center justify-center gap-2 font-semibold px-6 py-3 rounded-2xl
+            bg-accent/10 border border-accent/20 text-accent
+            hover:bg-primary hover:border-primary hover:text-white
+            transition-all duration-300"
+        >
+          Get Started
+          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+        </Link>
+      </div>
+
+      {/* Image + Mobile Nav */}
+      <div className="order-1 lg:order-2 relative">
+
+        {/* Decorative frame */}
+        <div className="absolute -top-3 -right-3 w-full h-full rounded-3xl border border-accent/15 pointer-events-none z-0 hidden md:block" />
+        <div className="absolute -top-1.5 -right-1.5 w-full h-full rounded-3xl border border-accent/8 pointer-events-none z-0 hidden md:block" />
+
+        {/* Image */}
+        <div className="relative h-80 md:h-[500px] rounded-3xl overflow-hidden border border-accent/20
+          shadow-2xl shadow-accent/10 z-10
+          hover:shadow-primary/15 hover:border-primary/30 transition-all duration-500 group">
+          <Image
+            src={currentService.image}
+            alt={currentService.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+
+          {/* Image overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent
+            group-hover:from-primary/30 transition-all duration-500" />
+
+          {/* Floating service title on image */}
+          <div className="absolute bottom-5 left-5 right-5">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/40
+              group-hover:bg-white/90 transition-all duration-300">
+              <p className="text-xs font-bold tracking-widest uppercase text-accent mb-0.5">
+                Currently Viewing
+              </p>
+              <p className="text-sm font-heading font-bold text-primary truncate">
+                {currentService.title}
+              </p>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* Corner accent dot */}
+        <div className="absolute -bottom-2 -left-2 w-5 h-5 rounded-full bg-accent/40 blur-sm z-0" />
+        <div className="absolute -bottom-1 -left-1 w-3 h-3 rounded-full bg-accent z-0" />
+
+        {/* ── Mobile Carousel Navigation — below image, mobile only ── */}
+        <div className="flex lg:hidden items-center justify-center gap-6 mt-6">
+          <button
+            onClick={handlePrevious}
+            className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
+              hover:bg-primary hover:border-primary
+              flex items-center justify-center transition-all duration-300"
+            aria-label="Previous service"
+          >
+            <ChevronLeft className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
+          </button>
+
+          <div className="flex items-center gap-2">
+            {services.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentServiceIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300
+                  ${index === currentServiceIndex
+                    ? "bg-accent w-8 shadow-sm shadow-accent/40"
+                    : "bg-accent/20 w-2 hover:bg-accent/50 hover:w-4"
+                  }`}
+                aria-label={`Go to service ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={handleNext}
+            className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
+              hover:bg-primary hover:border-primary
+              flex items-center justify-center transition-all duration-300"
+            aria-label="Next service"
+          >
+            <ChevronRight className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    {/* ── Desktop Carousel Navigation — below full grid, desktop only ── */}
+    <div className="hidden lg:flex items-center justify-center gap-6 mt-10">
+      <button
+        onClick={handlePrevious}
+        className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
+          hover:bg-primary hover:border-primary
+          flex items-center justify-center transition-all duration-300"
+        aria-label="Previous service"
+      >
+        <ChevronLeft className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
+      </button>
+
+      <div className="flex items-center gap-2">
+        {services.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentServiceIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300
+              ${index === currentServiceIndex
+                ? "bg-accent w-8 shadow-sm shadow-accent/40"
+                : "bg-accent/20 w-2 hover:bg-accent/50 hover:w-4"
+              }`}
+            aria-label={`Go to service ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      <button
+        onClick={handleNext}
+        className="group/nav w-11 h-11 rounded-2xl border border-accent/20 bg-accent/5
+          hover:bg-primary hover:border-primary
+          flex items-center justify-center transition-all duration-300"
+        aria-label="Next service"
+      >
+        <ChevronRight className="w-5 h-5 text-accent group-hover/nav:text-white transition-colors duration-300" />
+      </button>
+    </div>
+
+  </div>
+</section>
 
       {/* Process Section */}
       <section className="py-[28px] md:py-20 relative overflow-hidden bg-gradient-to-br from-accent/5 via-background to-primary/5">

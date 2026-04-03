@@ -109,7 +109,7 @@ export default function AboutPage() {
               </Link>
             </div>
 
-            <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
+            <div className="relative h-80 md:h-96 md:h-[500px] rounded-2xl overflow-hidden">
               <Image
                 src={AboutUsImg}
                 alt="Craftvasi team collaborating on interior design projects"
