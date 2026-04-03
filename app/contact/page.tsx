@@ -222,7 +222,7 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Show questionnaire first
       setFormData({ name: "", email: "", phone: "", message: "" });
       setShowQuestionnaire(true);
       setCurrentStep(0);
@@ -275,9 +275,49 @@ export default function ContactPage() {
 
   const handleQuestionnaireSubmit = async () => {
     setIsSubmittingQ(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmittingQ(false);
-    setQuestionnaireComplete(true);
+    try {
+      // Prepare the data for submission
+      const fullName = formData.name.split(" ");
+      const [firstName, ...lastNameParts] = fullName;
+      const lastName = lastNameParts.join(" ") || "User";
+
+      const payload = {
+        firstName: firstName || "User",
+        lastName: lastName,
+        email: formData.email,
+        phone: formData.phone,
+        company: "", // You might want to add this field
+        projectDescription: formData.message,
+        budget: "", // You might want to add this field
+        timeline: "", // You might want to add this field
+        questions: answers,
+        additionalInfo: "",
+        agreeToTerms: true,
+      };
+
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const result = await response.json();
+      console.log("[v0] Form submitted successfully:", result);
+
+      setQuestionnaireComplete(true);
+    } catch (error) {
+      console.error("[v0] Error submitting form:", error);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 4000);
+    } finally {
+      setIsSubmittingQ(false);
+    }
   };
 
   const progress = ((currentStep + 1) / questionnaireSteps.length) * 100;
