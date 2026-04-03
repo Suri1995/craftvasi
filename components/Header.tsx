@@ -60,7 +60,7 @@ export function Header() {
                     <a
                       key={link.label}
                       href={link.href}
-                      className={`font-medium text-[20px] transition-colors ${
+                      className={`font-medium text-[1.25rem] transition-colors ${
                         isActive
                           ? "text-red-500"
                           : "text-[#1a1a3d] hover:text-red-400"
@@ -76,7 +76,7 @@ export function Header() {
               <div className="hidden md:block">
                 <a
                   href="tel:+919700707830"
-                  className="flex items-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 hover:scale-105 transition-all duration-300 text-[16px]"
+                  className="flex items-center gap-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 hover:scale-105 transition-all duration-300 text-[1rem]"
                 >
                   <Phone className="w-5 h-5" />
                   <span>+91 9700707830</span>
