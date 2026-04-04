@@ -800,11 +800,11 @@ export default function ContactPage() {
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-white/10 h-96 shadow-2xl shadow-black/20 hover:shadow-black/40 transition-all duration-500">
             <iframe
-              src="https://www.google.com/maps?q=Nagarjuna%20Sagar%20Road%20Chaitanya%20Nagar%20BN%20Reddy%20Nagar%20Hastinapuram%20Hyderabad%20500079&output=embed"
-              className="absolute inset-0 w-full h-full border-0 scale-110"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+  src="https://maps.google.com/maps?q=17.323956,78.558187&z=17&output=embed"
+  className="absolute inset-0 w-full h-full border-0 scale-110"
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+/>
             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center">
               <div className="relative flex items-center justify-center mb-6">
                 <div className="absolute w-32 h-32 rounded-full border-2 border-blue-500/40 animate-ping" style={{ animationDuration: "3s" }} />
@@ -819,7 +819,7 @@ export default function ContactPage() {
                 Nagarjuna Sagar Road, Chaitanya Nagar,<br />
                 Above KFC, Hastinapuram, Hyderabad - 500079
               </p>
-              <a href="https://www.google.com/maps?q=Nagarjuna%20Sagar%20Road%20Chaitanya%20Nagar%20BN%20Reddy%20Nagar%20Hastinapuram%20Hyderabad%20500079"
+              <a href="https://www.google.com/maps/place/CRAFTVASI+INTERIOR+STUDIO+%26+CONSTRUCTIONS+PVT+LTD/@17.323956,78.558187,17z/data=!4m14!1m7!3m6!1s0x3bcba3cbd16f75d3:0xc903ec4f1e65b253!2sCRAFTVASI+INTERIOR+STUDIO+%26+CONSTRUCTIONS+PVT+LTD!8m2!3d17.323956!4d78.558187!16s%2Fg%2F11h_1kwlth!3m5!1s0x3bcba3cbd16f75d3:0xc903ec4f1e65b253!8m2!3d17.323956!4d78.558187!16s%2Fg%2F11h_1kwlth?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank" rel="noopener noreferrer"
                 className="group mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-blue-500 text-white rounded-2xl font-semibold text-sm
                   hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
