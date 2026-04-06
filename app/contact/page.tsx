@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import {
@@ -13,6 +13,9 @@ import {
   ArrowRight,
   ArrowLeft,
   ChevronRight,
+  FileText,
+  Upload,
+  X,
 } from "lucide-react";
 
 // ── Questionnaire Steps ──
@@ -199,6 +202,11 @@ export default function ContactPage() {
     phone: "",
     message: "",
   });
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string>("");
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "error">("idle");
 
@@ -218,12 +226,64 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ── File upload handlers ──
+  const validateAndSetFile = (file: File) => {
+    setFileError("");
+    const allowed = ["application/pdf", "image/jpeg", "image/jpg"];
+    if (!allowed.includes(file.type)) {
+      setFileError("Only PDF or JPG files are accepted.");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setFileError("File size must be under 10 MB.");
+      return;
+    }
+    setUploadedFile(file);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) validateAndSetFile(file);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) validateAndSetFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = () => setIsDragOver(false);
+
+  const removeFile = () => {
+    setUploadedFile(null);
+    setFileError("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!uploadedFile) {
+      setFileError("Please attach a floor plan or brief to proceed.");
+      return;
+    }
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setUploadedFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
       setShowQuestionnaire(true);
       setCurrentStep(0);
       setAnswers({});
@@ -481,27 +541,135 @@ export default function ContactPage() {
                             hover:border-accent/30 transition-all duration-300" />
                       </div>
                       <div>
-                      <label htmlFor="phone" className="block text-sm font-semibold text-primary mb-2">
-                        Phone Number <span className="text-accent">*</span>
-                      </label>
-                      <input type="tel" id="phone" name="phone" value={formData.phone}
-                        onChange={handleChange} required placeholder="+91 XXXXX XXXXX"
-                        className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
-                          focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
-                          hover:border-accent/30 transition-all duration-300" />
-                    </div>
-                    </div>
-
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">
-                          Email Address <span className="text-accent">*</span>
+                        <label htmlFor="phone" className="block text-sm font-semibold text-primary mb-2">
+                          Phone Number <span className="text-accent">*</span>
                         </label>
-                        <input type="email" id="email" name="email" value={formData.email}
-                          onChange={handleChange} required placeholder="your@email.com"
+                        <input type="tel" id="phone" name="phone" value={formData.phone}
+                          onChange={handleChange} required placeholder="+91 XXXXX XXXXX"
                           className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
                             focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
                             hover:border-accent/30 transition-all duration-300" />
                       </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">
+                        Email Address <span className="text-accent">*</span>
+                      </label>
+                      <input type="email" id="email" name="email" value={formData.email}
+                        onChange={handleChange} required placeholder="your@email.com"
+                        className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
+                          focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
+                          hover:border-accent/30 transition-all duration-300" />
+                    </div>
+
+                    {/* ── File Upload Field (Required) ── */}
+                    <div>
+                      <label className="block text-sm font-semibold text-primary mb-2">
+                        Attach Floor Plan / Brief <span className="text-accent">*</span>{" "}
+                        <span className="text-foreground/40 font-normal">(PDF or JPG · Max 10 MB)</span>
+                      </label>
+
+                      {!uploadedFile ? (
+                        <div
+                          onDrop={handleDrop}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onClick={() => fileInputRef.current?.click()}
+                          className={`relative flex flex-col items-center justify-center gap-3 px-6 py-7 rounded-2xl border-2 border-dashed cursor-pointer
+                            transition-all duration-300 group/upload
+                            ${isDragOver
+                              ? "border-accent bg-accent/8 scale-[1.01]"
+                              : fileError
+                              ? "border-red-400/60 bg-red-50/40 hover:border-red-400"
+                              : "border-accent/25 bg-background/40 hover:border-accent/60 hover:bg-accent/5"
+                            }`}
+                        >
+                          {/* Animated corner accents */}
+                          <div className={`absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 rounded-tl-lg transition-all duration-300
+                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 rounded-tr-lg transition-all duration-300
+                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 rounded-bl-lg transition-all duration-300
+                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 rounded-br-lg transition-all duration-300
+                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+
+                          {/* Icon */}
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300
+                            ${isDragOver
+                              ? "bg-accent border-accent scale-110"
+                              : fileError
+                              ? "bg-red-100 border-red-300"
+                              : "bg-accent/10 border-accent/20 group-hover/upload:bg-accent/20 group-hover/upload:border-accent/40"
+                            }`}>
+                            {isDragOver
+                              ? <Upload className="w-5 h-5 text-white" />
+                              : fileError
+                              ? <AlertCircle className="w-5 h-5 text-red-500" />
+                              : <FileText className="w-5 h-5 text-accent" />
+                            }
+                          </div>
+
+                          {/* Text */}
+                          <div className="text-center">
+                            <p className={`text-sm font-semibold transition-colors duration-300
+                              ${isDragOver ? "text-accent" : fileError ? "text-red-600" : "text-primary/70 group-hover/upload:text-primary"}`}>
+                              {isDragOver ? "Drop your file here" : fileError ? fileError : "Drop PDF or JPG here or click to browse"}
+                            </p>
+                            {!fileError && (
+                              <p className="text-xs text-foreground/40 mt-1">
+                                Floor plans, briefs, mood boards — PDF or JPG format
+                              </p>
+                            )}
+                          </div>
+
+                          <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="application/pdf,image/jpeg,image/jpg"
+                            onChange={handleFileChange}
+                            className="sr-only"
+                          />
+                        </div>
+                      ) : (
+                        /* Uploaded file preview */
+                        <div className="flex items-center gap-4 px-4 py-4 rounded-2xl border border-accent/30 bg-accent/5 transition-all duration-300">
+                          {/* File type icon */}
+                          <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md
+                            ${uploadedFile.type === "application/pdf"
+                              ? "bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/25"
+                              : "bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/25"
+                            }`}>
+                            <FileText className="w-5 h-5 text-white" />
+                          </div>
+
+                          {/* File info */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-primary truncate">{uploadedFile.name}</p>
+                            <div className="flex items-center gap-2 mt-0.5">
+                              <span className="text-xs text-foreground/40">{formatFileSize(uploadedFile.size)}</span>
+                              <span className="w-1 h-1 rounded-full bg-foreground/20" />
+                              <span className="text-xs text-accent font-medium flex items-center gap-1">
+                                <CheckCircle className="w-3 h-3" />
+                                {uploadedFile.type === "application/pdf" ? "PDF ready" : "JPG ready"}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Remove button */}
+                          <button
+                            type="button"
+                            onClick={removeFile}
+                            className="w-8 h-8 rounded-xl border border-accent/20 bg-white/60 flex items-center justify-center flex-shrink-0
+                              hover:border-red-400/60 hover:bg-red-50 transition-all duration-200 group/remove"
+                            aria-label="Remove file"
+                          >
+                            <X className="w-3.5 h-3.5 text-foreground/40 group-hover/remove:text-red-500 transition-colors duration-200" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
 
                     <div>
                       <label htmlFor="message" className="block text-sm font-semibold text-primary mb-2">
@@ -681,24 +849,17 @@ export default function ContactPage() {
 
                   {/* Animated success illustration */}
                   <div className="relative flex items-center justify-center mb-10 h-48">
-                    {/* Outer ping rings */}
                     <div className="absolute w-44 h-44 rounded-full border-2 border-accent/10 animate-ping"
                       style={{ animationDuration: "3s" }} />
                     <div className="absolute w-36 h-36 rounded-full border border-accent/15 animate-ping"
                       style={{ animationDuration: "2.2s", animationDelay: "0.3s" }} />
                     <div className="absolute w-28 h-28 rounded-full border border-accent/20 animate-ping"
                       style={{ animationDuration: "2.8s", animationDelay: "0.6s" }} />
-
-                    {/* Rotating dashed ring */}
                     <div className="absolute w-36 h-36 rounded-full border-2 border-dashed border-accent/30"
                       style={{ animation: "spin 8s linear infinite" }} />
-
-                    {/* Center gradient icon */}
                     <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-2xl shadow-accent/30 z-10">
                       <CheckCircle className="w-12 h-12 text-white" />
                     </div>
-
-                    {/* Floating bouncing dots */}
                     <div className="absolute top-4 right-10 w-3 h-3 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0s" }} />
                     <div className="absolute bottom-6 left-8 w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0.3s" }} />
                     <div className="absolute top-10 left-12 w-2 h-2 rounded-full bg-accent/60 animate-bounce" style={{ animationDelay: "0.6s" }} />
@@ -707,12 +868,10 @@ export default function ContactPage() {
                     <div className="absolute bottom-8 right-6 w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0.8s" }} />
                   </div>
 
-                  {/* Badge */}
                   <span className="inline-block text-xs font-bold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">
                     Questionnaire Submitted ✓
                   </span>
 
-                  {/* Heading */}
                   <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-2 mt-2">
                     Thank You! 🎉
                   </h2>
@@ -727,7 +886,6 @@ export default function ContactPage() {
                     <span className="font-semibold text-accent">24 hours</span> with a tailored consultation.
                   </p>
 
-                  {/* Summary cards */}
                   <div className="grid grid-cols-2 gap-3 mb-6 text-left">
                     {[
                       { label: "Project Category", value: answers["project_category"]?.[0] || "—" },
@@ -742,7 +900,6 @@ export default function ContactPage() {
                     ))}
                   </div>
 
-                  {/* What's next */}
                   <div className="bg-primary/5 border border-primary/15 rounded-2xl p-5 mb-8 text-left">
                     <p className="text-xs font-bold tracking-widest uppercase text-primary mb-3">What happens next?</p>
                     <div className="space-y-3">
@@ -761,7 +918,6 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Reset button */}
                   <button
                     onClick={() => {
                       setShowQuestionnaire(false);
@@ -776,7 +932,6 @@ export default function ContactPage() {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
                   </button>
 
-                  {/* Bottom accent line */}
                   <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                 </div>
               )}
@@ -800,11 +955,11 @@ export default function ContactPage() {
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-white/10 h-96 shadow-2xl shadow-black/20 hover:shadow-black/40 transition-all duration-500">
             <iframe
-  src="https://maps.google.com/maps?q=17.323956,78.558187&z=17&output=embed"
-  className="absolute inset-0 w-full h-full border-0 scale-110"
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"
-/>
+              src="https://maps.google.com/maps?q=17.323956,78.558187&z=17&output=embed"
+              className="absolute inset-0 w-full h-full border-0 scale-110"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center">
               <div className="relative flex items-center justify-center mb-6">
                 <div className="absolute w-32 h-32 rounded-full border-2 border-blue-500/40 animate-ping" style={{ animationDuration: "3s" }} />
