@@ -256,7 +256,7 @@ export default function CardStack() {
                         </motion.p>
 
                         <a
-                          href={link}
+                          href="/services"
                           className="inline-flex items-center text-sm font-semibold text-[#E52B2B] transition hover:text-red-400 md:text-base"
                         >
                           Learn More →

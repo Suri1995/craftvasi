@@ -36,11 +36,11 @@ export default function ProjectsPage() {
   const projects = [
     {
       id: 1,
-      title: "Modern Apartment Renovation",
+      title: "Modern Apartment Interior",
       category: "Residential",
-      image: "/images/project-bhk.jpg",
+      image: "/modern-apartment-interior.jpg",
       description:
-        "Complete renovation of a 1200 sq ft apartment with modern aesthetics and smart storage solutions.",
+        "Complete interior of a 1200 sq ft apartment with modern aesthetics and smart storage solutions.",
     },
     {
       id: 2,
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
       id: 3,
       title: "Luxury Villa Interior",
       category: "Residential",
-      image: "/images/project-bhk.jpg",
+      image: "/luxury-villa-interior.jpg",
       description:
         "High-end villa design featuring premium materials and sophisticated styling.",
     },
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
     },
     {
       id: 7,
-      title: "Kitchen Renovation",
+      title: "Kitchen Interior",
       category: "Residential",
       image: "/images/hero-kitchen.jpg",
       description:
@@ -101,7 +101,7 @@ export default function ProjectsPage() {
       id: 9,
       title: "Master Bedroom Suite",
       category: "Residential",
-      image: "/images/project-bhk.jpg",
+      image: "master-bedroom-interior.jpg",
       description:
         "Luxurious bedroom with walk-in closet and spa-like bathroom.",
     },

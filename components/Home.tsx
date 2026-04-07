@@ -82,14 +82,14 @@ export function Hero() {
 
         <div className="flex flex-col gap-4 sm:flex-row">
           <a
-            href="/projects"
+            href="/contact"
             className="rounded-lg bg-[#E52B2B] px-8 py-3 font-semibold text-white transition hover:scale-105"
           >
             Start Your Interior Project
           </a>
 
           <a
-            href="/contact"
+            href="/projects"
             className="rounded-lg bg-[#1B2A6B] px-8 py-3 font-semibold text-white transition hover:scale-105"
           >
             View Our Projects

@@ -16,331 +16,378 @@ import {
   FileText,
   Upload,
   X,
+  Ruler,
+  ClipboardList,
 } from "lucide-react";
 
-// ── Questionnaire Steps ──
-const questionnaireSteps = [
-  {
-    id: "project_category",
-    section: "Project Details",
-    question: "What type of project are you looking for?",
-    type: "single",
-    options: [
-      "Residential Design",
-      "Commercial Space",
-      "Renovation",
-      "Consultation",
-      "Other",
-    ],
-  },
-  {
-    id: "project_type",
-    section: "Client Details",
-    question: "What is your Project Type?",
-    type: "single",
-    options: ["Apartment", "Villa", "Independent House"],
-  },
-  {
-    id: "bhk_type",
-    section: "Client Details",
-    question: "What is your BHK Type?",
-    type: "single",
-    options: ["1BHK", "2BHK", "3BHK", "4BHK", "Others"],
-  },
-  {
-    id: "living_room",
-    section: "Living Room",
-    question: "What do you need for your Living Room?",
-    type: "multi",
-    options: [
-      "False Ceiling",
-      "TV Unit",
-      "Hall Partition",
-      "Wall Panelling",
-      "Shoe Rack",
-      "Puja Unit",
-      "Puja Door",
-      "Bedroom Doors",
-      "Main Door Panelling",
-      "Wallpaper / Paint",
-      "Curtains / Blinds",
-      "Lighting",
-    ],
-  },
-  {
-    id: "master_bedroom",
-    section: "Master Bedroom",
-    question: "What do you need for your Master Bedroom?",
-    type: "multi",
-    options: [
-      "False Ceiling",
-      "Wardrobe",
-      "Bed with Storage",
-      "Dressing Table",
-      "Study Table",
-      "TV Unit",
-      "Wallpaper / Paint",
-      "Curtains / Blinds",
-      "Lighting",
-    ],
-  },
-  {
-    id: "children_bedroom",
-    section: "Children's Bedroom",
-    question: "What do you need for your Children's Bedroom?",
-    type: "multi",
-    options: [
-      "False Ceiling",
-      "Wardrobe",
-      "Bed with Storage",
-      "Dressing Table",
-      "Study Table",
-      "TV Unit",
-      "Wallpaper / Paint",
-      "Curtains / Blinds",
-      "Lighting",
-    ],
-  },
-  {
-    id: "guest_bedroom",
-    section: "Guest Bedroom",
-    question: "What do you need for your Guest Bedroom?",
-    type: "multi",
-    options: [
-      "False Ceiling",
-      "Wardrobe",
-      "Bed with Storage",
-      "Dressing Table",
-      "Study Table",
-      "TV Unit",
-      "Wallpaper / Paint",
-      "Curtains / Blinds",
-      "Lighting",
-    ],
-  },
-  {
-    id: "kitchen_dining",
-    section: "Kitchen & Dining",
-    question: "What do you need for your Kitchen & Dining area?",
-    type: "multi",
-    options: [
-      "Modular Kitchen (Base + Wall Units)",
-      "Pantry / Tall Unit",
-      "Kitchen Accessories (Pullouts, Rolling Shutter, Corner Unit, Basket Systems)",
-      "Dining Table Unit / Storage",
-      "Chimney",
-      "Sink",
-      "Counter Top",
-      "Back Splash",
-    ],
-  },
-  {
-    id: "bathrooms",
-    section: "Bathrooms",
-    question: "What do you need for your Bathrooms?",
-    type: "multi",
-    options: [
-      "Vanity Unit",
-      "Mirror with Storage",
-      "False Ceiling with Lighting",
-    ],
-  },
-  {
-    id: "furnishings",
-    section: "Furnishings & Décor",
-    question: "What Furnishings & Décor do you need?",
-    type: "multi",
-    options: [
-      "Curtains (Sheer + Main)",
-      "Window Blinds (Zebra / Roller / Roman)",
-      "Wallpapers / Wall Textures",
-      "Sofas (Custom Design)",
-    ],
-  },
-  {
-    id: "electrical",
-    section: "Electrical & Lighting",
-    question: "What Electrical & Lighting do you need?",
-    type: "multi",
-    options: [
-      "Panel Lights",
-      "LED Strip Lights with Aluminium Profile",
-      "SMPS for Strip Lights",
-      "Decorative Lights / Chandeliers",
-      "Smart Home Automation",
-    ],
-  },
-  {
-    id: "painting",
-    section: "Painting",
-    question: "What Painting services do you need?",
-    type: "multi",
-    options: [
-      "Premium Emulsion Walls",
-      "Ceiling with Primer + Putty + Emulsion",
-      "PU Polish",
-    ],
-  },
-  {
-    id: "additional",
-    section: "Additional Services",
-    question: "Any Additional Services required?",
-    type: "multi",
-    options: [
-      "Invisible Grill (Balcony / Windows)",
-      "AC Copper Piping Installation",
-      "Smart Home Automation",
-    ],
-  },
+// ─────────────────────────────────────────────
+// STEP TYPE DEFINITIONS
+// ─────────────────────────────────────────────
+type StepType = "single" | "multi" | "area" | "textarea" | "commercial_type";
+
+interface Step {
+  id: string;
+  section: string;
+  question: string;
+  type: StepType;
+  options?: string[];
+  placeholder?: string;
+}
+
+// ── SHARED TAIL STEPS ──
+const STEP_ELECTRICAL: Step = {
+  id: "electrical", section: "Electrical & Lighting",
+  question: "What Electrical & Lighting do you need?", type: "multi",
+  options: ["Panel Lights","LED Strip Lights with Aluminium Profile","SMPS for Strip Lights","Decorative Lights / Chandeliers","Smart Home Automation"],
+};
+const STEP_PAINTING: Step = {
+  id: "painting", section: "Painting",
+  question: "What Painting services do you need?", type: "multi",
+  options: ["Premium Emulsion Walls","Ceiling with Primer + Putty + Emulsion","PU Polish"],
+};
+const STEP_ADDITIONAL: Step = {
+  id: "additional", section: "Additional Services",
+  question: "Any Additional Services required?", type: "multi",
+  options: ["Invisible Grill (Balcony / Windows)","AC Copper Piping Installation","Smart Home Automation"],
+};
+
+// ── STEP 0: Always first ──
+const STEP_CATEGORY: Step = {
+  id: "project_category", section: "Project Details",
+  question: "What type of project are you looking for?", type: "single",
+  options: ["Residential Design","Commercial Space","Others"],
+};
+
+// ── AREA STEP (Residential) ──
+const STEP_AREA_RESIDENTIAL: Step = {
+  id: "total_area_residential", section: "Project Information",
+  question: "Tell us about your project area & requirements", type: "area",
+};
+
+// ── AREA STEP (Commercial) ──
+const STEP_AREA_COMMERCIAL: Step = {
+  id: "total_area_commercial", section: "Project Information",
+  question: "Tell us about your project area & requirements", type: "area",
+};
+
+// ── AREA STEP (Others) ──
+const STEP_AREA_OTHERS: Step = {
+  id: "total_area_others", section: "Project Information",
+  question: "Tell us about your project area & requirements", type: "area",
+};
+
+// ── RESIDENTIAL STEPS (after area) ──
+const RESIDENTIAL_AFTER_AREA: Step[] = [
+  { id: "project_type", section: "Client Details", question: "What is your Project Type?", type: "single", options: ["Apartment","Villa","Independent House"] },
+  { id: "bhk_type", section: "Client Details", question: "What is your BHK Type?", type: "single", options: ["1BHK","2BHK","3BHK","4BHK","Others"] },
+  { id: "living_room", section: "Living Room", question: "What do you need for your Living Room?", type: "multi",
+    options: ["False Ceiling","TV Unit","Hall Partition","Wall Panelling","Shoe Rack","Puja Unit","Puja Door","Bedroom Doors","Main Door Panelling","Wallpaper / Paint","Curtains / Blinds","Lighting"] },
+  { id: "master_bedroom", section: "Master Bedroom", question: "What do you need for your Master Bedroom?", type: "multi",
+    options: ["False Ceiling","Wardrobe","Bed with Storage","Dressing Table","Study Table","TV Unit","Wallpaper / Paint","Curtains / Blinds","Lighting"] },
+  { id: "children_bedroom", section: "Children's Bedroom", question: "What do you need for your Children's Bedroom?", type: "multi",
+    options: ["False Ceiling","Wardrobe","Bed with Storage","Dressing Table","Study Table","TV Unit","Wallpaper / Paint","Curtains / Blinds","Lighting"] },
+  { id: "guest_bedroom", section: "Guest Bedroom", question: "What do you need for your Guest Bedroom?", type: "multi",
+    options: ["False Ceiling","Wardrobe","Bed with Storage","Dressing Table","Study Table","TV Unit","Wallpaper / Paint","Curtains / Blinds","Lighting"] },
+  { id: "kitchen_dining", section: "Kitchen & Dining", question: "What do you need for your Kitchen & Dining area?", type: "multi",
+    options: ["Modular Kitchen (Base + Wall Units)","Pantry / Tall Unit","Kitchen Accessories (Pullouts, Rolling Shutter, Corner Unit, Basket Systems)","Dining Table Unit / Storage","Chimney","Sink","Counter Top","Back Splash"] },
+  { id: "bathrooms", section: "Bathrooms", question: "What do you need for your Bathrooms?", type: "multi",
+    options: ["Vanity Unit","Mirror with Storage","False Ceiling with Lighting"] },
+  { id: "furnishings", section: "Furnishings & Décor", question: "What Furnishings & Décor do you need?", type: "multi",
+    options: ["Curtains (Sheer + Main)","Window Blinds (Zebra / Roller / Roman)","Wallpapers / Wall Textures","Sofas (Custom Design)"] },
+  STEP_ELECTRICAL, STEP_PAINTING, STEP_ADDITIONAL,
 ];
 
-export default function ContactPage() {
-  // ── Contact form state ──
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
+// ── COMMERCIAL TYPE STEP ──
+const STEP_COMMERCIAL_TYPE: Step = {
+  id: "project_type_commercial", section: "Client Details",
+  question: "What is your Commercial Project Type?", type: "commercial_type",
+  options: ["Restaurant","Office Space","Supermarket","Others"],
+};
+
+// ── COMMERCIAL-SPECIFIC STEPS ──
+const RESTAURANT_STEPS: Step[] = [
+  { id: "restaurant_seating", section: "Restaurant — Seating & Layout", question: "What do you need for Seating & Layout?", type: "multi",
+    options: ["Dining Area Layout","Private Dining Booths","Bar Counter","Open Kitchen Setup","Reception / Waiting Area","Outdoor Seating","Theme Wall / Mural"] },
+  { id: "restaurant_kitchen", section: "Restaurant — Kitchen", question: "What Commercial Kitchen requirements do you have?", type: "multi",
+    options: ["Modular Commercial Kitchen","Exhaust & Ventilation System","SS Work Tables","Sink & Wash Area","Cold Storage","Chimney / Hood","Storage Racks"] },
+  { id: "restaurant_interiors", section: "Restaurant — Interiors", question: "What Interior elements do you need?", type: "multi",
+    options: ["False Ceiling","Ambient Lighting","Wall Panelling / Cladding","Custom Furniture","Flooring","Signage & Branding","AC & Electrical"] },
+];
+const OFFICE_STEPS: Step[] = [
+  { id: "office_zones", section: "Office Space — Zones", question: "Which zones do you need designed?", type: "multi",
+    options: ["Open Work Area","Cabin Rooms","Conference / Meeting Room","Reception & Lobby","Pantry / Break Room","Server Room","Storage Room"] },
+  { id: "office_furniture", section: "Office Space — Furniture & Fixtures", question: "What Furniture & Fixtures are required?", type: "multi",
+    options: ["Workstations / Desks","Executive Chairs & Seating","Conference Table","Storage Cabinets & Lockers","Reception Counter","Partitions / Glass Cubicles"] },
+  { id: "office_interiors", section: "Office Space — Interiors", question: "What Interior elements do you need?", type: "multi",
+    options: ["False Ceiling","Ambient & Task Lighting","Wall Panelling / Branding Wall","Flooring","AC & Electrical Layout","Smart Automation","Signage"] },
+];
+const SUPERMARKET_STEPS: Step[] = [
+  { id: "supermarket_layout", section: "Supermarket — Layout & Shelving", question: "What Layout & Shelving do you need?", type: "multi",
+    options: ["Gondola Shelving Units","Wall Rack Systems","Checkout Counter","Customer Service Desk","Cold Storage Aisles","Produce / Fresh Zone","Storage Room"] },
+  { id: "supermarket_interiors", section: "Supermarket — Interiors", question: "What Interior elements do you need?", type: "multi",
+    options: ["False Ceiling","Track & Panel Lighting","Flooring","Signage & Branding","AC & Ventilation","Security Camera Setup","Entrance Display"] },
+];
+const COMMERCIAL_OTHERS_STEP: Step = {
+  id: "commercial_others_details", section: "Commercial — Project Details",
+  question: "Please describe your commercial project requirements", type: "textarea",
+  placeholder: "Describe the type of space, area breakdown, special requirements, style preferences, budget range, timeline, etc.",
+};
+
+// ─────────────────────────────────────────────
+// DYNAMIC STEP BUILDER
+// ─────────────────────────────────────────────
+function buildSteps(answers: Record<string, string[]>): Step[] {
+  const category = answers["project_category"]?.[0];
+  if (!category) return [STEP_CATEGORY];
+
+  if (category === "Residential Design") {
+    return [STEP_CATEGORY, STEP_AREA_RESIDENTIAL, ...RESIDENTIAL_AFTER_AREA];
+  }
+
+  if (category === "Others") {
+    return [STEP_CATEGORY, STEP_AREA_OTHERS];
+  }
+
+  if (category === "Commercial Space") {
+    const commercialType = answers["project_type_commercial"]?.[0];
+    const base = [STEP_CATEGORY, STEP_AREA_COMMERCIAL, STEP_COMMERCIAL_TYPE];
+    if (!commercialType) return base;
+    if (commercialType === "Others") return [...base, COMMERCIAL_OTHERS_STEP, STEP_ELECTRICAL, STEP_PAINTING, STEP_ADDITIONAL];
+    if (commercialType === "Restaurant") return [...base, ...RESTAURANT_STEPS, STEP_ELECTRICAL, STEP_PAINTING, STEP_ADDITIONAL];
+    if (commercialType === "Office Space") return [...base, ...OFFICE_STEPS, STEP_ELECTRICAL, STEP_PAINTING, STEP_ADDITIONAL];
+    if (commercialType === "Supermarket") return [...base, ...SUPERMARKET_STEPS, STEP_ELECTRICAL, STEP_PAINTING, STEP_ADDITIONAL];
+    return base;
+  }
+
+  return [STEP_CATEGORY];
+}
+
+// ─────────────────────────────────────────────
+// API SERVICE FUNCTIONS
+// ─────────────────────────────────────────────
+async function submitLeadData(leadData: any) {
+  const response = await fetch('/api/submit-lead', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(leadData),
   });
+  
+  if (!response.ok) {
+    throw new Error('Failed to submit lead');
+  }
+  
+  return response.json();
+}
+
+async function uploadFile(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const response = await fetch('/api/upload-file', {
+    method: 'POST',
+    body: formData,
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to upload file');
+  }
+  
+  return response.json();
+}
+
+// ─────────────────────────────────────────────
+// PAGE COMPONENT
+// ─────────────────────────────────────────────
+export default function ContactPage() {
+  // ── Contact form ──
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [fileError, setFileError] = useState<string>("");
+  const [fileError, setFileError] = useState("");
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "error">("idle");
 
-  // ── Questionnaire state ──
+  // ── Questionnaire ──
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
+  const [textAnswers, setTextAnswers] = useState<Record<string, string>>({});
+  const [areaAnswers, setAreaAnswers] = useState<Record<string, { total: string; carpet: string; requirements: string }>>({});
   const [questionnaireComplete, setQuestionnaireComplete] = useState(false);
   const [isSubmittingQ, setIsSubmittingQ] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [stepDirection, setStepDirection] = useState<"fwd" | "bwd">("fwd");
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [savedFileUrl, setSavedFileUrl] = useState<string>("");
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const steps = buildSteps(answers);
+  const currentQ = steps[currentStep];
+  const progress = ((currentStep + 1) / steps.length) * 100;
+
+  // ── Validation ──
+  const canProceed = (() => {
+    if (!currentQ) return false;
+    if (currentQ.type === "area") {
+      const a = areaAnswers[currentQ.id];
+      return !!(a?.total?.trim() && a?.carpet?.trim() && a?.requirements?.trim());
+    }
+    if (currentQ.type === "textarea") return !!(textAnswers[currentQ.id]?.trim());
+    return (answers[currentQ.id] || []).length > 0;
+  })();
+
+  // ── Contact form handlers ──
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "phone") {
+      const stripped = value.replace(/[^\d+]/g, "").replace(/(?!^)\+/g, "");
+      setFormData((p) => ({ ...p, phone: stripped }));
+      setFieldErrors((p) => ({ ...p, phone: stripped && !/^\+?\d{7,15}$/.test(stripped) ? "Enter a valid phone number (digits only, 7–15 digits)" : undefined }));
+      return;
+    }
+    if (name === "email") {
+      setFormData((p) => ({ ...p, email: value }));
+      setFieldErrors((p) => ({ ...p, email: value && !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value) ? "Enter a valid email address (e.g. you@example.com)" : undefined }));
+      return;
+    }
+    setFormData((p) => ({ ...p, [name]: value }));
   };
 
-  // ── File upload handlers ──
+  // ── File handlers ──
   const validateAndSetFile = (file: File) => {
     setFileError("");
-    const allowed = ["application/pdf", "image/jpeg", "image/jpg"];
-    if (!allowed.includes(file.type)) {
-      setFileError("Only PDF or JPG files are accepted.");
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setFileError("File size must be under 10 MB.");
-      return;
-    }
+    if (!["application/pdf","image/jpeg","image/jpg"].includes(file.type)) { setFileError("Only PDF or JPG files are accepted."); return; }
+    if (file.size > 10 * 1024 * 1024) { setFileError("File size must be under 10 MB."); return; }
     setUploadedFile(file);
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) validateAndSetFile(file);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) validateAndSetFile(file);
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const f = e.target.files?.[0]; if (f) validateAndSetFile(f); };
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => { e.preventDefault(); setIsDragOver(false); const f = e.dataTransfer.files?.[0]; if (f) validateAndSetFile(f); };
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => { e.preventDefault(); setIsDragOver(true); };
   const handleDragLeave = () => setIsDragOver(false);
-
-  const removeFile = () => {
-    setUploadedFile(null);
-    setFileError("");
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  };
-
-  const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
+  const removeFile = () => { setUploadedFile(null); setFileError(""); if (fileInputRef.current) fileInputRef.current.value = ""; setSavedFileUrl(""); };
+  const formatFileSize = (b: number) => b < 1024 ? `${b} B` : b < 1048576 ? `${(b/1024).toFixed(1)} KB` : `${(b/1048576).toFixed(1)} MB`;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!uploadedFile) {
-      setFileError("Please attach a floor plan or brief to proceed.");
-      return;
-    }
+    if (!uploadedFile) { setFileError("Please attach a floor plan or brief to proceed."); return; }
+    const errs: { phone?: string; email?: string } = {};
+    if (!/^\+?\d{7,15}$/.test(formData.phone)) errs.phone = "Enter a valid phone number (digits only, 7–15 digits)";
+    if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formData.email)) errs.email = "Enter a valid email address (e.g. you@example.com)";
+    if (Object.keys(errs).length) { setFieldErrors(errs); return; }
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Upload file first
+      const fileUploadResult = await uploadFile(uploadedFile);
+      setSavedFileUrl(fileUploadResult.fileUrl);
+      
+      // Store initial contact data
+      const contactData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        fileUrl: fileUploadResult.fileUrl,
+      };
+      
+      // Save to localStorage to use in questionnaire
+      localStorage.setItem('contactData', JSON.stringify(contactData));
+      
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setFieldErrors({});
       setUploadedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
       setShowQuestionnaire(true);
       setCurrentStep(0);
       setAnswers({});
+      setTextAnswers({});
+      setAreaAnswers({});
       setQuestionnaireComplete(false);
-    } catch {
+    } catch (error) {
+      console.error('Error during initial submission:', error);
       setSubmitStatus("error");
       setTimeout(() => setSubmitStatus("idle"), 4000);
-    } finally {
-      setIsSubmitting(false);
-    }
+    } finally { setIsSubmitting(false); }
   };
 
   // ── Questionnaire handlers ──
-  const currentQ = questionnaireSteps[currentStep];
+  const animateStep = (dir: "fwd" | "bwd", cb: () => void) => {
+    setStepDirection(dir);
+    setIsAnimating(true);
+    setTimeout(() => { cb(); setIsAnimating(false); }, 200);
+  };
 
   const toggleOption = (option: string) => {
-    const current = answers[currentQ.id] || [];
-    if (currentQ.type === "single") {
-      setAnswers((prev) => ({ ...prev, [currentQ.id]: [option] }));
+    const cur = answers[currentQ.id] || [];
+    if (currentQ.type === "single" || currentQ.type === "commercial_type") {
+      setAnswers((p) => ({ ...p, [currentQ.id]: [option] }));
     } else {
-      if (current.includes(option)) {
-        setAnswers((prev) => ({
-          ...prev,
-          [currentQ.id]: current.filter((o) => o !== option),
-        }));
-      } else {
-        setAnswers((prev) => ({
-          ...prev,
-          [currentQ.id]: [...current, option],
-        }));
-      }
+      setAnswers((p) => ({ ...p, [currentQ.id]: cur.includes(option) ? cur.filter((o) => o !== option) : [...cur, option] }));
     }
   };
 
-  const isSelected = (option: string) =>
-    (answers[currentQ.id] || []).includes(option);
-
-  const canProceed = (answers[currentQ.id] || []).length > 0;
+  const isSelected = (opt: string) => (answers[currentQ?.id] || []).includes(opt);
 
   const handleNext = () => {
-    if (currentStep < questionnaireSteps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+    // On category change: wipe all downstream answers so steps rebuild cleanly
+    if (currentQ.id === "project_category") {
+      setAnswers({ project_category: answers["project_category"] });
+      setTextAnswers({});
+      setAreaAnswers({});
     }
+    // On commercial type change: wipe commercial-specific answers
+    if (currentQ.id === "project_type_commercial") {
+      const keep = ["project_category","total_area_commercial","project_type_commercial"];
+      setAnswers((p) => Object.fromEntries(Object.entries(p).filter(([k]) => keep.includes(k))));
+    }
+    const nextSteps = buildSteps(answers);
+    if (currentStep < nextSteps.length - 1) animateStep("fwd", () => setCurrentStep((p) => p + 1));
   };
 
   const handleBack = () => {
-    if (currentStep > 0) setCurrentStep((prev) => prev - 1);
+    if (currentStep > 0) animateStep("bwd", () => setCurrentStep((p) => p - 1));
   };
 
   const handleQuestionnaireSubmit = async () => {
     setIsSubmittingQ(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmittingQ(false);
-    setQuestionnaireComplete(true);
+    try {
+      // Get contact data from localStorage
+      const contactDataStr = localStorage.getItem('contactData');
+      if (!contactDataStr) {
+        throw new Error('Contact data not found');
+      }
+      
+      const contactData = JSON.parse(contactDataStr);
+      
+      // Prepare complete lead data
+      const leadData = {
+        contact: contactData,
+        questionnaire: {
+          answers,
+          textAnswers,
+          areaAnswers,
+        },
+        submittedAt: new Date().toISOString(),
+      };
+      
+      // Submit all data
+      const result = await submitLeadData(leadData);
+      
+      // Clear localStorage
+      localStorage.removeItem('contactData');
+      
+      setQuestionnaireComplete(true);
+    } catch (error) {
+      console.error('Error submitting questionnaire:', error);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 4000);
+    } finally {
+      setIsSubmittingQ(false);
+    }
   };
-
-  const progress = ((currentStep + 1) / questionnaireSteps.length) * 100;
 
   return (
     <main className="overflow-x-hidden">
@@ -365,10 +412,8 @@ export default function ContactPage() {
       </section>
 
       {/* ── Contact Cards ── */}
-      <section
-        className="py-[28px] md:py-20 relative overflow-hidden"
-        style={{ background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--accent)/0.03) 100%)" }}
-      >
+      <section className="py-[28px] md:py-20 relative overflow-hidden"
+        style={{ background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--accent)/0.03) 100%)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -380,45 +425,19 @@ export default function ContactPage() {
               const isPrimary = item.color === "primary";
               return (
                 <a key={index} href={item.href}
-                  className={`group relative overflow-hidden rounded-3xl p-8 border transition-all duration-500
-                    hover:-translate-y-2 hover:shadow-2xl text-center
-                    ${isPrimary
-                      ? "bg-primary border-primary/20 hover:shadow-primary/20"
-                      : "bg-white/55 backdrop-blur-sm border-accent/15 hover:border-accent/50 hover:shadow-accent/15 hover:bg-white/80"
-                    }`}
-                >
-                  <div className={`absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500
-                    group-hover:left-0 group-hover:right-0
-                    ${isPrimary ? "via-white/20 group-hover:via-white/40" : "via-accent/40 group-hover:via-accent"}`} />
-                  <div className={`absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl opacity-0
-                    group-hover:opacity-100 transition-all duration-500
-                    ${isPrimary ? "bg-white/10" : "bg-accent/15"}`} />
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 border transition-all duration-300
-                    group-hover:scale-110 group-hover:rotate-3
-                    ${isPrimary
-                      ? "bg-white/10 border-white/20 group-hover:bg-accent group-hover:border-accent"
-                      : "bg-accent/10 border-accent/20 group-hover:bg-primary group-hover:border-primary"
-                    }`}>
-                    <Icon className={`w-7 h-7 transition-colors duration-300
-                      ${isPrimary ? "text-white" : "text-accent group-hover:text-white"}`} />
+                  className={`group relative overflow-hidden rounded-3xl p-8 border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-center
+                    ${isPrimary ? "bg-primary border-primary/20 hover:shadow-primary/20" : "bg-white/55 backdrop-blur-sm border-accent/15 hover:border-accent/50 hover:shadow-accent/15 hover:bg-white/80"}`}>
+                  <div className={`absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500 group-hover:left-0 group-hover:right-0 ${isPrimary ? "via-white/20 group-hover:via-white/40" : "via-accent/40 group-hover:via-accent"}`} />
+                  <div className={`absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 ${isPrimary ? "bg-white/10" : "bg-accent/15"}`} />
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 border transition-all duration-300 group-hover:scale-110 group-hover:rotate-3
+                    ${isPrimary ? "bg-white/10 border-white/20 group-hover:bg-accent group-hover:border-accent" : "bg-accent/10 border-accent/20 group-hover:bg-primary group-hover:border-primary"}`}>
+                    <Icon className={`w-7 h-7 transition-colors duration-300 ${isPrimary ? "text-white" : "text-accent group-hover:text-white"}`} />
                   </div>
-                  <h3 className={`text-lg font-heading font-bold mb-1 transition-colors duration-300
-                    ${isPrimary ? "text-white" : "text-primary group-hover:text-accent"}`}>
-                    {item.title}
-                  </h3>
-                  <div className={`w-8 h-1 rounded-full mx-auto mb-3 transition-all duration-500
-                    group-hover:w-16
-                    ${isPrimary ? "bg-accent/60 group-hover:bg-accent" : "bg-accent/40 group-hover:bg-primary"}`} />
-                  <p className={`font-semibold mb-1 transition-colors duration-300
-                    ${isPrimary ? "text-white" : "text-foreground/80 group-hover:text-primary"}`}>
-                    {item.content}
-                  </p>
-                  <p className={`text-sm ${isPrimary ? "text-white/50" : "text-foreground/40"}`}>
-                    {item.subtitle}
-                  </p>
-                  <div className={`absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500
-                    group-hover:left-0 group-hover:right-0
-                    ${isPrimary ? "via-white/10 group-hover:via-white/25" : "via-accent/20 group-hover:via-primary/40"}`} />
+                  <h3 className={`text-lg font-heading font-bold mb-1 transition-colors duration-300 ${isPrimary ? "text-white" : "text-primary group-hover:text-accent"}`}>{item.title}</h3>
+                  <div className={`w-8 h-1 rounded-full mx-auto mb-3 transition-all duration-500 group-hover:w-16 ${isPrimary ? "bg-accent/60 group-hover:bg-accent" : "bg-accent/40 group-hover:bg-primary"}`} />
+                  <p className={`font-semibold mb-1 transition-colors duration-300 ${isPrimary ? "text-white" : "text-foreground/80 group-hover:text-primary"}`}>{item.content}</p>
+                  <p className={`text-sm ${isPrimary ? "text-white/50" : "text-foreground/40"}`}>{item.subtitle}</p>
+                  <div className={`absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500 group-hover:left-0 group-hover:right-0 ${isPrimary ? "via-white/10 group-hover:via-white/25" : "via-accent/20 group-hover:via-primary/40"}`} />
                 </a>
               );
             })}
@@ -435,60 +454,48 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
 
-            {/* Left side info */}
+            {/* Left panel */}
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">
                   {showQuestionnaire ? "Interior Questionnaire" : "Send a Message"}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-4 leading-tight">
-                  {showQuestionnaire
-                    ? <><span className="text-accent">Requirements</span> Form</>
-                    : <>Let's Start a <span className="text-accent">Conversation</span></>
-                  }
+                  {showQuestionnaire ? <><span className="text-accent">Requirements</span> Form</> : <>Let's Start a <span className="text-accent">Conversation</span></>}
                 </h2>
                 <div className="w-12 h-1 bg-accent/50 rounded-full mb-5" />
                 <p className="text-foreground/60 leading-relaxed">
                   {showQuestionnaire
-                    ? "Answer each question about your room-wise requirements. This helps us prepare a tailored design proposal for your space."
-                    : "Fill out the form and our team will get back to you within 24 hours. After submitting, you'll complete a quick interior requirements questionnaire."
-                  }
+                    ? "Questions adapt to your project type — we only ask what's relevant for your space."
+                    : "Fill out the form and our team will get back to you within 24 hours. After submitting, you'll complete a smart requirements questionnaire."}
                 </p>
               </div>
 
-              {/* Steps */}
               <div className="space-y-4">
                 {(showQuestionnaire
                   ? [
-                      { step: "01", title: "Answer each question", desc: "Select your room-wise requirements" },
-                      { step: "02", title: "Multiple choice", desc: "Pick all options that apply to your space" },
+                      { step: "01", title: "Answer each question", desc: "Questions adapt to your project type" },
+                      { step: "02", title: "Select requirements", desc: "Pick all options that apply to your space" },
                       { step: "03", title: "Submit & done", desc: "We'll prepare your tailored proposal" },
                     ]
                   : [
                       { step: "01", title: "Submit your enquiry", desc: "Fill the form with your project details" },
-                      { step: "02", title: "Complete questionnaire", desc: "Answer quick room-wise requirements" },
+                      { step: "02", title: "Smart questionnaire", desc: "Tailored questions based on project type" },
                       { step: "03", title: "Free consultation", desc: "We schedule a call to discuss your vision" },
                     ]
                 ).map((item, i) => (
-                  <div key={i} className="group flex gap-4 p-4 rounded-2xl border border-accent/10
-                    hover:border-accent/30 hover:bg-accent/5 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0
-                      group-hover:bg-accent group-hover:border-accent transition-all duration-300">
-                      <span className="text-xs font-bold text-accent group-hover:text-white transition-colors duration-300">
-                        {item.step}
-                      </span>
+                  <div key={i} className="group flex gap-4 p-4 rounded-2xl border border-accent/10 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                      <span className="text-xs font-bold text-accent group-hover:text-white transition-colors duration-300">{item.step}</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-primary text-sm group-hover:text-accent transition-colors duration-300">
-                        {item.title}
-                      </p>
+                      <p className="font-semibold text-primary text-sm group-hover:text-accent transition-colors duration-300">{item.title}</p>
                       <p className="text-foreground/50 text-xs mt-0.5">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Progress indicator when questionnaire is active */}
               {showQuestionnaire && !questionnaireComplete && (
                 <div className="p-5 bg-accent/5 border border-accent/15 rounded-2xl">
                   <div className="flex items-center justify-between mb-3">
@@ -496,27 +503,40 @@ export default function ContactPage() {
                     <p className="text-xs font-bold text-accent">{Math.round(progress)}% Complete</p>
                   </div>
                   <div className="w-full h-2 bg-accent/10 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-accent to-primary rounded-full transition-all duration-500"
-                      style={{ width: `${progress}%` }}
-                    />
+                    <div className="h-full bg-gradient-to-r from-accent to-primary rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
                   </div>
-                  <p className="text-xs text-foreground/40 mt-2">
-                    Step {currentStep + 1} of {questionnaireSteps.length} — {currentQ.section}
-                  </p>
+                  <p className="text-xs text-foreground/40 mt-2">Step {currentStep + 1} of {steps.length} — {currentQ?.section}</p>
+                </div>
+              )}
+
+              {/* Flow breadcrumb */}
+              {showQuestionnaire && !questionnaireComplete && answers["project_category"]?.[0] && (
+                <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl">
+                  <p className="text-xs font-bold text-primary/60 uppercase tracking-wide mb-2">Current Path</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      answers["project_category"]?.[0],
+                      answers["project_type_commercial"]?.[0],
+                      answers["project_type"]?.[0],
+                      answers["bhk_type"]?.[0],
+                    ].filter(Boolean).map((tag, i) => (
+                      <span key={i} className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-semibold">
+                        {i > 0 && <span className="text-accent/40">›</span>}
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Right side — Form OR Questionnaire */}
+            {/* Right panel */}
             <div className="lg:col-span-3">
 
               {/* ── CONTACT FORM ── */}
               {!showQuestionnaire && (
-                <div className="group relative bg-white/60 backdrop-blur-sm border border-accent/15 rounded-3xl p-8 md:p-10 overflow-hidden
-                  transition-all duration-500 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/8">
-                  <div className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent
-                    group-hover:left-0 group-hover:right-0 group-hover:via-accent transition-all duration-500" />
+                <div className="group relative bg-white/60 backdrop-blur-sm border border-accent/15 rounded-3xl p-8 md:p-10 overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/8">
+                  <div className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:left-0 group-hover:right-0 group-hover:via-accent transition-all duration-500" />
 
                   {submitStatus === "error" && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3">
@@ -531,140 +551,65 @@ export default function ContactPage() {
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-semibold text-primary mb-2">
-                          Full Name <span className="text-accent">*</span>
-                        </label>
-                        <input type="text" id="name" name="name" value={formData.name}
-                          onChange={handleChange} required placeholder="Your name"
-                          className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
-                            focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
-                            hover:border-accent/30 transition-all duration-300" />
+                        <label htmlFor="name" className="block text-sm font-semibold text-primary mb-2">Full Name <span className="text-accent">*</span></label>
+                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required placeholder="Your name"
+                                                    className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300" />
                       </div>
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-semibold text-primary mb-2">
-                          Phone Number <span className="text-accent">*</span>
-                        </label>
-                        <input type="tel" id="phone" name="phone" value={formData.phone}
-                          onChange={handleChange} required placeholder="+91 XXXXX XXXXX"
-                          className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
-                            focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
-                            hover:border-accent/30 transition-all duration-300" />
+                        <label htmlFor="phone" className="block text-sm font-semibold text-primary mb-2">Phone Number <span className="text-accent">*</span></label>
+                        <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required placeholder="+91 XXXXX XXXXX" inputMode="numeric"
+                          onKeyDown={(e) => { const ok = ["Backspace","Delete","Tab","Escape","Enter","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End","+"]; if (ok.includes(e.key)) return; if (!/^\d$/.test(e.key)) e.preventDefault(); }}
+                          className={`w-full px-4 py-3 bg-background/60 border rounded-2xl text-sm focus:outline-none focus:ring-2 hover:border-accent/30 transition-all duration-300 ${fieldErrors.phone ? "border-red-400/70 focus:border-red-400 focus:ring-red-400/15" : "border-accent/15 focus:border-accent focus:ring-accent/15"}`} />
+                        {fieldErrors.phone && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3 flex-shrink-0" />{fieldErrors.phone}</p>}
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">
-                        Email Address <span className="text-accent">*</span>
-                      </label>
-                      <input type="email" id="email" name="email" value={formData.email}
-                        onChange={handleChange} required placeholder="your@email.com"
-                        className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
-                          focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
-                          hover:border-accent/30 transition-all duration-300" />
+                      <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">Email Address <span className="text-accent">*</span></label>
+                      <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required placeholder="your@email.com" pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
+                        className={`w-full px-4 py-3 bg-background/60 border rounded-2xl text-sm focus:outline-none focus:ring-2 hover:border-accent/30 transition-all duration-300 ${fieldErrors.email ? "border-red-400/70 focus:border-red-400 focus:ring-red-400/15" : "border-accent/15 focus:border-accent focus:ring-accent/15"}`} />
+                      {fieldErrors.email && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3 flex-shrink-0" />{fieldErrors.email}</p>}
                     </div>
 
-                    {/* ── File Upload Field (Required) ── */}
+                    {/* File upload */}
                     <div>
                       <label className="block text-sm font-semibold text-primary mb-2">
                         Attach Floor Plan / Brief <span className="text-accent">*</span>{" "}
                         <span className="text-foreground/40 font-normal">(PDF or JPG · Max 10 MB)</span>
                       </label>
-
                       {!uploadedFile ? (
-                        <div
-                          onDrop={handleDrop}
-                          onDragOver={handleDragOver}
-                          onDragLeave={handleDragLeave}
-                          onClick={() => fileInputRef.current?.click()}
-                          className={`relative flex flex-col items-center justify-center gap-3 px-6 py-7 rounded-2xl border-2 border-dashed cursor-pointer
-                            transition-all duration-300 group/upload
-                            ${isDragOver
-                              ? "border-accent bg-accent/8 scale-[1.01]"
-                              : fileError
-                              ? "border-red-400/60 bg-red-50/40 hover:border-red-400"
-                              : "border-accent/25 bg-background/40 hover:border-accent/60 hover:bg-accent/5"
-                            }`}
-                        >
-                          {/* Animated corner accents */}
-                          <div className={`absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 rounded-tl-lg transition-all duration-300
-                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
-                          <div className={`absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 rounded-tr-lg transition-all duration-300
-                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
-                          <div className={`absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 rounded-bl-lg transition-all duration-300
-                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
-                          <div className={`absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 rounded-br-lg transition-all duration-300
-                            ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
-
-                          {/* Icon */}
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300
-                            ${isDragOver
-                              ? "bg-accent border-accent scale-110"
-                              : fileError
-                              ? "bg-red-100 border-red-300"
-                              : "bg-accent/10 border-accent/20 group-hover/upload:bg-accent/20 group-hover/upload:border-accent/40"
-                            }`}>
-                            {isDragOver
-                              ? <Upload className="w-5 h-5 text-white" />
-                              : fileError
-                              ? <AlertCircle className="w-5 h-5 text-red-500" />
-                              : <FileText className="w-5 h-5 text-accent" />
-                            }
+                        <div onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onClick={() => fileInputRef.current?.click()}
+                          className={`relative flex flex-col items-center justify-center gap-3 px-6 py-7 rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-300 group/upload
+                            ${isDragOver ? "border-accent bg-accent/8 scale-[1.01]" : fileError ? "border-red-400/60 bg-red-50/40 hover:border-red-400" : "border-accent/25 bg-background/40 hover:border-accent/60 hover:bg-accent/5"}`}>
+                          <div className={`absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 rounded-tl-lg transition-all duration-300 ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 rounded-tr-lg transition-all duration-300 ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 rounded-bl-lg transition-all duration-300 ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 rounded-br-lg transition-all duration-300 ${isDragOver ? "border-accent w-6 h-6" : "border-accent/30 group-hover/upload:border-accent/70"}`} />
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300 ${isDragOver ? "bg-accent border-accent scale-110" : fileError ? "bg-red-100 border-red-300" : "bg-accent/10 border-accent/20 group-hover/upload:bg-accent/20 group-hover/upload:border-accent/40"}`}>
+                            {isDragOver ? <Upload className="w-5 h-5 text-white" /> : fileError ? <AlertCircle className="w-5 h-5 text-red-500" /> : <FileText className="w-5 h-5 text-accent" />}
                           </div>
-
-                          {/* Text */}
                           <div className="text-center">
-                            <p className={`text-sm font-semibold transition-colors duration-300
-                              ${isDragOver ? "text-accent" : fileError ? "text-red-600" : "text-primary/70 group-hover/upload:text-primary"}`}>
+                            <p className={`text-sm font-semibold transition-colors duration-300 ${isDragOver ? "text-accent" : fileError ? "text-red-600" : "text-primary/70 group-hover/upload:text-primary"}`}>
                               {isDragOver ? "Drop your file here" : fileError ? fileError : "Drop PDF or JPG here or click to browse"}
                             </p>
-                            {!fileError && (
-                              <p className="text-xs text-foreground/40 mt-1">
-                                Floor plans, briefs, mood boards — PDF or JPG format
-                              </p>
-                            )}
+                            {!fileError && <p className="text-xs text-foreground/40 mt-1">Floor plans, briefs, mood boards — PDF or JPG format</p>}
                           </div>
-
-                          <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="application/pdf,image/jpeg,image/jpg"
-                            onChange={handleFileChange}
-                            className="sr-only"
-                          />
+                          <input ref={fileInputRef} type="file" accept="application/pdf,image/jpeg,image/jpg" onChange={handleFileChange} className="sr-only" />
                         </div>
                       ) : (
-                        /* Uploaded file preview */
                         <div className="flex items-center gap-4 px-4 py-4 rounded-2xl border border-accent/30 bg-accent/5 transition-all duration-300">
-                          {/* File type icon */}
-                          <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md
-                            ${uploadedFile.type === "application/pdf"
-                              ? "bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/25"
-                              : "bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/25"
-                            }`}>
+                          <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md ${uploadedFile.type === "application/pdf" ? "bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/25" : "bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/25"}`}>
                             <FileText className="w-5 h-5 text-white" />
                           </div>
-
-                          {/* File info */}
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-primary truncate">{uploadedFile.name}</p>
                             <div className="flex items-center gap-2 mt-0.5">
                               <span className="text-xs text-foreground/40">{formatFileSize(uploadedFile.size)}</span>
                               <span className="w-1 h-1 rounded-full bg-foreground/20" />
-                              <span className="text-xs text-accent font-medium flex items-center gap-1">
-                                <CheckCircle className="w-3 h-3" />
-                                {uploadedFile.type === "application/pdf" ? "PDF ready" : "JPG ready"}
-                              </span>
+                              <span className="text-xs text-accent font-medium flex items-center gap-1"><CheckCircle className="w-3 h-3" />{uploadedFile.type === "application/pdf" ? "PDF ready" : "JPG ready"}</span>
                             </div>
                           </div>
-
-                          {/* Remove button */}
-                          <button
-                            type="button"
-                            onClick={removeFile}
-                            className="w-8 h-8 rounded-xl border border-accent/20 bg-white/60 flex items-center justify-center flex-shrink-0
-                              hover:border-red-400/60 hover:bg-red-50 transition-all duration-200 group/remove"
-                            aria-label="Remove file"
-                          >
+                          <button type="button" onClick={removeFile} className="w-8 h-8 rounded-xl border border-accent/20 bg-white/60 flex items-center justify-center flex-shrink-0 hover:border-red-400/60 hover:bg-red-50 transition-all duration-200 group/remove" aria-label="Remove file">
                             <X className="w-3.5 h-3.5 text-foreground/40 group-hover/remove:text-red-500 transition-colors duration-200" />
                           </button>
                         </div>
@@ -672,191 +617,172 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-semibold text-primary mb-2">
-                        Message <span className="text-accent">*</span>
-                      </label>
-                      <textarea id="message" name="message" value={formData.message}
-                        onChange={handleChange} required
-                        placeholder="Tell us about your project..." rows={5}
-                        className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm
-                          focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15
-                          hover:border-accent/30 transition-all duration-300 resize-none" />
+                      <label htmlFor="message" className="block text-sm font-semibold text-primary mb-2">Message <span className="text-accent">*</span></label>
+                      <textarea id="message" name="message" value={formData.message} onChange={handleChange} required placeholder="Tell us about your project..." rows={5}
+                        className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300 resize-none" />
                     </div>
 
                     <button type="submit" disabled={isSubmitting}
-                      className="group/btn w-full py-4 bg-primary text-white rounded-2xl font-bold text-sm
-                        hover:bg-accent hover:shadow-lg hover:shadow-accent/25
-                        disabled:opacity-50 disabled:cursor-not-allowed
-                        transition-all duration-300 flex items-center justify-center gap-3">
-                      {isSubmitting ? (
-                        <>
-                          <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          Interior Enquiry Questionnaire
-                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                        </>
-                      )}
+                      className="group/btn w-full py-4 bg-primary text-white rounded-2xl font-bold text-sm hover:bg-accent hover:shadow-lg hover:shadow-accent/25 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3">
+                      {isSubmitting
+                        ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Processing...</>
+                        : <><Send className="w-4 h-4" />Interior Enquiry Questionnaire<ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" /></>}
                     </button>
                   </form>
-
-                  <div className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent
-                    group-hover:left-0 group-hover:right-0 group-hover:via-accent/40 transition-all duration-500" />
+                  <div className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent group-hover:left-0 group-hover:right-0 group-hover:via-accent/40 transition-all duration-500" />
                 </div>
               )}
 
               {/* ── QUESTIONNAIRE ── */}
-              {showQuestionnaire && !questionnaireComplete && (
+              {showQuestionnaire && !questionnaireComplete && currentQ && (
                 <div className="relative bg-white/60 backdrop-blur-sm border border-accent/20 rounded-3xl overflow-hidden shadow-xl shadow-accent/8">
-
-                  {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
 
-                  {/* Progress bar at top */}
+                  {/* Progress bar */}
                   <div className="w-full h-1.5 bg-accent/10">
-                    <div
-                      className="h-full bg-gradient-to-r from-accent to-primary transition-all duration-500"
-                      style={{ width: `${progress}%` }}
-                    />
+                    <div className="h-full bg-gradient-to-r from-accent to-primary transition-all duration-500" style={{ width: `${progress}%` }} />
                   </div>
 
-                  {/* Question header */}
+                  {/* Header */}
                   <div className="px-8 pt-7 pb-4 border-b border-accent/10">
                     <div className="flex items-center justify-between mb-2">
                       <span className="inline-block text-xs font-bold tracking-widest uppercase text-accent px-3 py-1 rounded-full bg-accent/10 border border-accent/20">
                         {currentQ.section}
                       </span>
-                      <span className="text-xs font-semibold text-foreground/40">
-                        {currentStep + 1} / {questionnaireSteps.length}
-                      </span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-heading font-bold text-primary mt-3">
-                      {currentQ.question}
-                    </h3>
-                    <p className="text-sm text-foreground/40 mt-1">
-                      {currentQ.type === "single" ? "Select one option" : "Select all that apply"}
-                    </p>
+                    <h3 className="text-xl md:text-2xl font-heading font-bold text-primary mt-3">{currentQ.question}</h3>
+                    {(currentQ.type === "single" || currentQ.type === "commercial_type") && (
+                      <p className="text-sm text-foreground/40 mt-1">Select one option</p>
+                    )}
+                    {currentQ.type === "multi" && (
+                      <p className="text-sm text-foreground/40 mt-1">Select all that apply</p>
+                    )}
                   </div>
 
-                  {/* Options */}
-                  <div className="px-8 py-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                      {currentQ.options.map((option) => (
-                        <button
-                          key={option}
-                          onClick={() => toggleOption(option)}
-                          className={`group/opt relative flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-300
-                            ${isSelected(option)
-                              ? "bg-primary border-primary shadow-lg shadow-primary/20 scale-[1.02]"
-                              : "bg-white/50 border-accent/15 hover:border-accent/40 hover:bg-accent/5"
-                            }`}
-                        >
-                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all duration-300
-                            ${isSelected(option)
-                              ? "border-white bg-accent"
-                              : "border-accent/30 group-hover/opt:border-accent"
-                            }`}>
-                            {isSelected(option) && (
-                              <div className="w-2 h-2 rounded-full bg-white" />
-                            )}
+                  {/* Animated content */}
+                  <div
+                    className="px-8 py-6 transition-all duration-200"
+                    style={{
+                      opacity: isAnimating ? 0 : 1,
+                      transform: isAnimating ? `translateX(${stepDirection === "fwd" ? "12px" : "-12px"})` : "translateX(0)",
+                    }}
+                  >
+
+                    {/* SINGLE / MULTI SELECT */}
+                    {(currentQ.type === "single" || currentQ.type === "commercial_type" || currentQ.type === "multi") && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                        {currentQ.options?.map((option) => (
+                          <button key={option} onClick={() => toggleOption(option)}
+                            className={`group/opt relative flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-300
+                              ${isSelected(option) ? "bg-primary border-primary shadow-lg shadow-primary/20 scale-[1.02]" : "bg-white/50 border-accent/15 hover:border-accent/40 hover:bg-accent/5"}`}>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isSelected(option) ? "border-white bg-accent" : "border-accent/30 group-hover/opt:border-accent"}`}>
+                              {isSelected(option) && <div className="w-2 h-2 rounded-full bg-white" />}
+                            </div>
+                            <span className={`text-sm font-semibold transition-colors duration-300 ${isSelected(option) ? "text-white" : "text-foreground/70 group-hover/opt:text-primary"}`}>{option}</span>
+                            {isSelected(option) && <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* AREA INPUT */}
+                    {currentQ.type === "area" && (
+                      <div className="space-y-5 mb-8">
+                        <div className="flex items-start gap-3 p-4 bg-accent/5 border border-accent/15 rounded-2xl">
+                          <Ruler className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-foreground/60 leading-relaxed">
+                            Please enter the area in <span className="font-semibold text-primary">sq. ft.</span> — this helps us estimate material quantities and design scope accurately.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label className="block text-sm font-semibold text-primary mb-2">Total Area (sq. ft.) <span className="text-accent">*</span></label>
+                            <input type="number" min="1" placeholder="e.g. 1200"
+                              value={areaAnswers[currentQ.id]?.total || ""}
+                              onChange={(e) => setAreaAnswers((p) => ({ ...p, [currentQ.id]: { ...p[currentQ.id], total: e.target.value } }))}
+                              className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300" />
                           </div>
-                          <span className={`text-sm font-semibold transition-colors duration-300
-                            ${isSelected(option) ? "text-white" : "text-foreground/70 group-hover/opt:text-primary"}`}>
-                            {option}
-                          </span>
-                          {isSelected(option) && (
-                            <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
+                          <div>
+                            <label className="block text-sm font-semibold text-primary mb-2">Carpet Area (sq. ft.) <span className="text-accent">*</span></label>
+                            <input type="number" min="1" placeholder="e.g. 950"
+                              value={areaAnswers[currentQ.id]?.carpet || ""}
+                              onChange={(e) => setAreaAnswers((p) => ({ ...p, [currentQ.id]: { ...p[currentQ.id], carpet: e.target.value } }))}
+                              className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-primary mb-2">
+                            <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 text-accent" />Your Requirements <span className="text-accent">*</span></span>
+                          </label>
+                          <textarea rows={5}
+                            placeholder="Describe what you're looking for — style preferences, rooms to be covered, any special requirements, budget range, timeline, etc."
+                            value={areaAnswers[currentQ.id]?.requirements || ""}
+                            onChange={(e) => setAreaAnswers((p) => ({ ...p, [currentQ.id]: { ...p[currentQ.id], requirements: e.target.value } }))}
+                            className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300 resize-none" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* TEXTAREA */}
+                    {currentQ.type === "textarea" && (
+                      <div className="mb-8">
+                        <div className="flex items-start gap-3 p-4 bg-accent/5 border border-accent/15 rounded-2xl mb-4">
+                          <ClipboardList className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-foreground/60 leading-relaxed">Please describe your project in as much detail as possible so we can prepare the most accurate proposal.</p>
+                        </div>
+                        <textarea rows={7}
+                          placeholder={currentQ.placeholder || "Describe your requirements..."}
+                          value={textAnswers[currentQ.id] || ""}
+                          onChange={(e) => setTextAnswers((p) => ({ ...p, [currentQ.id]: e.target.value }))}
+                          className="w-full px-4 py-3 bg-background/60 border border-accent/15 rounded-2xl text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 hover:border-accent/30 transition-all duration-300 resize-none" />
+                      </div>
+                    )}
 
                     {/* Navigation */}
                     <div className="flex items-center justify-between gap-4">
-                      <button
-                        onClick={handleBack}
-                        disabled={currentStep === 0}
-                        className="group/back flex items-center gap-2 px-5 py-3 rounded-2xl border border-accent/20 text-foreground/60 font-semibold text-sm
-                          hover:border-accent/50 hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed
-                          transition-all duration-300"
-                      >
+                      <button onClick={handleBack} disabled={currentStep === 0}
+                        className="group/back flex items-center gap-2 px-5 py-3 rounded-2xl border border-accent/20 text-foreground/60 font-semibold text-sm hover:border-accent/50 hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300">
                         <ArrowLeft className="w-4 h-4 group-hover/back:-translate-x-0.5 transition-transform duration-300" />
                         Back
                       </button>
 
                       {/* Step dots */}
                       <div className="flex gap-1 flex-wrap justify-center">
-                        {questionnaireSteps.map((_, i) => (
-                          <div
-                            key={i}
-                            className={`h-1.5 rounded-full transition-all duration-300
-                              ${i === currentStep ? "w-5 bg-accent" : i < currentStep ? "w-2.5 bg-accent/40" : "w-2.5 bg-accent/15"}`}
-                          />
+                        {steps.map((_, i) => (
+                          <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === currentStep ? "w-5 bg-accent" : i < currentStep ? "w-2.5 bg-accent/40" : "w-2.5 bg-accent/15"}`} />
                         ))}
                       </div>
 
-                      {currentStep < questionnaireSteps.length - 1 ? (
-                        <button
-                          onClick={handleNext}
-                          disabled={!canProceed}
-                          className="group/next flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-white font-bold text-sm
-                            hover:bg-accent hover:shadow-lg hover:shadow-accent/25
-                            disabled:opacity-40 disabled:cursor-not-allowed
-                            transition-all duration-300"
-                        >
-                          Next
-                          <ChevronRight className="w-4 h-4 group-hover/next:translate-x-0.5 transition-transform duration-300" />
+                      {currentStep < steps.length - 1 ? (
+                        <button onClick={handleNext} disabled={!canProceed}
+                          className="group/next flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-white font-bold text-sm hover:bg-accent hover:shadow-lg hover:shadow-accent/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300">
+                          Next <ChevronRight className="w-4 h-4 group-hover/next:translate-x-0.5 transition-transform duration-300" />
                         </button>
                       ) : (
-                        <button
-                          onClick={handleQuestionnaireSubmit}
-                          disabled={!canProceed || isSubmittingQ}
-                          className="group/submit flex items-center gap-2 px-6 py-3 rounded-2xl bg-accent text-white font-bold text-sm
-                            hover:bg-primary hover:shadow-lg hover:shadow-primary/25
-                            disabled:opacity-40 disabled:cursor-not-allowed
-                            transition-all duration-300"
-                        >
-                          {isSubmittingQ ? (
-                            <>
-                              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                              Submitting...
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4" />
-                              Submit
-                            </>
-                          )}
+                        <button onClick={handleQuestionnaireSubmit} disabled={!canProceed || isSubmittingQ}
+                          className="group/submit flex items-center gap-2 px-6 py-3 rounded-2xl bg-accent text-white font-bold text-sm hover:bg-primary hover:shadow-lg hover:shadow-primary/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300">
+                          {isSubmittingQ
+                            ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Submitting...</>
+                            : <><Send className="w-4 h-4" />Submit</>}
                         </button>
                       )}
                     </div>
                   </div>
 
-                  {/* Bottom accent line */}
                   <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                 </div>
               )}
 
-              {/* ── THANK YOU SCREEN ── */}
+              {/* ── THANK YOU ── */}
               {showQuestionnaire && questionnaireComplete && (
                 <div className="relative bg-white/60 backdrop-blur-sm border border-accent/20 rounded-3xl p-8 md:p-10 overflow-hidden text-center shadow-xl shadow-accent/10">
-
-                  {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
 
-                  {/* Animated success illustration */}
                   <div className="relative flex items-center justify-center mb-10 h-48">
-                    <div className="absolute w-44 h-44 rounded-full border-2 border-accent/10 animate-ping"
-                      style={{ animationDuration: "3s" }} />
-                    <div className="absolute w-36 h-36 rounded-full border border-accent/15 animate-ping"
-                      style={{ animationDuration: "2.2s", animationDelay: "0.3s" }} />
-                    <div className="absolute w-28 h-28 rounded-full border border-accent/20 animate-ping"
-                      style={{ animationDuration: "2.8s", animationDelay: "0.6s" }} />
-                    <div className="absolute w-36 h-36 rounded-full border-2 border-dashed border-accent/30"
-                      style={{ animation: "spin 8s linear infinite" }} />
+                    <div className="absolute w-44 h-44 rounded-full border-2 border-accent/10 animate-ping" style={{ animationDuration: "3s" }} />
+                    <div className="absolute w-36 h-36 rounded-full border border-accent/15 animate-ping" style={{ animationDuration: "2.2s", animationDelay: "0.3s" }} />
+                    <div className="absolute w-28 h-28 rounded-full border border-accent/20 animate-ping" style={{ animationDuration: "2.8s", animationDelay: "0.6s" }} />
+                    <div className="absolute w-36 h-36 rounded-full border-2 border-dashed border-accent/30" style={{ animation: "spin 8s linear infinite" }} />
                     <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-2xl shadow-accent/30 z-10">
                       <CheckCircle className="w-12 h-12 text-white" />
                     </div>
@@ -864,24 +790,14 @@ export default function ContactPage() {
                     <div className="absolute bottom-6 left-8 w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0.3s" }} />
                     <div className="absolute top-10 left-12 w-2 h-2 rounded-full bg-accent/60 animate-bounce" style={{ animationDelay: "0.6s" }} />
                     <div className="absolute bottom-4 right-12 w-3 h-3 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: "0.2s" }} />
-                    <div className="absolute top-6 left-6 w-1.5 h-1.5 rounded-full bg-accent animate-bounce" style={{ animationDelay: "0.5s" }} />
-                    <div className="absolute bottom-8 right-6 w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0.8s" }} />
                   </div>
 
-                  <span className="inline-block text-xs font-bold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">
-                    Questionnaire Submitted ✓
-                  </span>
-
-                  <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-2 mt-2">
-                    Thank You! 🎉
-                  </h2>
-                  <p className="text-lg font-semibold text-accent mb-3">
-                    We've received your requirements
-                  </p>
+                  <span className="inline-block text-xs font-bold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">Questionnaire Submitted ✓</span>
+                  <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary mb-2 mt-2">Thank You! 🎉</h2>
+                  <p className="text-lg font-semibold text-accent mb-3">We've received your requirements</p>
                   <div className="w-16 h-1 bg-gradient-to-r from-accent to-primary rounded-full mx-auto mb-6" />
-
                   <p className="text-foreground/60 leading-relaxed max-w-md mx-auto mb-8">
-                    Your interior enquiry questionnaire has been successfully submitted. Our team at{" "}
+                    Your enquiry has been successfully submitted. Our team at{" "}
                     <span className="font-semibold text-primary">Craftvasi</span> will review your requirements and get back to you within{" "}
                     <span className="font-semibold text-accent">24 hours</span> with a tailored consultation.
                   </p>
@@ -889,9 +805,8 @@ export default function ContactPage() {
                   <div className="grid grid-cols-2 gap-3 mb-6 text-left">
                     {[
                       { label: "Project Category", value: answers["project_category"]?.[0] || "—" },
-                      { label: "Project Type", value: answers["project_type"]?.[0] || "—" },
-                      { label: "BHK Type", value: answers["bhk_type"]?.[0] || "—" },
-                      { label: "Sections Filled", value: `${Object.keys(answers).length} / ${questionnaireSteps.length}` },
+                      { label: "Project Type", value: answers["project_type"]?.[0] || answers["project_type_commercial"]?.[0] || "—" },
+                      { label: "BHK Type", value: answers["bhk_type"]?.[0] || "N/A" },
                     ].map((item, i) => (
                       <div key={i} className="p-4 bg-accent/5 border border-accent/15 rounded-2xl">
                         <p className="text-xs text-foreground/40 uppercase tracking-wide font-semibold mb-1">{item.label}</p>
@@ -918,20 +833,10 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      setShowQuestionnaire(false);
-                      setQuestionnaireComplete(false);
-                      setCurrentStep(0);
-                      setAnswers({});
-                    }}
-                    className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-2xl font-bold
-                      hover:bg-accent hover:shadow-lg hover:shadow-accent/25 transition-all duration-300"
-                  >
-                    Back to Contact
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+                  <button onClick={() => { setShowQuestionnaire(false); setQuestionnaireComplete(false); setCurrentStep(0); setAnswers({}); setTextAnswers({}); setAreaAnswers({}); }}
+                    className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-2xl font-bold hover:bg-accent hover:shadow-lg hover:shadow-accent/25 transition-all duration-300">
+                    Back to Contact <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
                   </button>
-
                   <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                 </div>
               )}
@@ -945,21 +850,12 @@ export default function ContactPage() {
         style={{ background: "linear-gradient(180deg, hsl(var(--accent)/0.03) 0%, hsl(var(--background)) 100%)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">
-              Find Us
-            </span>
-            <h2 className="text-4xl font-heading font-bold text-primary mb-3">
-              Visit <span className="text-accent">Us</span>
-            </h2>
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">Find Us</span>
+            <h2 className="text-4xl font-heading font-bold text-primary mb-3">Visit <span className="text-accent">Us</span></h2>
             <p className="text-foreground/60">Located in the heart of Hyderabad</p>
           </div>
           <div className="relative rounded-3xl overflow-hidden border border-white/10 h-96 shadow-2xl shadow-black/20 hover:shadow-black/40 transition-all duration-500">
-            <iframe
-              src="https://maps.google.com/maps?q=17.323956,78.558187&z=17&output=embed"
-              className="absolute inset-0 w-full h-full border-0 scale-110"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <iframe src="https://maps.google.com/maps?q=17.323956,78.558187&z=17&output=embed" className="absolute inset-0 w-full h-full border-0 scale-110" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center">
               <div className="relative flex items-center justify-center mb-6">
                 <div className="absolute w-32 h-32 rounded-full border-2 border-blue-500/40 animate-ping" style={{ animationDuration: "3s" }} />
@@ -974,12 +870,10 @@ export default function ContactPage() {
                 Nagarjuna Sagar Road, Chaitanya Nagar,<br />
                 Above KFC, Hastinapuram, Hyderabad - 500079
               </p>
-              <a href="https://www.google.com/maps/place/CRAFTVASI+INTERIOR+STUDIO+%26+CONSTRUCTIONS+PVT+LTD/@17.323956,78.558187,17z/data=!4m14!1m7!3m6!1s0x3bcba3cbd16f75d3:0xc903ec4f1e65b253!2sCRAFTVASI+INTERIOR+STUDIO+%26+CONSTRUCTIONS+PVT+LTD!8m2!3d17.323956!4d78.558187!16s%2Fg%2F11h_1kwlth!3m5!1s0x3bcba3cbd16f75d3:0xc903ec4f1e65b253!8m2!3d17.323956!4d78.558187!16s%2Fg%2F11h_1kwlth?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D"
+              <a href="https://www.google.com/maps/place/CRAFTVASI+INTERIOR+STUDIO+%26+CONSTRUCTIONS+PVT+LTD/@17.323956,78.558187,17z"
                 target="_blank" rel="noopener noreferrer"
-                className="group mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-blue-500 text-white rounded-2xl font-semibold text-sm
-                  hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
-                Open in Maps
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                className="group mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-blue-500 text-white rounded-2xl font-semibold text-sm hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+                Open in Maps <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </a>
             </div>
           </div>
@@ -990,19 +884,12 @@ export default function ContactPage() {
       <section className="py-[28px] md:py-20 relative overflow-hidden bg-gradient-to-br from-accent/5 via-background to-primary/5">
         <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 rounded-full blur-3xl pointer-events-none" />
-
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-14">
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">
-              FAQ
-            </span>
-            <h2 className="text-4xl font-heading font-bold text-primary mb-3">
-              Frequently Asked <span className="text-accent">Questions</span>
-            </h2>
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-4 px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5">FAQ</span>
+            <h2 className="text-4xl font-heading font-bold text-primary mb-3">Frequently Asked <span className="text-accent">Questions</span></h2>
             <p className="text-foreground/60">Everything you need to know before getting started</p>
           </div>
-
           <div className="space-y-4">
             {[
               { q: "How long does a typical project take?", a: "Project duration varies based on scope. Consultation takes 1–2 weeks, design phase 2–4 weeks, and execution 4–8 weeks depending on complexity." },
@@ -1011,48 +898,26 @@ export default function ContactPage() {
               { q: "What is your warranty policy?", a: "We offer a 1-year warranty on all our work, covering materials and craftsmanship defects with full support." },
             ].map((faq, index) => (
               <div key={index}
-                className={`group relative bg-white/55 backdrop-blur-sm border rounded-3xl overflow-hidden
-                  transition-all duration-300 cursor-pointer
-                  ${openFaq === index
-                    ? "border-accent/50 shadow-lg shadow-accent/10"
-                    : "border-accent/15 hover:border-accent/35 hover:bg-white/75"
-                  }`}
+                className={`group relative bg-white/55 backdrop-blur-sm border rounded-3xl overflow-hidden transition-all duration-300 cursor-pointer ${openFaq === index ? "border-accent/50 shadow-lg shadow-accent/10" : "border-accent/15 hover:border-accent/35 hover:bg-white/75"}`}
                 onClick={() => setOpenFaq(openFaq === index ? null : index)}>
-                <div className={`absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500
-                  ${openFaq === index ? "left-0 right-0 via-accent" : "via-accent/30 group-hover:left-0 group-hover:right-0 group-hover:via-accent/60"}`} />
+                <div className={`absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent to-transparent transition-all duration-500 ${openFaq === index ? "left-0 right-0 via-accent" : "via-accent/30 group-hover:left-0 group-hover:right-0 group-hover:via-accent/60"}`} />
                 <div className="p-6 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 border transition-all duration-300
-                      ${openFaq === index ? "bg-accent border-accent" : "bg-accent/10 border-accent/20 group-hover:bg-accent/20"}`}>
-                      <span className={`text-xs font-bold transition-colors duration-300
-                        ${openFaq === index ? "text-white" : "text-accent"}`}>
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 border transition-all duration-300 ${openFaq === index ? "bg-accent border-accent" : "bg-accent/10 border-accent/20 group-hover:bg-accent/20"}`}>
+                      <span className={`text-xs font-bold transition-colors duration-300 ${openFaq === index ? "text-white" : "text-accent"}`}>{String(index + 1).padStart(2, "0")}</span>
                     </div>
-                    <h3 className={`font-semibold transition-colors duration-300
-                      ${openFaq === index ? "text-accent" : "text-primary group-hover:text-accent"}`}>
-                      {faq.q}
-                    </h3>
+                    <h3 className={`font-semibold transition-colors duration-300 ${openFaq === index ? "text-accent" : "text-primary group-hover:text-accent"}`}>{faq.q}</h3>
                   </div>
-                  <div className={`w-8 h-8 rounded-xl border flex items-center justify-center flex-shrink-0 transition-all duration-300
-                    ${openFaq === index ? "bg-accent border-accent rotate-45" : "bg-accent/10 border-accent/20 group-hover:bg-accent/20"}`}>
-                    <svg className={`w-3.5 h-3.5 transition-colors duration-300 ${openFaq === index ? "text-white" : "text-accent"}`}
-                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <div className={`w-8 h-8 rounded-xl border flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openFaq === index ? "bg-accent border-accent rotate-45" : "bg-accent/10 border-accent/20 group-hover:bg-accent/20"}`}>
+                    <svg className={`w-3.5 h-3.5 transition-colors duration-300 ${openFaq === index ? "text-white" : "text-accent"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                   </div>
                 </div>
                 <div className={`overflow-hidden transition-all duration-300 ${openFaq === index ? "max-h-48 pb-6" : "max-h-0"}`}>
-                  <div className="px-6 pt-0">
-                    <div className="pl-12">
-                      <div className="h-px bg-gradient-to-r from-accent/30 to-transparent mb-4" />
-                      <p className="text-foreground/65 leading-relaxed text-sm">{faq.a}</p>
-                    </div>
-                  </div>
+                  <div className="px-6"><div className="pl-12"><div className="h-px bg-gradient-to-r from-accent/30 to-transparent mb-4" /><p className="text-foreground/65 leading-relaxed text-sm">{faq.a}</p></div></div>
                 </div>
-                {openFaq === index && (
-                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-                )}
+                {openFaq === index && <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />}
               </div>
             ))}
           </div>
