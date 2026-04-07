@@ -166,35 +166,41 @@ function buildSteps(answers: Record<string, string[]>): Step[] {
 // API SERVICE FUNCTIONS
 // ─────────────────────────────────────────────
 async function submitLeadData(leadData: any) {
-  const response = await fetch('/api/submit-lead', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(leadData),
+  return new Promise((resolve) => {
+    try {
+      // Save locally (acts like DB)
+      const existingLeads = JSON.parse(localStorage.getItem("leads") || "[]");
+      existingLeads.push({
+        ...leadData,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      });
+
+      localStorage.setItem("leads", JSON.stringify(existingLeads));
+
+      setTimeout(() => {
+        resolve({
+          success: true,
+          message: "Lead stored locally",
+        });
+      }, 800); // simulate API delay
+
+    } catch (error) {
+      throw new Error("Failed to submit lead");
+    }
   });
-  
-  if (!response.ok) {
-    throw new Error('Failed to submit lead');
-  }
-  
-  return response.json();
 }
 
 async function uploadFile(file: File) {
-  const formData = new FormData();
-  formData.append('file', file);
-  
-  const response = await fetch('/api/upload-file', {
-    method: 'POST',
-    body: formData,
+  return new Promise<{ fileUrl: string }>((resolve) => {
+    const fakeUrl = URL.createObjectURL(file);
+
+    setTimeout(() => {
+      resolve({
+        fileUrl: fakeUrl, // acts like uploaded file URL
+      });
+    }, 800); // simulate network delay
   });
-  
-  if (!response.ok) {
-    throw new Error('Failed to upload file');
-  }
-  
-  return response.json();
 }
 
 // ─────────────────────────────────────────────
